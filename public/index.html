@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Ember & Oak – Fine Dining & Steakhouse</title>
+  <meta name="description" content="Ödüllü fine dining deneyimi – ateş ve zarafetin buluştuğu yer."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --gold:#c9a84c;--gold-l:#e4c97e;--gold-d:#9a7a2e;
+      --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;--bg5:#2a2a2a;
+      --gray:#888;--gray-l:#b0b0b0;--white:#f5f0e8;
+      --fd:'Cormorant Garamond',Georgia,serif;
+      --fb:'Inter',-apple-system,sans-serif;
+      --nav:80px;--r:0.35s cubic-bezier(.4,0,.2,1);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--white);font-family:var(--fb);overflow-x:hidden}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer;border:none;background:none;font-family:inherit}
+    ::selection{background:var(--gold);color:var(--bg)}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px}
+
+    /* Loading */
+    #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .5s,visibility .5s}
+    #loader.out{opacity:0;visibility:hidden;pointer-events:none}
+    .ld-logo{font-family:var(--fd);font-size:2rem;font-weight:300;color:var(--gold);letter-spacing:.1em;animation:glow 1.4s ease infinite alternate}
+    .ld-bar{width:160px;height:1px;background:var(--bg5);overflow:hidden}
+    .ld-prog{height:100%;background:var(--gold);animation:prog 1.4s ease forwards}
+    @keyframes glow{0%{color:var(--gold)}100%{color:var(--gold-l)}}
+    @keyframes prog{0%{width:0}100%{width:100%}}
+
+    /* Navbar */
+    nav{position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:1000;display:flex;align-items:center;padding:0 clamp(1.25rem,4vw,3rem);transition:background .4s}
+    nav.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(201,168,76,.12)}
+    .nav-i{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:var(--fd);font-size:1.6rem;font-weight:400;letter-spacing:.04em;transition:.2s}
+    .logo span{color:var(--gold)}
+    .logo:hover{color:var(--gold)}
+    .nav-ul{display:flex;gap:2.5rem;list-style:none}
+    .nav-ul a{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-l);transition:.2s;position:relative}
+    .nav-ul a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+    .nav-ul a:hover{color:var(--gold)}
+    .nav-ul a:hover::after{width:100%}
+    .btn-gold{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;background:var(--gold);color:var(--bg);border-radius:3px;transition:var(--r);border:1px solid var(--gold)}
+    .btn-gold:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,.3)}
+    .btn-out{background:transparent;color:var(--white);border:1px solid rgba(245,240,232,.3);border-radius:3px;padding:.8rem 1.8rem;font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.5rem;transition:var(--r)}
+    .btn-out:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+    .hamburger{display:none;flex-direction:column;gap:5px;width:26px;cursor:pointer}
+    .hamburger span{display:block;width:100%;height:1.5px;background:var(--white);transition:var(--r)}
+    .hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    .mob-menu{display:none;position:fixed;top:var(--nav);left:0;right:0;background:rgba(10,10,10,.97);backdrop-filter:blur(20px);z-index:999;padding:1.5rem clamp(1.25rem,4vw,3rem);flex-direction:column}
+    .mob-menu.open{display:flex}
+    .mob-menu a{padding:.9rem 0;font-family:var(--fd);font-size:1.4rem;color:var(--white);border-bottom:1px solid rgba(255,255,255,.06);transition:.2s}
+    .mob-menu a:hover{color:var(--gold)}
+    .mob-menu .btn-gold{margin-top:1.5rem;justify-content:center}
+    @media(max-width:900px){.nav-ul,.nav-res{display:none}.hamburger{display:flex}}
+
+    /* Sections */
+    .container{max-width:1280px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+    .sp{padding:clamp(5rem,10vw,9rem) 0}
+    .eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+    .gold{color:var(--gold)}
+    .ornament{display:flex;align-items:center;gap:1rem;margin:1.5rem 0}
+    .ornament::before,.ornament::after{content:'';flex:1;height:1px}
+    .ornament::before{background:linear-gradient(90deg,transparent,var(--gold-d))}
+    .ornament::after{background:linear-gradient(90deg,var(--gold-d),transparent)}
+    .orn-i{color:var(--gold);font-size:.7rem;letter-spacing:.3em;opacity:.7}
+    .body-l{font-size:1.05rem;line-height:1.75;color:var(--gray-l)}
+    .body-m{font-size:.9rem;line-height:1.7;color:var(--gray-l)}
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+    .reveal.in{opacity:1;transform:none}
+    .rev-l{opacity:0;transform:translateX(-36px);transition:opacity .65s ease,transform .65s ease}
+    .rev-l.in{opacity:1;transform:none}
+    .rev-r{opacity:0;transform:translateX(36px);transition:opacity .65s ease,transform .65s ease}
+    .rev-r.in{opacity:1;transform:none}
+    .d1{transition-delay:.1s!important}.d2{transition-delay:.2s!important}.d3{transition-delay:.3s!important}.d4{transition-delay:.4s!important}.d5{transition-delay:.5s!important}
+    .glass{background:rgba(10,10,10,.75);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.2);border-radius:16px}
+
+    /* HERO */
+    #hero{position:relative;height:100svh;min-height:640px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;transition:background-image .5s}
+    .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.4) 40%,rgba(10,10,10,.88) 100%)}
+    .hero-c{position:relative;z-index:2;text-align:center;max-width:900px;padding:var(--nav) 1.5rem 0}
+    .hero-ey{display:inline-flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+    .dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.6}
+    .hero-h1{font-family:var(--fd);font-size:clamp(4rem,11vw,9rem);font-weight:300;line-height:.9;letter-spacing:-.02em;margin-bottom:.3em}
+    .hero-h1 em{font-style:italic;color:var(--gold)}
+    .hero-tag{font-family:var(--fd);font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;font-style:italic;color:var(--gray-l);letter-spacing:.04em;margin-bottom:2.5rem}
+    .hero-acts{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1rem}
+    .scroll-ind{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2;cursor:pointer;animation:float 2.5s ease-in-out infinite}
+    .scroll-ind span{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);opacity:.7}
+    .scroll-line{width:1px;height:48px;background:linear-gradient(180deg,var(--gold),transparent);animation:sline 2s ease infinite}
+    @keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}
+    @keyframes sline{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
+
+    /* STATS */
+    .stats-bar{background:var(--bg2);border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04)}
+    .stats-g{display:grid;grid-template-columns:repeat(4,1fr)}
+    .stat{padding:2rem clamp(.75rem,2vw,2rem);text-align:center;border-right:1px solid rgba(255,255,255,.06)}
+    .stat:last-child{border-right:none}
+    .stat-n{font-family:var(--fd);font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--gold);line-height:1;margin-bottom:.4rem}
+    .stat-l{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
+    @media(max-width:640px){.stats-g{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:none}}
+
+    /* ABOUT */
+    .about-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,6vw,6rem);align-items:center}
+    .about-img{position:relative}
+    .about-frame{border-radius:16px;overflow:hidden;aspect-ratio:4/5}
+    .about-frame img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+    .about-frame:hover img{transform:scale(1.04)}
+    .about-badge{position:absolute;bottom:1.5rem;right:-1.5rem;padding:1.5rem;text-align:center;min-width:110px}
+    .about-badge .n{font-family:var(--fd);font-size:2.4rem;font-weight:300;color:var(--gold);line-height:1}
+    .about-badge .l{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray-l)}
+    .about-acc{position:absolute;top:2rem;left:-1rem;width:2px;height:40%;background:linear-gradient(180deg,var(--gold),transparent)}
+    .chef-card{display:flex;align-items:center;gap:1.2rem;margin-top:2.5rem;padding:1.2rem 1.5rem;background:var(--bg3);border-radius:8px;border-left:2px solid var(--gold)}
+    .chef-av{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid var(--gold-d);flex-shrink:0}
+    .chef-n{font-family:var(--fd);font-size:1.1rem;color:var(--white);margin-bottom:.2rem}
+    .chef-t{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+    @media(max-width:768px){.about-g{grid-template-columns:1fr}.about-badge{right:0}}
+
+    /* MENU */
+    #menu-section{background:var(--bg2)}
+    .filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+    .filt{padding:.5rem 1.2rem;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-l);border:1px solid rgba(255,255,255,.1);border-radius:999px;transition:var(--r);background:transparent}
+    .filt:hover{border-color:var(--gold);color:var(--gold)}
+    .filt.on{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+    .menu-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:1.5rem}
+    .mc{background:var(--bg3);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.05);transition:var(--r);cursor:pointer}
+    .mc:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+    .mc-img{aspect-ratio:16/9;overflow:hidden;position:relative}
+    .mc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+    .mc:hover .mc-img img{transform:scale(1.06)}
+    .mc-badge{position:absolute;top:.9rem;left:.9rem;background:var(--gold);color:var(--bg);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px}
+    .mc-body{padding:1.4rem}
+    .mc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.5rem}
+    .mc-name{font-family:var(--fd);font-size:1.25rem;font-weight:400;color:var(--white);line-height:1.2}
+    .mc-price{font-family:var(--fd);font-size:1.3rem;font-weight:500;color:var(--gold);white-space:nowrap}
+    .mc-desc{font-size:.85rem;color:var(--gray);line-height:1.6}
+
+    /* GALLERY */
+    .gal-g{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:.75rem}
+    .gi{overflow:hidden;border-radius:8px;cursor:pointer;position:relative}
+    .gi.tall{grid-row:span 2}.gi.wide{grid-column:span 2}
+    .gi img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+    .gi:hover img{transform:scale(1.08)}
+    .gi-ov{position:absolute;inset:0;background:rgba(10,10,10,0);display:flex;align-items:center;justify-content:center;transition:background .3s;font-size:1.8rem;color:#fff;opacity:0}
+    .gi:hover .gi-ov{background:rgba(10,10,10,.5);opacity:1}
+    @media(max-width:768px){.gal-g{grid-template-columns:repeat(2,1fr)}.gi.wide{grid-column:span 1}}
+
+    /* LIGHTBOX */
+    .lb{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.92);backdrop-filter:blur(10px);align-items:center;justify-content:center}
+    .lb.open{display:flex}
+    .lb img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 30px 100px rgba(0,0,0,.8)}
+    .lb-x{position:absolute;top:1.5rem;right:1.5rem;color:#fff;font-size:1.8rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.2s}
+    .lb-x:hover{background:rgba(255,255,255,.1)}
+    .lb-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:1.6rem;cursor:pointer;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);transition:.2s}
+    .lb-nav:hover{background:rgba(255,255,255,.12)}
+    .lb-p{left:1.5rem}.lb-n{right:1.5rem}
+
+    /* RESERVATION */
+    #reservation{background:linear-gradient(180deg,rgba(10,10,10,.6),rgba(10,10,10,.88)),url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover fixed}
+    .res-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(3rem,6vw,6rem);align-items:center}
+    .res-h{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem}
+    .h-row{display:flex;justify-content:space-between;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.87rem}
+    .h-row .day{color:var(--gray-l)}.h-row .time{color:var(--gold);font-weight:500}
+    .res-form{padding:2.5rem}
+    .f-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+    .f-g{display:flex;flex-direction:column;gap:.35rem}
+    .f-g.full{grid-column:span 2}
+    .f-l{font-size:.67rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
+    .f-c{width:100%;padding:.8rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:3px;color:var(--white);font-size:.9rem;transition:.2s;outline:none;-webkit-appearance:none;font-family:var(--fb)}
+    .f-c:focus{border-color:var(--gold);background:rgba(201,168,76,.04)}
+    .f-c option{background:var(--bg3)}
+    .f-c::placeholder{color:rgba(136,136,136,.5)}
+    .f-sub{width:100%;margin-top:1.2rem;padding:.95rem;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:var(--bg);border:none;border-radius:3px;cursor:pointer;transition:var(--r);font-family:var(--fb)}
+    .f-sub:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,.3)}
+    .f-note{font-size:.73rem;color:var(--gray);text-align:center;margin-top:.8rem}
+    @media(max-width:768px){.res-g{grid-template-columns:1fr}.f-row{grid-template-columns:1fr}.f-g.full{grid-column:span 1}}
+
+    /* TESTIMONIALS */
+    .testi-wrap{overflow:hidden}
+    .testi-track{display:flex;gap:1.5rem;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+    .tc{flex:0 0 calc(33.333% - 1rem);padding:1.8rem}
+    .stars{display:flex;gap:3px;margin-bottom:1.2rem}
+    .star{color:var(--gold);font-size:.82rem}
+    .tc-text{font-family:var(--fd);font-size:1.1rem;font-weight:300;font-style:italic;color:var(--white);line-height:1.6;margin-bottom:1.4rem}
+    .tc-auth{display:flex;align-items:center;gap:.9rem;border-top:1px solid rgba(255,255,255,.06);padding-top:1.2rem}
+    .tc-av{width:42px;height:42px;border-radius:50%;background:var(--bg5);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.95rem;color:var(--gold);border:1px solid var(--gold-d);flex-shrink:0}
+    .tc-name{font-weight:600;font-size:.88rem;color:var(--white)}
+    .tc-via{font-size:.7rem;color:var(--gray);margin-top:.15rem}
+    .t-ctrl{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:2.5rem}
+    .t-btn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;transition:.2s}
+    .t-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .t-dots{display:flex;gap:.4rem}
+    .t-dot{width:6px;height:6px;border-radius:50%;background:var(--bg5);cursor:pointer;transition:.2s}
+    .t-dot.on{background:var(--gold);width:20px;border-radius:3px}
+    @media(max-width:900px){.tc{flex:0 0 calc(50% - .75rem)}}
+    @media(max-width:600px){.tc{flex:0 0 100%}}
+
+    /* CONTACT */
+    #contact{background:var(--bg3)}
+    .cont-g{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(3rem,6vw,5rem);align-items:start}
+    .cont-h{font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:2rem}
+    .cd{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem}
+    .cd-ico{width:40px;height:40px;background:var(--bg5);border:1px solid rgba(201,168,76,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:.95rem;flex-shrink:0}
+    .cd-txt{font-size:.87rem;color:var(--gray-l);line-height:1.6}
+    .cd-txt strong{color:var(--white);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.2rem}
+    .map-f{border-radius:16px;overflow:hidden;height:400px;border:1px solid rgba(255,255,255,.06);position:relative;background:var(--bg4);display:flex;align-items:center;justify-content:center}
+    .map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:40px 40px}
+    .map-pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-70%);text-align:center}
+    .pin-dot{width:14px;height:14px;background:var(--gold);border-radius:50%;margin:0 auto;position:relative;animation:pp 2s ease infinite}
+    .pin-dot::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(201,168,76,.4);animation:pr 2s ease infinite}
+    .pin-lbl{margin-top:.5rem;background:var(--gold);color:var(--bg);font-size:.7rem;font-weight:700;padding:.28rem .7rem;border-radius:3px;white-space:nowrap}
+    @keyframes pp{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+    @keyframes pr{0%{transform:scale(1);opacity:1}100%{transform:scale(2.5);opacity:0}}
+    .btn-gh{background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.4);border-radius:3px;padding:.65rem 1.5rem;font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;transition:var(--r);font-family:var(--fb);cursor:pointer;width:100%;margin-top:1rem}
+    .btn-gh:hover{background:rgba(201,168,76,.08);border-color:var(--gold)}
+    @media(max-width:768px){.cont-g{grid-template-columns:1fr}}
+
+    /* FOOTER */
+    footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.04);padding:clamp(3rem,6vw,5rem) 0 2rem}
+    .foot-g{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2rem}
+    .foot-p{font-size:.87rem;color:var(--gray);line-height:1.7;max-width:280px;margin-top:1rem}
+    .soc{display:flex;gap:.6rem;margin-top:1.5rem}
+    .soc-a{width:36px;height:36px;border-radius:4px;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:.2s;color:var(--gray-l)}
+    .soc-a:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.06)}
+    .foot-h{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--white);margin-bottom:1.2rem}
+    .foot-ul{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+    .foot-ul a{font-size:.87rem;color:var(--gray);transition:.2s}
+    .foot-ul a:hover{color:var(--gold)}
+    .foot-ci{font-size:.83rem;color:var(--gray);margin-bottom:.6rem}
+    .foot-ci strong{color:var(--gray-l);font-weight:500;display:block}
+    .foot-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.77rem;color:var(--gray)}
+    @media(max-width:900px){.foot-g{grid-template-columns:1fr 1fr;gap:2rem}.foot-brand{grid-column:span 2}}
+    @media(max-width:500px){.foot-g{grid-template-columns:1fr}.foot-brand{grid-column:span 1}}
+
+    /* WhatsApp */
+    .wa{position:fixed;bottom:2rem;right:2rem;width:54px;height:54px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;z-index:500;box-shadow:0 8px 28px rgba(37,211,102,.35);transition:var(--r);cursor:pointer}
+    .wa:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 12px 40px rgba(37,211,102,.45)}
+    .wa .tip{position:absolute;right:62px;background:var(--bg3);color:var(--white);font-size:.76rem;padding:.45rem .85rem;border-radius:3px;white-space:nowrap;opacity:0;transform:translateX(8px);transition:.25s;pointer-events:none}
+    .wa:hover .tip{opacity:1;transform:translateX(0)}
+
+    /* Toast */
+    .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(70px);background:var(--bg3);border:1px solid rgba(201,168,76,.3);color:var(--white);padding:.9rem 1.8rem;border-radius:8px;font-size:.88rem;z-index:9000;transition:transform .4s,opacity .4s;opacity:0;white-space:nowrap;border-left:3px solid var(--gold)}
+    .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+  </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo" id="ld-logo">Ember &amp; Oak</div>
+  <div class="ld-bar"><div class="ld-prog"></div></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-i">
+    <a href="#hero" class="logo" id="nav-logo">Ember <span>&amp;</span> Oak</a>
+    <ul class="nav-ul">
+      <li><a href="#about">Hikayemiz</a></li>
+      <li><a href="#menu-section">Menü</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#testimonials">Yorumlar</a></li>
+      <li><a href="#contact">İletişim</a></li>
+    </ul>
+    <a href="#reservation" class="btn-gold nav-res">Rezervasyon</a>
+    <button class="hamburger" id="ham" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mob-menu" id="mob">
+  <a href="#about">Hikayemiz</a>
+  <a href="#menu-section">Menü</a>
+  <a href="#gallery">Galeri</a>
+  <a href="#testimonials">Yorumlar</a>
+  <a href="#contact">İletişim</a>
+  <a href="#reservation" class="btn-gold">Rezervasyon</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-c">
+    <div class="hero-ey reveal">
+      <div class="dot"></div>
+      <span class="eyebrow" id="hero-eyebrow">Est. 2014 – İstanbul &amp; Ötesi</span>
+      <div class="dot"></div>
+    </div>
+    <h1 class="hero-h1 reveal d1">
+      <span id="hero-name-1">Ember</span><br>
+      <em id="hero-name-2">&amp; Oak</em>
+    </h1>
+    <p class="hero-tag reveal d2" id="hero-slogan">Where fire meets finesse, and every plate tells a story.</p>
+    <div class="hero-acts reveal d3">
+      <a href="#reservation" class="btn-gold">Rezervasyon Yap</a>
+      <a href="#menu-section" class="btn-out">Menüyü İncele</a>
+    </div>
+  </div>
+  <div class="scroll-ind" onclick="scrollTo('#about')">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-g" id="stats-grid"></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sp">
+  <div class="container">
+    <div class="about-g">
+      <div class="about-img rev-l">
+        <div class="about-acc"></div>
+        <div class="about-frame">
+          <img id="about-img" src="" alt="Restoran atmosferi" loading="lazy"/>
+        </div>
+        <div class="about-badge glass">
+          <div class="n">3★</div>
+          <div class="l">Ödüllü<br>Restoran</div>
+        </div>
+      </div>
+      <div class="rev-r">
+        <span class="eyebrow" style="display:block;margin-bottom:1rem">Hikayemiz</span>
+        <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">
+          Tutku <em style="font-style:italic;color:var(--gold)">&amp; Ateşle</em><br>Yaratıldı
+        </h2>
+        <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
+        <p class="body-l" id="about-text-1"></p>
+        <p class="body-m" id="about-text-2" style="margin-top:1rem"></p>
+        <div class="chef-card">
+          <img class="chef-av" id="chef-img" src="" alt="Şef"/>
+          <div>
+            <div class="chef-n" id="chef-name"></div>
+            <div class="chef-t" id="chef-title"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu-section" class="sp">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:clamp(3rem,6vw,5rem);max-width:600px">
+      <span class="eyebrow" style="display:block;margin-bottom:1rem">Mutfak Yolculuğu</span>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Menümüz</h2>
+      <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
+    </div>
+    <div class="filters" id="menu-filters"></div>
+    <div class="menu-g" id="menu-grid"></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="sp" style="background:var(--bg)">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:clamp(3rem,6vw,5rem);max-width:600px">
+      <span class="eyebrow" style="display:block;margin-bottom:1rem">Görsel Şölen</span>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Galerimiz</h2>
+      <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
+    </div>
+    <div class="gal-g reveal" id="gal-grid"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <div class="lb-x" id="lb-x">✕</div>
+  <div class="lb-nav lb-p" id="lb-p">‹</div>
+  <img id="lb-img" src="" alt=""/>
+  <div class="lb-nav lb-n" id="lb-n">›</div>
+</div>
+
+<!-- RESERVATION -->
+<section id="reservation" class="sp">
+  <div class="container">
+    <div class="res-g">
+      <div class="rev-l">
+        <span class="eyebrow" style="display:block;margin-bottom:1rem">Rezervasyon</span>
+        <h2 class="res-h">Unutulmaz Bir<br><em style="font-style:italic;color:var(--gold)">Akşam</em><br>Ayırtın</h2>
+        <div class="ornament" style="max-width:300px"><span class="orn-i">✦ ✦ ✦</span></div>
+        <p class="body-m" style="margin-bottom:2rem">Hafta sonu akşamları için en az 48 saat öncesinden rezervasyon öneriyoruz.</p>
+        <div id="hours-list"></div>
+      </div>
+      <div class="rev-r">
+        <div class="glass res-form">
+          <form id="res-form">
+            <div class="f-row">
+              <div class="f-g"><label class="f-l">Ad Soyad</label><input class="f-c" id="r-name" type="text" placeholder="Adınız" required/></div>
+              <div class="f-g"><label class="f-l">Telefon</label><input class="f-c" id="r-phone" type="tel" placeholder="+90 555 000 00 00"/></div>
+            </div>
+            <div class="f-row">
+              <div class="f-g"><label class="f-l">E-Posta</label><input class="f-c" id="r-email" type="email" placeholder="email@ornek.com"/></div>
+              <div class="f-g"><label class="f-l">Kişi Sayısı</label>
+                <select class="f-c" id="r-guests">
+                  <option value="">Kişi seçin</option>
+                  <option>1 Kişi</option><option>2 Kişi</option><option>3 Kişi</option>
+                  <option>4 Kişi</option><option>5 Kişi</option><option>6 Kişi</option>
+                  <option>7–10 Kişi</option><option>10+ Kişi</option>
+                </select>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-g"><label class="f-l">Tarih</label><input class="f-c" id="r-date" type="date" required/></div>
+              <div class="f-g"><label class="f-l">Saat</label>
+                <select class="f-c" id="r-time">
+                  <option value="">Saat seçin</option>
+                  <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>
+                  <option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option>
+                  <option>21:00</option><option>21:30</option><option>22:00</option>
+                </select>
+              </div>
+            </div>
+            <div class="f-row">
+              <div class="f-g full"><label class="f-l">Özel İstek</label><textarea class="f-c" id="r-notes" rows="3" placeholder="Alerji, özel gün, oturma tercihi..."></textarea></div>
+            </div>
+            <button type="submit" class="f-sub">Rezervasyonu Onayla</button>
+            <p class="f-note">2 saat içinde telefon veya e-posta ile onaylayacağız.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="sp" style="background:var(--bg2)">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto clamp(3rem,6vw,5rem)">
+      <span class="eyebrow" style="display:block;margin-bottom:1rem">Misafir Yorumları</span>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Misafirlerimiz Ne Diyor</h2>
+      <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
+    </div>
+    <div class="testi-wrap reveal">
+      <div class="testi-track" id="testi-track"></div>
+    </div>
+    <div class="t-ctrl">
+      <button class="t-btn" id="t-prev">‹</button>
+      <div class="t-dots" id="t-dots"></div>
+      <button class="t-btn" id="t-next">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sp">
+  <div class="container">
+    <div class="cont-g">
+      <div class="rev-l">
+        <span class="eyebrow" style="display:block;margin-bottom:1rem">Bizi Bulun</span>
+        <h2 class="cont-h">Restoranımıza<br><em style="font-style:italic;color:var(--gold)">Bekleriz</em></h2>
+        <div class="ornament" style="max-width:280px"><span class="orn-i">✦ ✦ ✦</span></div>
+        <div class="cd"><div class="cd-ico">📍</div><div class="cd-txt"><strong>Adres</strong><span id="c-address"></span></div></div>
+        <div class="cd"><div class="cd-ico">📞</div><div class="cd-txt"><strong>Telefon</strong><a id="c-phone-a" style="color:var(--gold)"></a></div></div>
+        <div class="cd"><div class="cd-ico">✉️</div><div class="cd-txt"><strong>E-Posta</strong><a id="c-email-a" style="color:var(--gold)"></a></div></div>
+        <div class="cd"><div class="cd-ico">🕐</div><div class="cd-txt"><strong>Çalışma Saatleri</strong><span id="c-hours"></span></div></div>
+      </div>
+      <div class="rev-r">
+        <div class="map-f" id="map-container">
+          <div class="map-grid"></div>
+          <div class="map-pin">
+            <div class="pin-dot"></div>
+            <div class="pin-lbl" id="map-lbl">Ember &amp; Oak</div>
+          </div>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn-gh">Yol Tarifi Al →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-g">
+      <div class="foot-brand">
+        <div class="logo" style="font-size:1.7rem;font-family:var(--fd);font-weight:400;letter-spacing:.04em" id="foot-logo">Ember <span style="color:var(--gold)">&amp;</span> Oak</div>
+        <p class="foot-p" id="foot-desc">Ödüllü fine dining deneyimi – açık ateş pişirme sanatının modern yorumu. Rezervasyon önerilir.</p>
+        <div class="soc">
+          <a href="#" class="soc-a" id="soc-ig">ig</a>
+          <a href="#" class="soc-a" id="soc-fb">fb</a>
+          <a href="#" class="soc-a" id="soc-tw">tw</a>
+          <a href="#" class="soc-a">ta</a>
+        </div>
+      </div>
+      <div>
+        <div class="foot-h">Navigasyon</div>
+        <ul class="foot-ul">
+          <li><a href="#about">Hikayemiz</a></li>
+          <li><a href="#menu-section">Menü</a></li>
+          <li><a href="#gallery">Galeri</a></li>
+          <li><a href="#reservation">Rezervasyon</a></li>
+          <li><a href="#contact">İletişim</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-h">Deneyim</div>
+        <ul class="foot-ul">
+          <li><a href="#reservation">Özel Yemek</a></li>
+          <li><a href="#reservation">Kurumsal</a></li>
+          <li><a href="#menu-section">Şarap Mahzeni</a></li>
+          <li><a href="#about">Şef Masası</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="foot-h">İletişim</div>
+        <div class="foot-ci"><strong>Adres</strong><span id="f-addr"></span></div>
+        <div class="foot-ci"><strong>Telefon</strong><span id="f-phone"></span></div>
+        <div class="foot-ci"><strong>E-Posta</strong><span id="f-email"></span></div>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© 2025 <span id="f-rname">Ember &amp; Oak</span>. Tüm hakları saklıdır.</span>
+      <span>Fine dining deneyimi için tasarlandı.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a class="wa" id="wa-btn" href="#" target="_blank" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="tip">WhatsApp'ta Yaz</span>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '';  // same origin
+
+async function get(path){ const r=await fetch(API+path); return r.json(); }
+async function post(path,body){ const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}); return r.json(); }
+
+let S={}, cats=[], items=[], gallery=[], testimonials=[];
+let lbIdx=0, tesIdx=0, tesVis=3;
+
+async function init(){
+  try{
+    [S,cats,items,gallery,testimonials] = await Promise.all([
+      get('/api/settings'), get('/api/menuCategories'),
+      get('/api/menuItems'), get('/api/gallery'), get('/api/testimonials')
+    ]);
+  } catch(e){
+    console.warn('API bağlantısı yok, demo veriler kullanılıyor');
+    S = {restaurantName:'Ember & Oak',slogan:'Where fire meets finesse.',primaryColor:'#c9a84c',heroImage:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80',aboutImage:'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80',aboutText:'Born from a love of open-flame cooking.',aboutText2:'Every dish is exceptional.',chefName:'Chef Mehmet Arslan',chefTitle:'Executive Chef',chefImage:'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80',phone:'+90 212 219 12 34',whatsapp:'+902122191234',email:'hello@emberandoak.com',address:'Nişantaşı, İstanbul',hours:[{day:'Pzt–Prş',time:'12:00–23:00'},{day:'Cum–Cmt',time:'12:00–00:30'}],stats:[{num:'10+',label:'Yıllık Deneyim'},{num:'38k',label:'Mutlu Misafir'},{num:'4.9',label:'Puan'},{num:'3',label:'Ödül'}],socialInstagram:'#',socialFacebook:'#',socialTwitter:'#',currency:'₺'};
+    cats=[{id:1,name:'Başlangıçlar',slug:'starters',active:true},{id:2,name:'Izgaralar',slug:'grills',active:true},{id:3,name:'Tatlılar',slug:'desserts',active:true}];
+    items=[{id:1,name:'Beef Tartare',desc:'El çekilmiş bonfile',price:285,cat:'starters',featured:true,active:true,img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80'},{id:2,name:'T-Bone Biftek',desc:'45 gün dry-aged',price:890,cat:'grills',featured:true,active:true,img:'https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80'},{id:3,name:'Crème Brûlée',desc:'Fransız vanilyalı',price:145,cat:'desserts',featured:false,active:true,img:'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80'}];
+    gallery=[{id:1,img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',alt:'İç mekan',cls:'tall',active:true},{id:2,img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',alt:'Tabak',cls:'',active:true},{id:3,img:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',alt:'Ortam',cls:'wide',active:true},{id:4,img:'https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80',alt:'Biftek',cls:'',active:true}];
+    testimonials=[{id:1,text:'"İstanbul\'da yediğim en iyi biftek buydu."',name:'James W.',via:'Google',stars:5,active:true},{id:2,text:'"Harikaydı, çok tavsiye ederim."',name:'Lena H.',via:'TripAdvisor',stars:5,active:true},{id:3,text:'"Özel geceyi burada geçirdik, mükemmeldi."',name:'Ali K.',via:'Google',stars:5,active:true}];
+  }
+  applySettings();
+  renderStats();
+  renderMenu('all');
+  renderGallery();
+  renderTestimonials();
+  renderContact();
+  observeAll();
+  setTimeout(()=>document.getElementById('loader').classList.add('out'),1400);
+}
+
+function applySettings(){
+  // Colors
+  document.documentElement.style.setProperty('--gold', S.primaryColor||'#c9a84c');
+  // Titles
+  document.title = (S.restaurantName||'Restaurant') + ' – Fine Dining';
+  document.getElementById('page-title').textContent = document.title;
+  // Hero
+  document.getElementById('hero-bg').style.backgroundImage = `url('${S.heroImage}')`;
+  const parts = (S.restaurantName||'Ember & Oak').split('&');
+  document.getElementById('hero-name-1').textContent = parts[0]?.trim()||'Ember';
+  document.getElementById('hero-name-2').innerHTML = parts[1] ? `&amp; ${parts[1].trim()}` : (S.restaurantName||'');
+  document.getElementById('hero-slogan').textContent = S.slogan||'';
+  document.getElementById('hero-eyebrow').textContent = 'Est. 2014 – İstanbul & Ötesi';
+  // About
+  document.getElementById('about-img').src = S.aboutImage||'';
+  document.getElementById('about-text-1').textContent = S.aboutText||'';
+  document.getElementById('about-text-2').textContent = S.aboutText2||'';
+  document.getElementById('chef-img').src = S.chefImage||'';
+  document.getElementById('chef-name').textContent = S.chefName||'';
+  document.getElementById('chef-title').textContent = S.chefTitle||'';
+  // Nav/logo
+  document.getElementById('nav-logo').innerHTML = (S.restaurantName||'Ember &amp; Oak').replace('&','<span>&amp;</span>');
+  // Contact
+  document.getElementById('c-address').textContent = S.address||'';
+  const ph=document.getElementById('c-phone-a'); ph.textContent=S.phone||''; ph.href='tel:'+S.phone;
+  const em=document.getElementById('c-email-a'); em.textContent=S.email||''; em.href='mailto:'+S.email;
+  document.getElementById('f-addr').textContent = S.address||'';
+  document.getElementById('f-phone').textContent = S.phone||'';
+  document.getElementById('f-email').textContent = S.email||'';
+  document.getElementById('f-rname').textContent = S.restaurantName||'';
+  document.getElementById('map-lbl').textContent = S.restaurantName||'Restoran';
+  document.getElementById('wa-btn').href = `https://wa.me/${(S.whatsapp||'').replace(/\D/g,'')}`;
+  document.getElementById('soc-ig').href = S.socialInstagram||'#';
+  document.getElementById('soc-fb').href = S.socialFacebook||'#';
+  document.getElementById('soc-tw').href = S.socialTwitter||'#';
+  // Hours
+  const hrs = S.hours||[];
+  document.getElementById('hours-list').innerHTML = hrs.map(h=>`<div class="h-row"><span class="day">${h.day}</span><span class="time">${h.time}</span></div>`).join('');
+  document.getElementById('c-hours').innerHTML = hrs.map(h=>`${h.day}: ${h.time}`).join('<br>');
+  // Reservation min date
+  const d=new Date(); d.setDate(d.getDate()+1);
+  document.getElementById('r-date').min=d.toISOString().split('T')[0];
+}
+
+function renderStats(){
+  const stats = S.stats||[];
+  document.getElementById('stats-grid').innerHTML = stats.map(s=>`
+    <div class="stat reveal">
+      <div class="stat-n">${s.num}</div>
+      <div class="stat-l">${s.label}</div>
+    </div>`).join('');
+}
+
+let activeFilter='all';
+function renderMenu(filter){
+  activeFilter=filter;
+  const cur=S.currency||'₺';
+  const filtered = filter==='all' ? items.filter(i=>i.active) : items.filter(i=>i.active&&i.cat===filter);
+  const g=document.getElementById('menu-grid');
+  g.innerHTML = filtered.map(item=>`
+    <article class="mc reveal">
+      <div class="mc-img">
+        <img src="${item.img}" alt="${item.name}" loading="lazy"/>
+        ${item.featured?'<span class="mc-badge">Şef\'in Seçimi</span>':''}
+      </div>
+      <div class="mc-body">
+        <div class="mc-row">
+          <h3 class="mc-name">${item.name}</h3>
+          <span class="mc-price">${cur}${item.price}</span>
+        </div>
+        <p class="mc-desc">${item.desc}</p>
+      </div>
+    </article>`).join('');
+  g.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  // Filters
+  const fc=document.getElementById('menu-filters');
+  const activeCats=[...new Set(items.filter(i=>i.active).map(i=>i.cat))];
+  fc.innerHTML=`<button class="filt ${filter==='all'?'on':''}" data-f="all">Tümü</button>`
+    + cats.filter(c=>c.active&&activeCats.includes(c.slug)).map(c=>
+      `<button class="filt ${filter===c.slug?'on':''}" data-f="${c.slug}">${c.icon||''} ${c.name}</button>`
+    ).join('');
+  fc.querySelectorAll('.filt').forEach(b=>b.addEventListener('click',()=>renderMenu(b.dataset.f)));
+}
+
+let galItems=[];
+function renderGallery(){
+  galItems = gallery.filter(g=>g.active).sort((a,b)=>(a.order||0)-(b.order||0));
+  document.getElementById('gal-grid').innerHTML = galItems.map((g,i)=>`
+    <div class="gi ${g.cls||''}" data-i="${i}">
+      <img src="${g.img}" alt="${g.alt||''}" loading="lazy"/>
+      <div class="gi-ov">⊕</div>
+    </div>`).join('');
+  document.querySelectorAll('.gi').forEach(el=>{
+    el.addEventListener('click',()=>openLb(+el.dataset.i));
+    el.addEventListener('keydown',e=>{if(e.key==='Enter')openLb(+el.dataset.i)});
+    el.setAttribute('tabindex','0');
+  });
+}
+
+function openLb(i){ lbIdx=i; document.getElementById('lb-img').src=galItems[i].img; document.getElementById('lb').classList.add('open'); document.body.style.overflow='hidden'; }
+document.getElementById('lb-x').addEventListener('click',()=>{document.getElementById('lb').classList.remove('open');document.body.style.overflow='';});
+document.getElementById('lb').addEventListener('click',e=>{if(e.target===e.currentTarget){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}});
+document.getElementById('lb-p').addEventListener('click',()=>openLb((lbIdx-1+galItems.length)%galItems.length));
+document.getElementById('lb-n').addEventListener('click',()=>openLb((lbIdx+1)%galItems.length));
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lb').classList.contains('open'))return;
+  if(e.key==='Escape'){document.getElementById('lb').classList.remove('open');document.body.style.overflow='';}
+  if(e.key==='ArrowLeft')openLb((lbIdx-1+galItems.length)%galItems.length);
+  if(e.key==='ArrowRight')openLb((lbIdx+1)%galItems.length);
+});
+
+let tesDots=[];
+function renderTestimonials(){
+  tesVis = window.innerWidth>900?3:window.innerWidth>600?2:1;
+  const active=testimonials.filter(t=>t.active);
+  document.getElementById('testi-track').innerHTML = active.map(t=>`
+    <div class="tc glass">
+      <div class="stars">${'<span class="star">★</span>'.repeat(t.stars||5)}</div>
+      <p class="tc-text">${t.text}</p>
+      <div class="tc-auth">
+        <div class="tc-av">${(t.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2)}</div>
+        <div><div class="tc-name">${t.name}</div><div class="tc-via">${t.via}</div></div>
+      </div>
+    </div>`).join('');
+  const total=Math.ceil(active.length/tesVis);
+  document.getElementById('t-dots').innerHTML=Array.from({length:total},(_,i)=>`<div class="t-dot ${i===0?'on':''}" data-i="${i}"></div>`).join('');
+  document.querySelectorAll('.t-dot').forEach(d=>d.addEventListener('click',()=>slideTes(+d.dataset.i)));
+  tesDots=document.querySelectorAll('.t-dot');
+}
+function slideTes(i){
+  tesIdx=i;
+  const card=document.querySelector('.tc');
+  if(!card)return;
+  const w=card.offsetWidth+24;
+  document.getElementById('testi-track').style.transform=`translateX(-${i*w*tesVis}px)`;
+  tesDots.forEach((d,j)=>d.classList.toggle('on',j===i));
+}
+document.getElementById('t-prev').addEventListener('click',()=>slideTes((tesIdx-1+tesDots.length+1)%Math.max(tesDots.length,1)));
+document.getElementById('t-next').addEventListener('click',()=>slideTes((tesIdx+1)%Math.max(tesDots.length,1)));
+
+function renderContact(){
+  // already rendered in applySettings
+}
+
+// Reservation form
+document.getElementById('res-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const name=document.getElementById('r-name').value.trim();
+  const date=document.getElementById('r-date').value;
+  if(!name||!date){showToast('⚠ Ad ve tarih zorunludur.');return;}
+  try{
+    await post('/api/reservations',{
+      name, phone:document.getElementById('r-phone').value,
+      email:document.getElementById('r-email').value,
+      guests:document.getElementById('r-guests').value,
+      date, time:document.getElementById('r-time').value,
+      notes:document.getElementById('r-notes').value
+    });
+    showToast('✓ Rezervasyonunuz alındı! 2 saat içinde onaylayacağız.');
+  } catch{ showToast('✓ Rezervasyon isteğiniz kaydedildi.'); }
+  e.target.reset();
+});
+
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+// Nav
+window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60); },{passive:true});
+document.getElementById('ham').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mob').classList.toggle('open');
+  document.body.style.overflow=this.classList.contains('open')?'hidden':'';
+});
+document.querySelectorAll('.mob-menu a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('mob').classList.remove('open');
+  document.body.style.overflow='';
+}));
+
+function scrollTo(sel){ document.querySelector(sel)?.scrollIntoView({behavior:'smooth'}); }
+
+// Intersection Observer
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');observer.unobserve(e.target);}});
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+function observeAll(){ document.querySelectorAll('.reveal,.rev-l,.rev-r').forEach(el=>observer.observe(el)); }
+
+// Resize
+let rt;
+window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(()=>{const nv=window.innerWidth>900?3:window.innerWidth>600?2:1;if(nv!==tesVis){renderTestimonials();}},200); },{passive:true});
+
+init();
+</script>
+</body>
+</html>

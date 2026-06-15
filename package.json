@@ -1,0 +1,14 @@
+{
+  "name": "ember-oak-restaurant",
+  "version": "1.0.0",
+  "description": "Ember & Oak – Restaurant Website + Admin Panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["restaurant", "admin", "website"],
+  "author": "Ember & Oak",
+  "license": "MIT",
+  "engines": { "node": ">=16.0.0" }
+}
