@@ -352,35 +352,34 @@ async function handleAPI(req, res, pathname) {
 
 // ─── MAIN SERVER ──────────────────────────────────────────────
 const server = http.createServer(async (req, res) => {
-  const pathname = url.parse(req.url).pathname;
-
-if (pathname.startsWith('/admin')) {
-  const auth = req.headers.authorization;
-
-  if (!auth) {
-    res.writeHead(401, {
-      'WWW-Authenticate': 'Basic realm="Admin Panel"'
-    });
-    return res.end('Giris gerekli');
-  }
-
-  const [user, pass] = Buffer
-    .from(auth.split(' ')[1], 'base64')
-    .toString()
-    .split(':');
-
-  if (user !== ADMIN_USER || pass !== ADMIN_PASS) {
-    res.writeHead(401, {
-      'WWW-Authenticate': 'Basic realm="Admin Panel"'
-    });
-    return res.end('Hatali kullanici adi veya sifre');
-  }
-}
-  setCORS(res);
+setCORS(res);
   if (req.method === 'OPTIONS') { res.writeHead(204); return res.end(); }
 
   const parsed   = url.parse(req.url);
   const pathname = parsed.pathname;
+
+  if (pathname.startsWith('/admin')) {
+    const auth = req.headers.authorization;
+
+    if (!auth) {
+      res.writeHead(401, {
+        'WWW-Authenticate': 'Basic realm="Admin Panel"'
+      });
+      return res.end('Giris gerekli');
+    }
+
+    const [user, pass] = Buffer
+      .from(auth.split(' ')[1], 'base64')
+      .toString()
+      .split(':');
+
+    if (user !== ADMIN_USER || pass !== ADMIN_PASS) {
+      res.writeHead(401, {
+        'WWW-Authenticate': 'Basic realm="Admin Panel"'
+      });
+      return res.end('Hatali kullanici adi veya sifre');
+    }
+  }
 
   // API routes
   if (pathname.startsWith('/api/')) {
@@ -389,6 +388,7 @@ if (pathname.startsWith('/admin')) {
       sendJSON(res, { error: 'Server error' }, 500);
     });
   }
+
 
   // Static file serving
   let filePath;
