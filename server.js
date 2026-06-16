@@ -12,28 +12,17 @@ const url  = require('url');
 const PORT       = process.env.PORT || 3000;
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'GucluBirSifre123!';
-const DATA_FILE  = path.join(__dirname, 'data', 'db.json');
-const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 
-// ─── ENV OVERRIDES ────────────────────────────────────────────
-// Railway'de her deploy'da data/db.json sıfırlanabilir.
-// Kritik ayarları Railway Dashboard → Variables bölümüne ekle:
-//   RESTAURANT_NAME=Senin Restoran Adın
-//   RESTAURANT_SLOGAN=Kısa slogan
-//   RESTAURANT_PHONE=+90 212 000 00 00
-//   RESTAURANT_EMAIL=info@restoranim.com
-//   RESTAURANT_ADDRESS=Adres
-//   RESTAURANT_WHATSAPP=+902120000000
-//   RESTAURANT_COLOR=#c9a84c
-const ENV = {
-  restaurantName : process.env.RESTAURANT_NAME     || null,
-  slogan         : process.env.RESTAURANT_SLOGAN   || null,
-  phone          : process.env.RESTAURANT_PHONE    || null,
-  email          : process.env.RESTAURANT_EMAIL    || null,
-  address        : process.env.RESTAURANT_ADDRESS  || null,
-  whatsapp       : process.env.RESTAURANT_WHATSAPP || null,
-  primaryColor   : process.env.RESTAURANT_COLOR    || null,
-};
+// ─── PERSISTENT STORAGE ───────────────────────────────────────
+// Railway Volume mount path: /app/data
+// Railway'de Volume ekleyince bu klasör deploy'larda korunur.
+// Volume yoksa proje klasöründeki data/ kullanılır (localhost için).
+const DATA_DIR   = process.env.DATA_DIR || path.join(__dirname, 'data');
+const DATA_FILE  = path.join(DATA_DIR, 'db.json');
+
+// Upload'lar da kalıcı olsun:
+// Volume mount path: /app/data → uploads/ altında sakla
+const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'public', 'uploads');
 
 // ─── MIME TYPES ───────────────────────────────────────────────
 const MIME = {
@@ -155,9 +144,9 @@ function getDefaultDB() {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────
-if (!fs.existsSync(path.join(__dirname,'data'))) fs.mkdirSync(path.join(__dirname,'data'),{recursive:true});
+if (!fs.existsSync(DATA_DIR))   fs.mkdirSync(DATA_DIR,  {recursive:true});
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR,{recursive:true});
-if (!fs.existsSync(DATA_FILE)) writeDB(getDefaultDB());
+if (!fs.existsSync(DATA_FILE))  writeDB(getDefaultDB());
 
 // ─── BODY PARSER ──────────────────────────────────────────────
 function parseBody(req, maxSize = 20*1024*1024) {
