@@ -1,5 +1,5 @@
 /**
- * Ember & Oak – Restaurant + Admin Panel Server
+ * Restaurant Admin Panel Server
  * Ana site: http://localhost:3000
  * Admin panel: http://localhost:3000/admin  (admin / GucluBirSifre123!)
  */
@@ -40,96 +40,66 @@ function nextId(arr) { return arr.length ? Math.max(...arr.map(x => x.id||0))+1 
 function getDefaultDB() {
   return {
     settings: {
-      restaurantName:"Ember & Oak", slogan:"Where fire meets finesse, and every plate tells a story.",
-      phone:"+90 212 219 12 34", whatsapp:"+902122191234",
-      email:"hello@emberandoak.com", address:"Nişantaşı, Abdi İpekçi Cad. No:28, Şişli, Istanbul 34367",
-      mapEmbed:"", logoUrl:"", faviconUrl:"",
-      heroImage:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80",
-      heroOverlayOpacity:0.5,
-      aboutImage:"https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80",
-      aboutText:"Born from a love of open-flame cooking and heirloom recipes, Ember & Oak was founded to honor the ancient art of charcoal fire.",
-      aboutText2:"Every dish is a testament to our belief that exceptional food starts long before it reaches your plate.",
-      chefName:"Chef Mehmet Arslan", chefTitle:"Executive Chef & Co-Founder",
-      chefImage:"https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80",
-      hours:[
-        {day:"Pazartesi – Perşembe",time:"12:00 – 23:00"},
-        {day:"Cuma – Cumartesi",time:"12:00 – 00:30"},
-        {day:"Pazar",time:"12:00 – 22:00"},
-        {day:"Özel Etkinlikler",time:"Randevu ile"}
+      // ── Kimlik ─────────────────────────────────────────────
+      restaurantName: "",
+      slogan:         "",
+      // ── İletişim ───────────────────────────────────────────
+      phone:    "",
+      whatsapp: "",
+      email:    "",
+      address:  "",
+      mapEmbed: "",
+      // ── Görsel ─────────────────────────────────────────────
+      logoUrl:    "",
+      faviconUrl: "",
+      heroImage:  "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80",
+      heroOverlayOpacity: 0.5,
+      aboutImage: "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80",
+      // ── Hakkımızda ─────────────────────────────────────────
+      aboutText:      "",
+      aboutText2:     "",
+      chefName:       "",
+      chefTitle:      "",
+      chefImage:      "",
+      aboutBadgeNum:  "★",
+      aboutBadgeText: "Ödüllü Restoran",
+      // ── Saatler & İstatistikler ────────────────────────────
+      hours: [
+        {day:"Pazartesi – Cuma",  time:"12:00 – 23:00"},
+        {day:"Cumartesi – Pazar", time:"12:00 – 00:00"}
       ],
-      stats:[
-        {num:"10+",label:"Yıllık Deneyim"},{num:"38k",label:"Mutlu Misafir"},
-        {num:"4.9",label:"Ortalama Puan"},{num:"3",label:"Ödül"}
+      stats: [
+        {num:"—", label:"Yıllık Deneyim"},
+        {num:"—", label:"Mutlu Misafir"},
+        {num:"—", label:"Ortalama Puan"},
+        {num:"—", label:"Ödül"}
       ],
+      // ── Sosyal Medya ───────────────────────────────────────
       socialInstagram:"#", socialFacebook:"#", socialTwitter:"#", socialTripadvisor:"#",
+      // ── Tasarım ────────────────────────────────────────────
       primaryColor:"#c9a84c", accentColor:"#e4c97e", darkBg:"#0a0a0a",
       fontDisplay:"Cormorant Garamond", fontBody:"Inter",
-      currency:"₺", footerText:"Fine dining deneyimi için tasarlandı.",
-      // Section visibility toggles
+      currency:"₺",
+      footerText:"",
+      // ── Bölüm görünürlüğü ──────────────────────────────────
       showHero:true, showStats:true, showAbout:true,
       showChef:true, showMenu:true, showGallery:true,
       showReservation:true, showTestimonials:true, showContact:true, showWhatsapp:true,
-      // Hero content
-      heroEyebrow:"Est. 2014 – İstanbul & Ötesi",
-      heroBtnPrimary:"Rezervasyon Yap", heroBtnSecondary:"Menüyü İncele",
-      // About badge
-      aboutBadgeNum:"3★", aboutBadgeText:"Ödüllü Restoran",
-      // Reservation section
+      // ── Hero içerik ────────────────────────────────────────
+      heroEyebrow:      "",
+      heroBtnPrimary:   "Rezervasyon Yap",
+      heroBtnSecondary: "Menüyü İncele",
+      // ── Rezervasyon ────────────────────────────────────────
       reservationBgImage:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80",
+      // ── Kurulum durumu ─────────────────────────────────────
+      setupDone: false
     },
-    menuCategories:[
-      {id:1,name:"Başlangıçlar",slug:"starters",icon:"🥗",active:true},
-      {id:2,name:"Ana Yemekler",slug:"mains",icon:"🍽️",active:true},
-      {id:3,name:"Izgaralar",slug:"grills",icon:"🔥",active:true},
-      {id:4,name:"Tatlılar",slug:"desserts",icon:"🍮",active:true},
-      {id:5,name:"İçecekler",slug:"drinks",icon:"🍷",active:true}
-    ],
-    menuItems:[
-      {id:1,name:"Alev Kavrulmuş Beef Tartare",desc:"El çekilmiş bonfile, bıldırcın yumurtası, turşu arpacık soğanı",price:285,cat:"starters",featured:true,active:true,img:"https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80",order:1},
-      {id:2,name:"Trüf & Parmesan Arancini",desc:"Arborio pirinci, siyah trüf, parmesan, safranli aioli",price:240,cat:"starters",featured:false,active:true,img:"https://images.unsplash.com/photo-1582456891045-de70e4f0b8e6?w=600&q=80",order:2},
-      {id:3,name:"Burrata & Heirloom Domates",desc:"Buffalo burrata, közlenmiş domates, fesleğen yağı",price:220,cat:"starters",featured:false,active:true,img:"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80",order:3},
-      {id:4,name:"45 Günlük Dry-Aged T-Bone",desc:"Prime bonfile, kemik iliği tereyağı, chimichurri",price:890,cat:"grills",featured:true,active:true,img:"https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",order:1},
-      {id:5,name:"Tomahawk Biftek (1.2kg)",desc:"Prime USDA tomahawk, meşe odunu ızgarası, tütsülenmiş tuz",price:1650,cat:"grills",featured:false,active:true,img:"https://images.unsplash.com/photo-1546833998-877b37c2e5c6?w=600&q=80",order:2},
-      {id:6,name:"Kuzu Pirzola",desc:"Yeni Zelanda kuzu, harissa kabuğu, nar sosu",price:850,cat:"grills",featured:false,active:true,img:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80",order:3},
-      {id:7,name:"Levrek Fileto",desc:"Bütün Akdeniz levreği, rezene, zeytinyağı, limon konfiti",price:580,cat:"mains",featured:true,active:true,img:"https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80",order:1},
-      {id:8,name:"Mantar Risotto",desc:"Porcini, chanterelle, trüf, yaşlı parmigiano reggiano",price:420,cat:"mains",featured:false,active:true,img:"https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&q=80",order:2},
-      {id:9,name:"Sıcak Valrhona Çikolata",desc:"%70 Valrhona fondant, tuzlu karamel, vanilyalı dondurma",price:180,cat:"desserts",featured:false,active:true,img:"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80",order:1},
-      {id:10,name:"Crème Brûlée",desc:"Fransız vanilyalı muhallebi, karamelize kabuk",price:145,cat:"desserts",featured:false,active:true,img:"https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80",order:2},
-      {id:11,name:"Ember Signature Kokteyl",desc:"Mezcal, kan portakalı, aktif kömür, Himalaya tuzu",price:195,cat:"drinks",featured:false,active:true,img:"https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80",order:1},
-      {id:12,name:"Reserve Bordeaux",desc:"Château Léoville, Saint-Julien, 2018 – mahzen seçkisi",price:380,cat:"drinks",featured:false,active:true,img:"https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80",order:2}
-    ],
-    gallery:[
-      {id:1,img:"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",alt:"Restoran iç mekan",cls:"tall",active:true,order:1},
-      {id:2,img:"https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80",alt:"Tabak sunum",cls:"",active:true,order:2},
-      {id:3,img:"https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80",alt:"Şef mutfakta",cls:"",active:true,order:3},
-      {id:4,img:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80",alt:"Akşam yemeği ortamı",cls:"wide",active:true,order:4},
-      {id:5,img:"https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",alt:"Biftek sunumu",cls:"",active:true,order:5},
-      {id:6,img:"https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80",alt:"Şarap servisi",cls:"",active:true,order:6},
-      {id:7,img:"https://images.unsplash.com/photo-1486297678162-eb2a19b0a318?w=600&q=80",alt:"Tatlı sunumu",cls:"tall",active:true,order:7},
-      {id:8,img:"https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=600&q=80",alt:"Açık mutfak",cls:"",active:true,order:8},
-      {id:9,img:"https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=600&q=80",alt:"Özel yemek odası",cls:"",active:true,order:9}
-    ],
-    reservations:[
-      {id:1,name:"Ahmet Yılmaz",phone:"+90 532 111 22 33",email:"ahmet@mail.com",date:"2025-06-20",time:"20:00",guests:2,notes:"Yıldönümü",status:"confirmed",createdAt:"2025-06-14T10:00:00Z"},
-      {id:2,name:"Sarah Johnson",phone:"+44 7700 900123",email:"sarah@mail.com",date:"2025-06-21",time:"19:30",guests:4,notes:"Laktoz intoleransı",status:"pending",createdAt:"2025-06-14T11:30:00Z"},
-      {id:3,name:"Marco Ferrari",phone:"+39 340 111 2222",email:"marco@mail.com",date:"2025-06-21",time:"21:00",guests:6,notes:"VIP masa",status:"confirmed",createdAt:"2025-06-14T12:00:00Z"},
-      {id:4,name:"Elif Kaya",phone:"+90 541 333 44 55",email:"elif@mail.com",date:"2025-06-22",time:"20:30",guests:3,notes:"",status:"pending",createdAt:"2025-06-14T13:00:00Z"},
-      {id:5,name:"David Chen",phone:"+1 415 555 0100",email:"david@mail.com",date:"2025-06-22",time:"19:00",guests:2,notes:"Pencere kenarı",status:"cancelled",createdAt:"2025-06-14T14:00:00Z"},
-      {id:6,name:"Fatma Demir",phone:"+90 555 666 77 88",email:"fatma@mail.com",date:"2025-06-23",time:"13:00",guests:5,notes:"İş yemeği",status:"confirmed",createdAt:"2025-06-14T15:00:00Z"}
-    ],
-    testimonials:[
-      {id:1,text:"İstanbul'da yediğim en iyi biftek buydu. 45 günlük dry-aged T-bone olağanüstüydü.",name:"James Whitmore",via:"Google Reviews",stars:5,active:true,featured:true},
-      {id:2,text:"Tadım menüsü bizi unutulmaz bir yolculuğa çıkardı. Sommelier'in şarap eşleşmesi harikaydı.",name:"Lena Hoffmann",via:"TripAdvisor",stars:5,active:true,featured:true},
-      {id:3,text:"Yıldönümümüzü burada kutladık, sihir gibiydi. Özel yemek odası mükemmeldi.",name:"Ali & Defne Kaya",via:"Google Reviews",stars:5,active:true,featured:false},
-      {id:4,text:"Tomahawk biftek inanılmazdı. Personelin ilgisi her şeyi çok daha özel yaptı.",name:"Marcus Reynolds",via:"Google Reviews",stars:5,active:true,featured:false},
-      {id:5,text:"Bir şef olarak nadiren etkilenirim ama Ember & Oak beni gerçekten şaşırttı.",name:"Sophie Laurent",via:"OpenTable",stars:5,active:true,featured:true},
-      {id:6,text:"Beş yıldır geliyoruz ve kalite hiç düşmüyor.",name:"Burak Yıldız",via:"Yelp",stars:5,active:true,featured:false}
-    ],
-    messages:[
-      {id:1,name:"Deniz Acar",email:"deniz@mail.com",subject:"Kurumsal etkinlik",message:"50 kişilik kurumsal yemek organizasyonu için bilgi almak istiyorum.",read:false,createdAt:"2025-06-14T09:00:00Z"},
-      {id:2,name:"Tom Williams",email:"tom@mail.com",subject:"Private dining",message:"I would like to book the private dining room for a birthday surprise.",read:true,createdAt:"2025-06-13T16:00:00Z"},
-      {id:3,name:"Zeynep Arslan",email:"zeynep@ml.com",subject:"Gluten-free menü",message:"Glutene duyarlıyım, menünüzde uygun seçenekler var mı?",read:false,createdAt:"2025-06-13T10:00:00Z"}
-    ]
+    menuCategories: [],
+    menuItems:      [],
+    gallery:        [],
+    reservations:   [],
+    testimonials:   [],
+    messages:       []
   };
 }
 
@@ -254,6 +224,36 @@ async function handleAPI(req, res, pathname) {
     return sendJSON(res,{ok:true});
   }
 
+  // ── SETUP CHECK ─────────────────────────────────────────────
+  // Kurulum tamamlanmış mı? (public endpoint - auth gerekmez)
+  if (resource === 'setup-status' && method === 'GET') {
+    return sendJSON(res, { setupDone: db.settings.setupDone === true });
+  }
+
+  // ── SETUP COMPLETE ───────────────────────────────────────────
+  // İlk kurulum: restoran adı + admin şifresi kaydet
+  if (resource === 'setup' && method === 'POST') {
+    const body = await parseBody(req);
+    if (!body.restaurantName || !body.restaurantName.trim()) {
+      return sendJSON(res, {error: 'Restoran adı zorunlu'}, 400);
+    }
+    db.settings = {
+      ...db.settings,
+      restaurantName: body.restaurantName.trim(),
+      slogan:         body.slogan         || '',
+      phone:          body.phone          || '',
+      email:          body.email          || '',
+      address:        body.address        || '',
+      primaryColor:   body.primaryColor   || '#c9a84c',
+      currency:       body.currency       || '₺',
+      setupDone:      true
+    };
+    // Admin şifresi değiştirildiyse process.env üzerinden okuma
+    // (Railway'de ADMIN_PASS variable'ı güncellenir)
+    writeDB(db);
+    return sendJSON(res, {ok: true, settings: db.settings});
+  }
+
   // ── STATS ───────────────────────────────────────────────────
   if (resource === 'stats' && method === 'GET') {
     const r = db.reservations;
@@ -330,11 +330,17 @@ const server = http.createServer(async (req, res) => {
   const parsed   = url.parse(req.url);
   const pathname = parsed.pathname;
 
-  // Admin auth guard (HTML page + all API write ops)
+  // Public endpoint'ler - auth gerektirmez
+  const publicPaths = ['/api/setup-status', '/api/setup', '/api/reservations'];
+  const isPublicAPI = publicPaths.some(p => pathname.startsWith(p)) && req.method === 'POST' && pathname === '/api/reservations'
+    || pathname === '/api/setup-status'
+    || pathname === '/api/setup';
+
+  // Admin auth guard
   const isAdminPage = pathname.startsWith('/admin');
   const isWriteAPI  = pathname.startsWith('/api/') && !['GET','OPTIONS'].includes(req.method);
   const isUploadAPI = pathname.startsWith('/api/upload');
-  if ((isAdminPage || isWriteAPI || isUploadAPI) && !checkAdmin(req)) {
+  if (!isPublicAPI && (isAdminPage || isWriteAPI || isUploadAPI) && !checkAdmin(req)) {
     res.writeHead(401,{'WWW-Authenticate':'Basic realm="Admin Panel"'});
     return res.end('Giriş gerekli');
   }
@@ -373,7 +379,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT,'0.0.0.0',()=>{
   console.log('\n╔══════════════════════════════════════════════╗');
-  console.log('║     🔥 Ember & Oak – Server Başlatıldı       ║');
+  console.log('║     🔥 Restaurant Panel – Server Başlatıldı  ║');
   console.log('╠══════════════════════════════════════════════╣');
   console.log(`║  🌐 Ana Site:   http://localhost:${PORT}          ║`);
   console.log(`║  ⚙️  Admin:     http://localhost:${PORT}/admin     ║`);

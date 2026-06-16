@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title id="page-title">Ember & Oak – Fine Dining & Steakhouse</title>
+  <title id="page-title">Restoranımız</title>
   <meta name="description" content="Ödüllü fine dining deneyimi – ateş ve zarafetin buluştuğu yer."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -298,8 +298,8 @@
       <div class="dot"></div>
     </div>
     <h1 class="hero-h1 reveal d1">
-      <span id="hero-name-1">Ember</span><br>
-      <em id="hero-name-2">&amp; Oak</em>
+      <span id="hero-name-1"></span><br>
+      <em id="hero-name-2"></em>
     </h1>
     <p class="hero-tag reveal d2" id="hero-slogan">Where fire meets finesse, and every plate tells a story.</p>
     <div class="hero-acts reveal d3">
@@ -477,7 +477,7 @@
             <div class="map-grid"></div>
             <div class="map-pin">
               <div class="pin-dot"></div>
-              <div class="pin-lbl" id="map-lbl">Ember &amp; Oak</div>
+              <div class="pin-lbl" id="map-lbl">Restoran</div>
             </div>
           </div>
         </div>
@@ -528,7 +528,7 @@
       </div>
     </div>
     <div class="foot-bot">
-      <span>© 2025 <span id="f-rname">Ember &amp; Oak</span>. Tüm hakları saklıdır.</span>
+      <span>© <span id="f-year"></span> <span id="f-rname"></span>. Tüm hakları saklıdır.</span>
       <span>Fine dining deneyimi için tasarlandı.</span>
     </div>
   </div>
@@ -559,7 +559,7 @@ async function init(){
     ]);
   } catch(e){
     console.warn('API bağlantısı yok, demo veriler kullanılıyor');
-    S = {restaurantName:'Ember & Oak',slogan:'Where fire meets finesse.',primaryColor:'#c9a84c',heroImage:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80',aboutImage:'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80',aboutText:'Born from a love of open-flame cooking.',aboutText2:'Every dish is exceptional.',chefName:'Chef Mehmet Arslan',chefTitle:'Executive Chef',chefImage:'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80',phone:'+90 212 219 12 34',whatsapp:'+902122191234',email:'hello@emberandoak.com',address:'Nişantaşı, İstanbul',hours:[{day:'Pzt–Prş',time:'12:00–23:00'},{day:'Cum–Cmt',time:'12:00–00:30'}],stats:[{num:'10+',label:'Yıllık Deneyim'},{num:'38k',label:'Mutlu Misafir'},{num:'4.9',label:'Puan'},{num:'3',label:'Ödül'}],socialInstagram:'#',socialFacebook:'#',socialTwitter:'#',currency:'₺'};
+    S = {restaurantName:'',slogan:'',primaryColor:'#c9a84c',heroImage:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80',aboutImage:'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80',aboutText:'Born from a love of open-flame cooking.',aboutText2:'Every dish is exceptional.',chefName:'',chefTitle:'',chefImage:'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80',phone:'',whatsapp:'',email:'',address:'',hours:[{day:'Pzt–Prş',time:'12:00–23:00'},{day:'Cum–Cmt',time:'12:00–00:30'}],stats:[{num:'10+',label:'Yıllık Deneyim'},{num:'38k',label:'Mutlu Misafir'},{num:'4.9',label:'Puan'},{num:'3',label:'Ödül'}],socialInstagram:'#',socialFacebook:'#',socialTwitter:'#',currency:'₺'};
     cats=[{id:1,name:'Başlangıçlar',slug:'starters',active:true},{id:2,name:'Izgaralar',slug:'grills',active:true},{id:3,name:'Tatlılar',slug:'desserts',active:true}];
     items=[{id:1,name:'Beef Tartare',desc:'El çekilmiş bonfile',price:285,cat:'starters',featured:true,active:true,img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80'},{id:2,name:'T-Bone Biftek',desc:'45 gün dry-aged',price:890,cat:'grills',featured:true,active:true,img:'https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80'},{id:3,name:'Crème Brûlée',desc:'Fransız vanilyalı',price:145,cat:'desserts',featured:false,active:true,img:'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80'}];
     gallery=[{id:1,img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',alt:'İç mekan',cls:'tall',active:true},{id:2,img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',alt:'Tabak',cls:'',active:true},{id:3,img:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',alt:'Ortam',cls:'wide',active:true},{id:4,img:'https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80',alt:'Biftek',cls:'',active:true}];
@@ -573,10 +573,13 @@ async function init(){
   renderContact();
   observeAll();
   setTimeout(()=>document.getElementById('loader').classList.add('out'),1400);
+  // Yılı otomatik güncelle
+  const fyear = document.getElementById('f-year');
+  if(fyear) fyear.textContent = new Date().getFullYear();
 }
 
 function applySettings(){
-  const name = S.restaurantName||'Ember & Oak';
+  const name = S.restaurantName||'';
 
   // ── Renk ─────────────────────────────────────────
   document.documentElement.style.setProperty('--gold', S.primaryColor||'#c9a84c');
