@@ -104,9 +104,13 @@ function getDefaultDB() {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────
-if (!fs.existsSync(DATA_DIR))   fs.mkdirSync(DATA_DIR,  {recursive:true});
-if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR,{recursive:true});
-if (!fs.existsSync(DATA_FILE))  writeDB(getDefaultDB());
+try {
+  if (!fs.existsSync(DATA_DIR))   fs.mkdirSync(DATA_DIR,  {recursive:true});
+  if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR,{recursive:true});
+  if (!fs.existsSync(DATA_FILE))  writeDB(getDefaultDB());
+} catch(e) {
+  console.error('Data dizini hazirlanamadi:', e.message, '| DATA_DIR:', DATA_DIR);
+}
 
 // ─── BODY PARSER ──────────────────────────────────────────────
 function parseBody(req, maxSize = 20*1024*1024) {
@@ -396,6 +400,12 @@ const server = http.createServer(async (req, res) => {
     return res.end(fs.readFileSync(fpath));
   }
 
+  // Health check — Railway ve uptime monitor'lar için
+  if (pathname === '/health' || pathname === '/ping') {
+    res.writeHead(200, {'Content-Type':'application/json'});
+    return res.end(JSON.stringify({status:'ok', ts: Date.now()}));
+  }
+
   // Static files
   let filePath;
   if (pathname==='/'||pathname==='/index.html') filePath = path.join(__dirname,'public','index.html');
@@ -419,3 +429,11 @@ server.listen(PORT,'0.0.0.0',()=>{
   console.log('║  🔑 Kullanıcı: Kurulum sihirbazından belirlenir    ║');
   console.log('╚══════════════════════════════════════════════╝\n');
 });
+
+// ─── GRACEFUL SHUTDOWN ────────────────────────────────────────
+process.on('SIGTERM', () => {
+  console.log('SIGTERM alındı, sunucu kapatılıyor...');
+  server.close(() => { process.exit(0); });
+  setTimeout(() => process.exit(0), 5000);
+});
+process.on('SIGINT', () => process.exit(0));
