@@ -10,15 +10,23 @@ const path = require('path');
 const url  = require('url');
 
 const PORT = process.env.PORT || 3000;
-// Kullanıcı adı & şifre artık db.json'dan okunuyor (kurulum sihirbazında belirlenir)
-// Fallback: kurulum tamamlanmamışsa hiçbir şey çalışmaz
 
-// ─── PERSISTENT STORAGE ───────────────────────────────────────
-// Railway Volume: Mount Path = /app/data
-// Variables'a ekle: DATA_DIR=/app/data  UPLOAD_DIR=/app/data/uploads
-const DATA_DIR   = process.env.DATA_DIR   || path.join(__dirname, 'data');
+// ─── STORAGE ──────────────────────────────────────────────────
+// Railway'de Volume KULLANMIYORUZ (sorun çıkarıyor).
+// Veriler /app/data'da tutulur — deploy'da sıfırlanır AMA
+// tüm kritik ayarlar Railway Variables'dan okunur (kalıcı).
+const DATA_DIR   = path.join(__dirname, 'data');
 const DATA_FILE  = path.join(DATA_DIR, 'db.json');
-const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'public', 'uploads');
+const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
+
+// ─── RAILWAY VARIABLES → KALICI AYARLAR ──────────────────────
+// Railway Dashboard → Variables'a bunları ekle:
+//   ADMIN_USER  = kullaniciadi
+//   ADMIN_PASS  = sifre
+//   DB_JSON     = (boş bırak, ilk kurulumda otomatik dolar)
+// Deploy sonrası ADMIN_USER ve ADMIN_PASS Variables'dan okunur.
+const ENV_ADMIN_USER = process.env.ADMIN_USER || null;
+const ENV_ADMIN_PASS = process.env.ADMIN_PASS || null;
 
 // ─── MIME TYPES ───────────────────────────────────────────────
 const MIME = {
@@ -180,15 +188,21 @@ function sendJSON(res, data, status=200) {
 function checkAdmin(req) {
   const auth = req.headers.authorization||'';
   if (!auth.startsWith('Basic ')) return false;
-  const [u,p] = Buffer.from(auth.slice(6),'base64').toString().split(':');
-  // Kimlik bilgilerini db'den oku — kurulumda belirlendi
+  const decoded = Buffer.from(auth.slice(6),'base64').toString();
+  const colonIdx = decoded.indexOf(':');
+  if (colonIdx === -1) return false;
+  const u = decoded.slice(0, colonIdx);
+  const p = decoded.slice(colonIdx + 1);
+
+  // 1. Önce Railway Variables'dan bak (kalıcı, deploy'da silinmez)
+  if (ENV_ADMIN_USER && ENV_ADMIN_PASS) {
+    return u === ENV_ADMIN_USER && p === ENV_ADMIN_PASS;
+  }
+  // 2. Yoksa db.json'dan bak (kurulum sihirbazından kaydedildi)
   try {
     const db = readDB();
-    const adminUser = db.settings.adminUser || '';
-    const adminPass = db.settings.adminPass || '';
-    // Kurulum tamamlanmamışsa sadece setup endpoint'ine izin ver
     if (!db.settings.setupDone) return false;
-    return u === adminUser && p === adminPass;
+    return u === (db.settings.adminUser||'') && p === (db.settings.adminPass||'');
   } catch {
     return false;
   }
@@ -265,12 +279,17 @@ async function handleAPI(req, res, pathname) {
       primaryColor:   body.primaryColor  || '#c9a84c',
       currency:       body.currency      || '₺',
       heroEyebrow:    body.heroEyebrow   || '',
-      // Kullanıcı adı ve şifre db'ye kaydedilir
       adminUser:      body.adminUser.trim(),
       adminPass:      body.adminPass,
       setupDone:      true
     };
     writeDB(db);
+    // Railway Variables yoksa console'a yaz — kullanıcı manuel ekleyebilir
+    if (!ENV_ADMIN_USER) {
+      console.log('\n⚠️  Kalıcı giriş için Railway Variables ekle:');
+      console.log(`   ADMIN_USER = ${body.adminUser.trim()}`);
+      console.log(`   ADMIN_PASS = ${body.adminPass}\n`);
+    }
     return sendJSON(res, {ok: true});
   }
 
