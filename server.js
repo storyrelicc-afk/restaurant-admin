@@ -15,6 +15,26 @@ const ADMIN_PASS = process.env.ADMIN_PASS || 'GucluBirSifre123!';
 const DATA_FILE  = path.join(__dirname, 'data', 'db.json');
 const UPLOAD_DIR = path.join(__dirname, 'public', 'uploads');
 
+// ─── ENV OVERRIDES ────────────────────────────────────────────
+// Railway'de her deploy'da data/db.json sıfırlanabilir.
+// Kritik ayarları Railway Dashboard → Variables bölümüne ekle:
+//   RESTAURANT_NAME=Senin Restoran Adın
+//   RESTAURANT_SLOGAN=Kısa slogan
+//   RESTAURANT_PHONE=+90 212 000 00 00
+//   RESTAURANT_EMAIL=info@restoranim.com
+//   RESTAURANT_ADDRESS=Adres
+//   RESTAURANT_WHATSAPP=+902120000000
+//   RESTAURANT_COLOR=#c9a84c
+const ENV = {
+  restaurantName : process.env.RESTAURANT_NAME     || null,
+  slogan         : process.env.RESTAURANT_SLOGAN   || null,
+  phone          : process.env.RESTAURANT_PHONE    || null,
+  email          : process.env.RESTAURANT_EMAIL    || null,
+  address        : process.env.RESTAURANT_ADDRESS  || null,
+  whatsapp       : process.env.RESTAURANT_WHATSAPP || null,
+  primaryColor   : process.env.RESTAURANT_COLOR    || null,
+};
+
 // ─── MIME TYPES ───────────────────────────────────────────────
 const MIME = {
   '.html':'text/html; charset=utf-8', '.css':'text/css',
@@ -26,8 +46,14 @@ const MIME = {
 
 // ─── DB HELPERS ───────────────────────────────────────────────
 function readDB() {
-  try { return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
-  catch { return getDefaultDB(); }
+  let db;
+  try { db = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
+  catch { db = getDefaultDB(); }
+  // Environment variable'lar her zaman öncelikli - Railway deploy'da db sıfırlanmasın diye
+  Object.entries(ENV).forEach(([k,v]) => {
+    if (v !== null) db.settings[k] = v;
+  });
+  return db;
 }
 function writeDB(data) { fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2)); }
 function nextId(arr) { return arr.length ? Math.max(...arr.map(x => x.id||0))+1 : 1; }
