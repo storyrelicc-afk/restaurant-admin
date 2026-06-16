@@ -1,7 +1,7 @@
 /**
  * Restaurant Admin Panel Server
  * Ana site: http://localhost:3000
- * Admin panel: http://localhost:3000/admin  (admin / GucluBirSifre123!)
+ * Admin panel: http://localhost:3000/admin  (kurulum sihirbazından belirlenir)
  */
 
 const http = require('http');
@@ -9,9 +9,9 @@ const fs   = require('fs');
 const path = require('path');
 const url  = require('url');
 
-const PORT       = process.env.PORT || 3000;
-const ADMIN_USER = process.env.ADMIN_USER || 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASS || 'GucluBirSifre123!';
+const PORT = process.env.PORT || 3000;
+// Kullanıcı adı & şifre artık db.json'dan okunuyor (kurulum sihirbazında belirlenir)
+// Fallback: kurulum tamamlanmamışsa hiçbir şey çalışmaz
 
 // ─── PERSISTENT STORAGE ───────────────────────────────────────
 // Railway Volume: Mount Path = /app/data
@@ -177,7 +177,17 @@ function checkAdmin(req) {
   const auth = req.headers.authorization||'';
   if (!auth.startsWith('Basic ')) return false;
   const [u,p] = Buffer.from(auth.slice(6),'base64').toString().split(':');
-  return u===ADMIN_USER && p===ADMIN_PASS;
+  // Kimlik bilgilerini db'den oku — kurulumda belirlendi
+  try {
+    const db = readDB();
+    const adminUser = db.settings.adminUser || '';
+    const adminPass = db.settings.adminPass || '';
+    // Kurulum tamamlanmamışsa sadece setup endpoint'ine izin ver
+    if (!db.settings.setupDone) return false;
+    return u === adminUser && p === adminPass;
+  } catch {
+    return false;
+  }
 }
 
 // ─── API ROUTER ───────────────────────────────────────────────
@@ -231,27 +241,47 @@ async function handleAPI(req, res, pathname) {
   }
 
   // ── SETUP COMPLETE ───────────────────────────────────────────
-  // İlk kurulum: restoran adı + admin şifresi kaydet
   if (resource === 'setup' && method === 'POST') {
     const body = await parseBody(req);
-    if (!body.restaurantName || !body.restaurantName.trim()) {
+    if (!body.restaurantName || !body.restaurantName.trim())
       return sendJSON(res, {error: 'Restoran adı zorunlu'}, 400);
-    }
+    if (!body.adminUser || !body.adminUser.trim())
+      return sendJSON(res, {error: 'Kullanıcı adı zorunlu'}, 400);
+    if (!body.adminPass || body.adminPass.length < 6)
+      return sendJSON(res, {error: 'Şifre en az 6 karakter olmalı'}, 400);
+
     db.settings = {
       ...db.settings,
       restaurantName: body.restaurantName.trim(),
-      slogan:         body.slogan         || '',
-      phone:          body.phone          || '',
-      email:          body.email          || '',
-      address:        body.address        || '',
-      primaryColor:   body.primaryColor   || '#c9a84c',
-      currency:       body.currency       || '₺',
+      slogan:         body.slogan        || '',
+      phone:          body.phone         || '',
+      whatsapp:       body.whatsapp      || '',
+      email:          body.email         || '',
+      address:        body.address       || '',
+      primaryColor:   body.primaryColor  || '#c9a84c',
+      currency:       body.currency      || '₺',
+      heroEyebrow:    body.heroEyebrow   || '',
+      // Kullanıcı adı ve şifre db'ye kaydedilir
+      adminUser:      body.adminUser.trim(),
+      adminPass:      body.adminPass,
       setupDone:      true
     };
-    // Admin şifresi değiştirildiyse process.env üzerinden okuma
-    // (Railway'de ADMIN_PASS variable'ı güncellenir)
     writeDB(db);
-    return sendJSON(res, {ok: true, settings: db.settings});
+    return sendJSON(res, {ok: true});
+  }
+
+  // ── CHANGE PASSWORD ──────────────────────────────────────────
+  // Admin panelinden şifre değiştirme
+  if (resource === 'change-password' && method === 'POST') {
+    const body = await parseBody(req);
+    if (!body.newUser || !body.newUser.trim())
+      return sendJSON(res, {error: 'Kullanıcı adı boş olamaz'}, 400);
+    if (!body.newPass || body.newPass.length < 6)
+      return sendJSON(res, {error: 'Şifre en az 6 karakter olmalı'}, 400);
+    db.settings.adminUser = body.newUser.trim();
+    db.settings.adminPass = body.newPass;
+    writeDB(db);
+    return sendJSON(res, {ok: true});
   }
 
   // ── STATS ───────────────────────────────────────────────────
@@ -331,18 +361,21 @@ const server = http.createServer(async (req, res) => {
   const pathname = parsed.pathname;
 
   // Public endpoint'ler - auth gerektirmez
-  const publicPaths = ['/api/setup-status', '/api/setup', '/api/reservations'];
-  const isPublicAPI = publicPaths.some(p => pathname.startsWith(p)) && req.method === 'POST' && pathname === '/api/reservations'
-    || pathname === '/api/setup-status'
-    || pathname === '/api/setup';
+  const isPublicAPI = pathname === '/api/setup-status'
+    || pathname === '/api/setup'
+    || (pathname === '/api/reservations' && req.method === 'POST');
 
-  // Admin auth guard
-  const isAdminPage = pathname.startsWith('/admin');
+  // Admin HTML her zaman yüklenir — içindeki JS kurulum/auth kontrolü yapar
+  const isAdminHTML = (pathname === '/admin' || pathname === '/admin/' || pathname === '/admin/index.html');
+
+  // API koruması — WWW-Authenticate header'ı YOK (tarayıcı popup açmasın)
   const isWriteAPI  = pathname.startsWith('/api/') && !['GET','OPTIONS'].includes(req.method);
+  const isReadAPI   = pathname.startsWith('/api/') && req.method === 'GET';
   const isUploadAPI = pathname.startsWith('/api/upload');
-  if (!isPublicAPI && (isAdminPage || isWriteAPI || isUploadAPI) && !checkAdmin(req)) {
-    res.writeHead(401,{'WWW-Authenticate':'Basic realm="Admin Panel"'});
-    return res.end('Giriş gerekli');
+  const needsAuth   = !isPublicAPI && !isAdminHTML && (isWriteAPI || isReadAPI || isUploadAPI);
+  if (needsAuth && !checkAdmin(req)) {
+    res.writeHead(401, {'Content-Type':'application/json'});
+    return res.end(JSON.stringify({error:'Yetkisiz',code:401}));
   }
 
   // API
@@ -383,6 +416,6 @@ server.listen(PORT,'0.0.0.0',()=>{
   console.log('╠══════════════════════════════════════════════╣');
   console.log(`║  🌐 Ana Site:   http://localhost:${PORT}          ║`);
   console.log(`║  ⚙️  Admin:     http://localhost:${PORT}/admin     ║`);
-  console.log(`║  🔑 Kullanıcı: ${ADMIN_USER} / ${ADMIN_PASS}  ║`);
+  console.log('║  🔑 Kullanıcı: Kurulum sihirbazından belirlenir    ║');
   console.log('╚══════════════════════════════════════════════╝\n');
 });

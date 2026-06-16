@@ -231,276 +231,513 @@ textarea.f-ctrl{resize:vertical;min-height:72px}
 </head>
 <body>
 
-<!-- ═══ KURULUM SİHİRBAZI ═══════════════════════════════════════ -->
-<div id="setup-overlay" style="display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0d0f14 0%,#141720 100%);overflow-y:auto;align-items:center;justify-content:center">
-  <div style="max-width:560px;width:100%;margin:auto;padding:2rem 1rem">
-    <!-- Logo alanı -->
-    <div style="text-align:center;margin-bottom:2.5rem">
-      <div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#c9a84c,#8a6a20);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1rem">🔥</div>
-      <h1 style="font-family:'Inter',sans-serif;font-size:1.5rem;font-weight:700;color:#f1f5f9;margin-bottom:.4rem">Restoranınıza Hoş Geldiniz</h1>
-      <p style="font-size:.88rem;color:#64748b">Başlamadan önce birkaç temel bilgi girin. Bunları daha sonra admin panelinden değiştirebilirsiniz.</p>
+<!-- ═══ GİRİŞ EKRANI ═══════════════════════════════════════════ -->
+<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:99998;background:linear-gradient(135deg,#0d0f14 0%,#141720 100%);align-items:center;justify-content:center">
+  <div style="max-width:400px;width:100%;margin:auto;padding:2rem 1rem">
+    <div style="text-align:center;margin-bottom:2rem">
+      <div style="width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#c9a84c,#8a6a20);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin:0 auto .9rem">🔐</div>
+      <h1 style="font-size:1.3rem;font-weight:700;color:#f1f5f9;margin-bottom:.3rem">Admin Girişi</h1>
+      <p style="font-size:.83rem;color:#64748b" id="login-sub">Kullanıcı adı ve şifrenizi girin</p>
     </div>
-
-    <!-- Adım göstergesi -->
-    <div style="display:flex;align-items:center;justify-content:center;gap:.5rem;margin-bottom:2rem" id="setup-steps">
-      <div class="setup-step active" data-step="1" style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:#c9a84c">
-        <div style="width:24px;height:24px;border-radius:50%;background:#c9a84c;color:#000;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">1</div>
-        Kimlik
-      </div>
-      <div style="width:32px;height:1px;background:rgba(255,255,255,.1)"></div>
-      <div class="setup-step" data-step="2" style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:#64748b">
-        <div style="width:24px;height:24px;border-radius:50%;background:#2d3154;color:#64748b;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">2</div>
-        İletişim
-      </div>
-      <div style="width:32px;height:1px;background:rgba(255,255,255,.1)"></div>
-      <div class="setup-step" data-step="3" style="display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:#64748b">
-        <div style="width:24px;height:24px;border-radius:50%;background:#2d3154;color:#64748b;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">3</div>
-        Tasarım
-      </div>
-    </div>
-
-    <!-- ADIM 1: Kimlik -->
-    <div id="setup-page-1" class="setup-page" style="background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
-      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:1.5rem">🏠 Restoran Bilgileri</h2>
+    <div style="background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:2rem">
       <div style="display:flex;flex-direction:column;gap:1rem">
         <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Restoran Adı *</label>
-          <input id="setup-name" type="text" placeholder="Örn: Karadeniz Balık Evi" maxlength="60"
-            style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
-            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
-          <div style="font-size:.7rem;color:#64748b;margin-top:.3rem">Bu isim sitenin her yerinde görünecek</div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Kullanıcı Adı</label>
+          <input id="login-user" type="text" autocomplete="username"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"
+            onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()"/>
         </div>
         <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Slogan / Kısa Açıklama</label>
-          <input id="setup-slogan" type="text" placeholder="Örn: Taze deniz ürünleri, eşsiz lezzetler" maxlength="100"
-            style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
-            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
-          <div>
-            <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Para Birimi</label>
-            <select id="setup-currency"
-              style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;-webkit-appearance:none">
-              <option value="₺">₺ Türk Lirası</option>
-              <option value="$">$ Dolar</option>
-              <option value="€">€ Euro</option>
-              <option value="£">£ Sterlin</option>
-              <option value="₽">₽ Ruble</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Hero Eyebrow Metin</label>
-            <input id="setup-eyebrow" type="text" placeholder="Örn: Est. 2020 – İstanbul"
-              style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.88rem;outline:none;transition:.2s"
-              onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Şifre</label>
+          <div style="position:relative">
+            <input id="login-pass" type="password" autocomplete="current-password"
+              style="width:100%;padding:.78rem 2.5rem .78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+              onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"
+              onkeydown="if(event.key==='Enter')doLogin()"/>
+            <button onclick="const i=document.getElementById('login-pass');i.type=i.type==='password'?'text':'password'"
+              style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:1rem">👁</button>
           </div>
         </div>
-      </div>
-      <div style="display:flex;justify-content:flex-end;margin-top:1.5rem">
-        <button onclick="setupNext(2)" style="padding:.7rem 1.75rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer">Devam →</button>
-      </div>
-    </div>
-
-    <!-- ADIM 2: İletişim -->
-    <div id="setup-page-2" class="setup-page" style="display:none;background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
-      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:1.5rem">📞 İletişim Bilgileri</h2>
-      <div style="display:flex;flex-direction:column;gap:1rem">
-        <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Telefon</label>
-          <input id="setup-phone" type="tel" placeholder="+90 555 000 00 00"
-            style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
-            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
-        </div>
-        <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">WhatsApp Numarası</label>
-          <input id="setup-wa" type="tel" placeholder="+905550000000 (başında + ve ülke kodu)"
-            style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
-            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
-        </div>
-        <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">E-Posta</label>
-          <input id="setup-email" type="email" placeholder="info@restoranim.com"
-            style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
-            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
-        </div>
-        <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Adres</label>
-          <input id="setup-address" type="text" placeholder="Tam adresiniz..."
-            style="width:100%;padding:.75rem 1rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
-            onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.1)'"/>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
-        <button onclick="setupNext(1)" style="padding:.7rem 1.25rem;background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer">← Geri</button>
-        <button onclick="setupNext(3)" style="padding:.7rem 1.75rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer">Devam →</button>
+        <div id="login-err" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:.6rem .9rem;font-size:.82rem;color:#fca5a5"></div>
+        <button onclick="doLogin()" id="login-btn"
+          style="width:100%;padding:.82rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:.2s;margin-top:.25rem"
+          onmouseover="this.style.background='#e4c97e'" onmouseout="this.style.background='#c9a84c'">
+          Giriş Yap
+        </button>
       </div>
     </div>
-
-    <!-- ADIM 3: Tasarım -->
-    <div id="setup-page-3" class="setup-page" style="display:none;background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
-      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:1.5rem">🎨 Marka Rengi</h2>
-      <p style="font-size:.83rem;color:#64748b;margin-bottom:1.25rem">Sitenizin ana rengi — butonlar, fiyatlar ve vurgu öğelerinde kullanılır. Daha sonra değiştirilebilir.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.5rem" id="setup-colors">
-        <div class="sc" data-color="#c9a84c" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#c9a84c;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 3px #c9a84c;transition:.2s" title="Altın"></div>
-        <div class="sc" data-color="#2a9d8f" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#2a9d8f;cursor:pointer;border:3px solid transparent;transition:.2s" title="Deniz"></div>
-        <div class="sc" data-color="#e11d48" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#e11d48;cursor:pointer;border:3px solid transparent;transition:.2s" title="Kırmızı"></div>
-        <div class="sc" data-color="#c1666b" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#c1666b;cursor:pointer;border:3px solid transparent;transition:.2s" title="Gül"></div>
-        <div class="sc" data-color="#6b9e5e" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#6b9e5e;cursor:pointer;border:3px solid transparent;transition:.2s" title="Zeytin"></div>
-        <div class="sc" data-color="#8b5e3c" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#8b5e3c;cursor:pointer;border:3px solid transparent;transition:.2s" title="Kahve"></div>
-        <div class="sc" data-color="#4f7cff" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#4f7cff;cursor:pointer;border:3px solid transparent;transition:.2s" title="Mavi"></div>
-        <div class="sc" data-color="#7c3aed" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#7c3aed;cursor:pointer;border:3px solid transparent;transition:.2s" title="Mor"></div>
-        <div class="sc" data-color="#ea580c" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#ea580c;cursor:pointer;border:3px solid transparent;transition:.2s" title="Turuncu"></div>
-        <div class="sc" data-color="#0891b2" onclick="pickSetupColor(this)" style="width:44px;height:44px;border-radius:10px;background:#0891b2;cursor:pointer;border:3px solid transparent;transition:.2s" title="Okyanus"></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:.75rem">
-        <span style="font-size:.78rem;color:#64748b">Özel renk:</span>
-        <input type="color" id="setup-custom-color" value="#c9a84c" oninput="pickSetupColorHex(this.value)"
-          style="width:44px;height:36px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;cursor:pointer;padding:2px"/>
-        <input type="text" id="setup-color-hex" value="#c9a84c" maxlength="7"
-          style="width:90px;padding:.5rem .75rem;background:#1c1f2e;border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#f1f5f9;font-size:.85rem;font-family:monospace;outline:none"
-          oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value)){pickSetupColorHex(this.value)}"/>
-      </div>
-
-      <!-- Önizleme -->
-      <div style="margin-top:1.5rem;padding:1rem;background:#1c1f2e;border-radius:10px;border:1px solid rgba(255,255,255,.06)">
-        <div style="font-size:.7rem;color:#64748b;margin-bottom:.6rem;text-transform:uppercase;letter-spacing:.1em">Önizleme</div>
-        <div style="display:flex;align-items:center;gap:.75rem">
-          <div id="setup-preview-btn" style="padding:.5rem 1.1rem;border-radius:6px;font-size:.8rem;font-weight:700;background:#c9a84c;color:#000">Rezervasyon Yap</div>
-          <div id="setup-preview-price" style="font-size:1.1rem;font-weight:700;color:#c9a84c">₺285</div>
-          <div style="font-size:.8rem;color:#94a3b8">← Renk buraya yansır</div>
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:space-between;margin-top:1.75rem">
-        <button onclick="setupNext(2)" style="padding:.7rem 1.25rem;background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer">← Geri</button>
-        <button onclick="completeSetup()" id="setup-finish-btn" style="padding:.7rem 2rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer">🚀 Kurulumu Tamamla</button>
-      </div>
-    </div>
-
-    <p style="text-align:center;font-size:.72rem;color:#475569;margin-top:1.25rem">Tüm bilgileri daha sonra Admin Panel → Ayarlar bölümünden güncelleyebilirsiniz.</p>
   </div>
 </div>
 
 <script>
-// ═══ KURULUM SİHİRBAZI LOGIC ══════════════════════════════════
-let setupColor = '#c9a84c';
+function showLoginScreen() {
+  document.getElementById('login-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('login-user').focus(), 100);
+}
+
+function hideLoginScreen() {
+  document.getElementById('login-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-err');
+  const btn = document.getElementById('login-btn');
+
+  if (!user || !pass) {
+    errEl.textContent = 'Kullanıcı adı ve şifre zorunlu.';
+    errEl.style.display = 'block'; return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Kontrol ediliyor...';
+  errEl.style.display = 'none';
+
+  const testCreds = btoa(user + ':' + pass);
+  try {
+    const r = await fetch('/api/settings', {
+      headers: {'Authorization': 'Basic ' + testCreds}
+    });
+    if (r.ok) {
+      window._adminCreds = testCreds;
+      hideLoginScreen();
+      if (typeof initAll === 'function') initAll();
+    } else {
+      errEl.textContent = 'Kullanıcı adı veya şifre hatalı.';
+      errEl.style.display = 'block';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-pass').focus();
+    }
+  } catch(e) {
+    errEl.textContent = 'Bağlantı hatası: ' + e.message;
+    errEl.style.display = 'block';
+  }
+  btn.disabled = false; btn.textContent = 'Giriş Yap';
+}
+</script>
+
+<!-- ═══ KURULUM SİHİRBAZI ═══════════════════════════════════════ -->
+<div id="setup-overlay" style="display:none;position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0d0f14 0%,#141720 100%);overflow-y:auto">
+  <div style="max-width:580px;width:100%;margin:auto;padding:2rem 1rem;min-height:100vh;display:flex;flex-direction:column;justify-content:center">
+
+    <!-- Başlık -->
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#c9a84c,#8a6a20);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1rem">🔥</div>
+      <h1 style="font-size:1.5rem;font-weight:700;color:#f1f5f9;margin-bottom:.4rem">Hoş Geldiniz!</h1>
+      <p style="font-size:.88rem;color:#64748b">İlk kurulumu tamamlayın. Tüm bilgileri daha sonra admin panelinden değiştirebilirsiniz.</p>
+    </div>
+
+    <!-- Adım göstergesi -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:.4rem;margin-bottom:2rem" id="setup-steps-bar">
+      <div class="sbar-step active-step" data-s="1" style="display:flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:600;color:#c9a84c">
+        <div class="sbar-dot" style="width:26px;height:26px;border-radius:50%;background:#c9a84c;color:#000;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">1</div>Restoran
+      </div>
+      <div style="flex:1;max-width:36px;height:1px;background:rgba(255,255,255,.08)"></div>
+      <div class="sbar-step" data-s="2" style="display:flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:600;color:#64748b">
+        <div class="sbar-dot" style="width:26px;height:26px;border-radius:50%;background:#2d3154;color:#64748b;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">2</div>İletişim
+      </div>
+      <div style="flex:1;max-width:36px;height:1px;background:rgba(255,255,255,.08)"></div>
+      <div class="sbar-step" data-s="3" style="display:flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:600;color:#64748b">
+        <div class="sbar-dot" style="width:26px;height:26px;border-radius:50%;background:#2d3154;color:#64748b;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">3</div>Tasarım
+      </div>
+      <div style="flex:1;max-width:36px;height:1px;background:rgba(255,255,255,.08)"></div>
+      <div class="sbar-step" data-s="4" style="display:flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:600;color:#64748b">
+        <div class="sbar-dot" style="width:26px;height:26px;border-radius:50%;background:#2d3154;color:#64748b;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700">4</div>Giriş Bilgileri
+      </div>
+    </div>
+
+    <!-- SAYFA 1: Restoran -->
+    <div id="sp1" class="sp-page" style="background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
+      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:1.5rem">🏠 Restoran Bilgileri</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Restoran Adı *</label>
+          <input id="s1-name" type="text" placeholder="Örn: Karadeniz Balık Evi" maxlength="60"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+            oninput="this.style.borderColor='#c9a84c'"
+            onblur="this.style.borderColor=this.value?'rgba(34,197,94,.4)':'rgba(255,255,255,.08)'"/>
+          <div style="font-size:.7rem;color:#64748b;margin-top:.3rem">Navbar, footer, sayfa başlığı ve yükleme ekranında görünür</div>
+        </div>
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Kısa Slogan</label>
+          <input id="s1-slogan" type="text" placeholder="Örn: Taze deniz ürünleri, eşsiz lezzetler" maxlength="120"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+            oninput="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div>
+            <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Para Birimi</label>
+            <select id="s1-currency" style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.9rem;outline:none;-webkit-appearance:none">
+              <option value="₺">₺  Türk Lirası</option>
+              <option value="$">$  Dolar</option>
+              <option value="€">€  Euro</option>
+              <option value="£">£  Sterlin</option>
+              <option value="₽">₽  Ruble</option>
+              <option value="د.إ">د.إ  Dirhem</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Hero Alt Yazı</label>
+            <input id="s1-eyebrow" type="text" placeholder="Örn: Est. 2020 – İstanbul"
+              style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.88rem;outline:none;transition:.2s"
+              oninput="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:1.75rem">
+        <button onclick="swNext(2)" style="padding:.72rem 1.75rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;transition:.2s" onmouseover="this.style.background='#e4c97e'" onmouseout="this.style.background='#c9a84c'">Devam → </button>
+      </div>
+    </div>
+
+    <!-- SAYFA 2: İletişim -->
+    <div id="sp2" class="sp-page" style="display:none;background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
+      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:1.5rem">📞 İletişim Bilgileri</h2>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div>
+            <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Telefon</label>
+            <input id="s2-phone" type="tel" placeholder="+90 555 000 00 00"
+              style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.9rem;outline:none;transition:.2s"
+              oninput="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+          </div>
+          <div>
+            <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">WhatsApp</label>
+            <input id="s2-wa" type="tel" placeholder="+905550000000"
+              style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.9rem;outline:none;transition:.2s"
+              oninput="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">E-Posta</label>
+          <input id="s2-email" type="email" placeholder="info@restoranim.com"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.9rem;outline:none;transition:.2s"
+            oninput="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+        </div>
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Adres</label>
+          <input id="s2-address" type="text" placeholder="Mahalle, Cadde No, İlçe, Şehir"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.9rem;outline:none;transition:.2s"
+            oninput="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:1.75rem">
+        <button onclick="swNext(1)" style="padding:.72rem 1.25rem;background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer">← Geri</button>
+        <button onclick="swNext(3)" style="padding:.72rem 1.75rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer" onmouseover="this.style.background='#e4c97e'" onmouseout="this.style.background='#c9a84c'">Devam →</button>
+      </div>
+    </div>
+
+    <!-- SAYFA 3: Tasarım -->
+    <div id="sp3" class="sp-page" style="display:none;background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
+      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:.5rem">🎨 Marka Rengi</h2>
+      <p style="font-size:.82rem;color:#64748b;margin-bottom:1.25rem">Sitenizin ana rengi — butonlar, fiyatlar ve vurgu öğelerinde kullanılır.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.25rem">
+        <div class="sw-dot sel-dot" data-c="#c9a84c" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#c9a84c;cursor:pointer;border:3px solid #fff;box-shadow:0 0 0 3px #c9a84c;transition:.15s" title="Altın"></div>
+        <div class="sw-dot" data-c="#2a9d8f" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#2a9d8f;cursor:pointer;border:3px solid transparent;transition:.15s" title="Deniz"></div>
+        <div class="sw-dot" data-c="#e11d48" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#e11d48;cursor:pointer;border:3px solid transparent;transition:.15s" title="Kırmızı"></div>
+        <div class="sw-dot" data-c="#c1666b" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#c1666b;cursor:pointer;border:3px solid transparent;transition:.15s" title="Gül"></div>
+        <div class="sw-dot" data-c="#6b9e5e" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#6b9e5e;cursor:pointer;border:3px solid transparent;transition:.15s" title="Zeytin"></div>
+        <div class="sw-dot" data-c="#8b5e3c" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#8b5e3c;cursor:pointer;border:3px solid transparent;transition:.15s" title="Kahve"></div>
+        <div class="sw-dot" data-c="#4f7cff" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#4f7cff;cursor:pointer;border:3px solid transparent;transition:.15s" title="Mavi"></div>
+        <div class="sw-dot" data-c="#7c3aed" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#7c3aed;cursor:pointer;border:3px solid transparent;transition:.15s" title="Mor"></div>
+        <div class="sw-dot" data-c="#ea580c" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#ea580c;cursor:pointer;border:3px solid transparent;transition:.15s" title="Turuncu"></div>
+        <div class="sw-dot" data-c="#0891b2" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#0891b2;cursor:pointer;border:3px solid transparent;transition:.15s" title="Okyanus"></div>
+        <div class="sw-dot" data-c="#db2777" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#db2777;cursor:pointer;border:3px solid transparent;transition:.15s" title="Pembe"></div>
+        <div class="sw-dot" data-c="#ffffff" onclick="pickSWColor(this)" style="width:42px;height:42px;border-radius:10px;background:#fff;cursor:pointer;border:3px solid transparent;transition:.15s" title="Beyaz"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem">
+        <span style="font-size:.78rem;color:#64748b">Özel:</span>
+        <input type="color" id="sw-color-picker" value="#c9a84c" oninput="pickSWColorHex(this.value)"
+          style="width:42px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;cursor:pointer;padding:2px"/>
+        <input type="text" id="sw-color-hex" value="#c9a84c" maxlength="7"
+          style="width:90px;padding:.5rem .75rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.85rem;font-family:monospace;outline:none;transition:.2s"
+          oninput="if(/^#[0-9a-fA-F]{6}$/.test(this.value)){pickSWColorHex(this.value)}"
+          onfocus="this.style.borderColor='#c9a84c'" onblur="this.style.borderColor='rgba(255,255,255,.08)'"/>
+      </div>
+      <!-- Önizleme -->
+      <div style="padding:1rem 1.25rem;background:#1c1f2e;border-radius:10px;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:1rem">
+        <div id="sw-prev-btn" style="padding:.5rem 1.1rem;border-radius:6px;font-size:.82rem;font-weight:700;background:#c9a84c;color:#000;transition:.2s">Rezervasyon Yap</div>
+        <div id="sw-prev-price" style="font-size:1.1rem;font-weight:700;color:#c9a84c;transition:.2s">₺285</div>
+        <span style="font-size:.75rem;color:#475569">Canlı önizleme</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:1.75rem">
+        <button onclick="swNext(2)" style="padding:.72rem 1.25rem;background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer">← Geri</button>
+        <button onclick="swNext(4)" style="padding:.72rem 1.75rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer" onmouseover="this.style.background='#e4c97e'" onmouseout="this.style.background='#c9a84c'">Devam →</button>
+      </div>
+    </div>
+
+    <!-- SAYFA 4: Giriş Bilgileri -->
+    <div id="sp4" class="sp-page" style="display:none;background:#141720;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:2rem">
+      <h2 style="font-size:1rem;font-weight:700;color:#f1f5f9;margin-bottom:.5rem">🔐 Admin Giriş Bilgileri</h2>
+      <p style="font-size:.82rem;color:#64748b;margin-bottom:1.5rem">Bu bilgilerle admin paneline giriş yapacaksınız. Güvenli bir şifre seçin.</p>
+      <div style="display:flex;flex-direction:column;gap:1.1rem">
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Kullanıcı Adı *</label>
+          <input id="s4-user" type="text" placeholder="Örn: admin veya restoranim" maxlength="40" autocomplete="username"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+            oninput="this.style.borderColor='#c9a84c'"
+            onblur="this.style.borderColor=this.value?'rgba(34,197,94,.4)':'rgba(239,68,68,.5)'"/>
+          <div style="font-size:.7rem;color:#64748b;margin-top:.3rem">Boşluk kullanmayın. Küçük harf önerilir.</div>
+        </div>
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Şifre * <span style="color:#64748b;font-size:.62rem;font-weight:400;letter-spacing:0;text-transform:none">(en az 6 karakter)</span></label>
+          <div style="position:relative">
+            <input id="s4-pass" type="password" placeholder="Güçlü bir şifre girin" maxlength="80" autocomplete="new-password"
+              style="width:100%;padding:.78rem 2.75rem .78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+              oninput="checkPassStrength(this.value);this.style.borderColor='#c9a84c'"
+              onblur="this.style.borderColor=this.value.length>=6?'rgba(34,197,94,.4)':'rgba(239,68,68,.5)'"/>
+            <button onclick="togglePassVis('s4-pass','s4-eye')" id="s4-eye" style="position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:1rem;padding:.2rem">👁</button>
+          </div>
+          <!-- Güç göstergesi -->
+          <div style="display:flex;gap:3px;margin-top:.5rem" id="pass-strength-bars">
+            <div style="height:3px;flex:1;border-radius:2px;background:#2d3154;transition:.3s" id="psb1"></div>
+            <div style="height:3px;flex:1;border-radius:2px;background:#2d3154;transition:.3s" id="psb2"></div>
+            <div style="height:3px;flex:1;border-radius:2px;background:#2d3154;transition:.3s" id="psb3"></div>
+            <div style="height:3px;flex:1;border-radius:2px;background:#2d3154;transition:.3s" id="psb4"></div>
+          </div>
+          <div id="pass-strength-txt" style="font-size:.7rem;color:#64748b;margin-top:.3rem"></div>
+        </div>
+        <div>
+          <label style="font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;display:block;margin-bottom:.4rem">Şifre Tekrar *</label>
+          <input id="s4-pass2" type="password" placeholder="Şifrenizi tekrar girin" maxlength="80" autocomplete="new-password"
+            style="width:100%;padding:.78rem 1rem;background:#1c1f2e;border:2px solid rgba(255,255,255,.08);border-radius:8px;color:#f1f5f9;font-size:.95rem;outline:none;transition:.2s"
+            oninput="checkPassMatch();this.style.borderColor='#c9a84c'"
+            onblur="checkPassMatch()"/>
+          <div id="pass-match-msg" style="font-size:.7rem;margin-top:.3rem"></div>
+        </div>
+
+        <!-- Özet kutu -->
+        <div style="background:#0d0f14;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:1rem 1.25rem;margin-top:.25rem">
+          <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#64748b;margin-bottom:.75rem">Kurulum Özeti</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;font-size:.8rem">
+            <div style="color:#64748b">Restoran:</div><div id="sum-name" style="color:#f1f5f9;font-weight:600">—</div>
+            <div style="color:#64748b">Para birimi:</div><div id="sum-currency" style="color:#f1f5f9">—</div>
+            <div style="color:#64748b">Kullanıcı adı:</div><div id="sum-user" style="color:#f1f5f9">—</div>
+            <div style="color:#64748b">Renk:</div><div id="sum-color" style="display:flex;align-items:center;gap:.4rem"><span id="sum-color-dot" style="width:14px;height:14px;border-radius:3px;background:#c9a84c;display:inline-block"></span><span id="sum-color-txt" style="color:#f1f5f9">#c9a84c</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="setup-err" style="display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:.75rem 1rem;font-size:.82rem;color:#fca5a5;margin-top:1rem"></div>
+
+      <div style="display:flex;justify-content:space-between;margin-top:1.75rem">
+        <button onclick="swNext(3)" style="padding:.72rem 1.25rem;background:transparent;color:#94a3b8;border:1px solid rgba(255,255,255,.1);border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer">← Geri</button>
+        <button onclick="completeSetup()" id="finish-btn"
+          style="padding:.72rem 2rem;background:#c9a84c;color:#000;border:none;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;display:flex;align-items:center;gap:.5rem"
+          onmouseover="this.style.background='#e4c97e'" onmouseout="this.style.background='#c9a84c'">
+          🚀 Kurulumu Tamamla
+        </button>
+      </div>
+    </div>
+
+    <p style="text-align:center;font-size:.72rem;color:#475569;margin-top:1.25rem">Tüm bilgileri admin panelinden güncelleyebilirsiniz.</p>
+  </div>
+</div>
+
+<script>
+// ═══ SETUP WIZARD ══════════════════════════════════════════════
+let swColor = '#c9a84c';
+let swCurrentPage = 1;
 
 async function checkSetup() {
   try {
     const r = await fetch('/api/setup-status');
     const j = await r.json();
-    if (!j.setupDone) showSetup();
-  } catch(e) {
-    // API erişim yoksa kurulumu atla
-    console.warn('Setup check failed:', e);
-  }
-}
-
-function showSetup() {
-  const ov = document.getElementById('setup-overlay');
-  ov.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-
-function hideSetup() {
-  const ov = document.getElementById('setup-overlay');
-  ov.style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-function setupNext(step) {
-  if (step === 2) {
-    const name = document.getElementById('setup-name').value.trim();
-    if (!name) {
-      document.getElementById('setup-name').style.borderColor = '#ef4444';
-      document.getElementById('setup-name').focus();
-      return;
+    if (!j.setupDone) {
+      document.getElementById('setup-overlay').style.display = 'block';
+      document.body.style.overflow = 'hidden';
     }
+  } catch(e) { console.warn('Setup check skipped:', e); }
+}
+
+function swNext(page) {
+  // Validasyon
+  if (page > swCurrentPage) {
+    if (swCurrentPage === 1) {
+      const n = document.getElementById('s1-name').value.trim();
+      if (!n) {
+        document.getElementById('s1-name').style.borderColor = '#ef4444';
+        document.getElementById('s1-name').focus();
+        swShake('sp1'); return;
+      }
+    }
+    if (swCurrentPage === 4) return;
   }
-  document.querySelectorAll('.setup-page').forEach(p => p.style.display = 'none');
-  document.getElementById('setup-page-' + step).style.display = 'block';
-  // Adım göstergesi
-  document.querySelectorAll('.setup-step').forEach(s => {
-    const n = parseInt(s.dataset.step);
-    const dot = s.querySelector('div');
-    if (n < step) {
-      s.style.color = '#22c55e'; dot.style.background = '#22c55e'; dot.style.color = '#fff';
-      dot.textContent = '✓';
-    } else if (n === step) {
-      s.style.color = '#c9a84c'; dot.style.background = setupColor; dot.style.color = '#000';
-      dot.textContent = n;
+  swCurrentPage = page;
+  // Sayfaları göster/gizle
+  document.querySelectorAll('.sp-page').forEach(p => p.style.display = 'none');
+  document.getElementById('sp' + page).style.display = 'block';
+  // Adım barını güncelle
+  document.querySelectorAll('.sbar-step').forEach(s => {
+    const n = parseInt(s.dataset.s);
+    const dot = s.querySelector('.sbar-dot');
+    if (n < page) {
+      s.style.color = '#22c55e';
+      dot.style.background = '#22c55e'; dot.style.color = '#fff'; dot.textContent = '✓';
+    } else if (n === page) {
+      s.style.color = swColor;
+      dot.style.background = swColor; dot.style.color = n<=2?'#000':'#fff'; dot.textContent = n;
     } else {
-      s.style.color = '#64748b'; dot.style.background = '#2d3154'; dot.style.color = '#64748b';
-      dot.textContent = n;
+      s.style.color = '#64748b';
+      dot.style.background = '#2d3154'; dot.style.color = '#64748b'; dot.textContent = n;
     }
   });
+  // Adım 4'e geçince özeti doldur
+  if (page === 4) updateSummary();
+  // Scroll top
+  document.getElementById('setup-overlay').scrollTo(0, 0);
 }
 
-function pickSetupColor(el) {
-  document.querySelectorAll('.sc').forEach(e => { e.style.borderColor = 'transparent'; e.style.boxShadow = 'none'; });
+function swShake(id) {
+  const el = document.getElementById(id);
+  el.style.animation = 'shake .4s ease';
+  setTimeout(() => el.style.animation = '', 400);
+}
+
+function pickSWColor(el) {
+  document.querySelectorAll('.sw-dot').forEach(e => { e.style.borderColor = 'transparent'; e.style.boxShadow = 'none'; });
   el.style.borderColor = '#fff';
-  el.style.boxShadow = '0 0 0 3px ' + el.dataset.color;
-  setupColor = el.dataset.color;
-  applySetupColorPreview(setupColor);
-  document.getElementById('setup-custom-color').value = setupColor;
-  document.getElementById('setup-color-hex').value = setupColor;
+  el.style.boxShadow = '0 0 0 3px ' + el.dataset.c;
+  swColor = el.dataset.c;
+  applySWColorPreview(swColor);
+  document.getElementById('sw-color-picker').value = swColor;
+  document.getElementById('sw-color-hex').value = swColor;
 }
 
-function pickSetupColorHex(val) {
-  setupColor = val;
-  document.getElementById('setup-custom-color').value = val;
-  document.getElementById('setup-color-hex').value = val;
-  document.querySelectorAll('.sc').forEach(e => { e.style.borderColor = 'transparent'; e.style.boxShadow = 'none'; });
-  applySetupColorPreview(val);
+function pickSWColorHex(val) {
+  swColor = val;
+  document.querySelectorAll('.sw-dot').forEach(e => { e.style.borderColor = 'transparent'; e.style.boxShadow = 'none'; });
+  applySWColorPreview(val);
 }
 
-function applySetupColorPreview(c) {
-  const btn = document.getElementById('setup-preview-btn');
-  const price = document.getElementById('setup-preview-price');
-  if(btn) btn.style.background = c;
-  if(price) price.style.color = c;
+function applySWColorPreview(c) {
+  document.getElementById('sw-prev-btn').style.background = c;
+  document.getElementById('sw-prev-price').style.color = c;
+}
+
+function checkPassStrength(p) {
+  const bars = ['psb1','psb2','psb3','psb4'];
+  const colors = ['#ef4444','#f59e0b','#22c55e','#22c55e'];
+  const labels = ['Çok zayıf','Zayıf','İyi','Güçlü'];
+  let score = 0;
+  if (p.length >= 6)  score++;
+  if (p.length >= 10) score++;
+  if (/[A-Z]/.test(p) || /[0-9]/.test(p)) score++;
+  if (/[^A-Za-z0-9]/.test(p)) score++;
+  bars.forEach((id, i) => {
+    document.getElementById(id).style.background = i < score ? colors[score-1] : '#2d3154';
+  });
+  const txt = document.getElementById('pass-strength-txt');
+  txt.textContent = p.length ? labels[score-1] || '' : '';
+  txt.style.color = score > 0 ? colors[score-1] : '#64748b';
+}
+
+function checkPassMatch() {
+  const p1 = document.getElementById('s4-pass').value;
+  const p2 = document.getElementById('s4-pass2').value;
+  const msg = document.getElementById('pass-match-msg');
+  const inp = document.getElementById('s4-pass2');
+  if (!p2) { msg.textContent = ''; return; }
+  if (p1 === p2) {
+    msg.textContent = '✓ Şifreler eşleşiyor'; msg.style.color = '#22c55e';
+    inp.style.borderColor = 'rgba(34,197,94,.4)';
+  } else {
+    msg.textContent = '✗ Şifreler eşleşmiyor'; msg.style.color = '#ef4444';
+    inp.style.borderColor = 'rgba(239,68,68,.5)';
+  }
+}
+
+function togglePassVis(inputId, btnId) {
+  const inp = document.getElementById(inputId);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function updateSummary() {
+  const n = document.getElementById('s1-name').value.trim();
+  const c = document.getElementById('s1-currency').value;
+  const u = document.getElementById('s4-user').value.trim();
+  document.getElementById('sum-name').textContent     = n || '—';
+  document.getElementById('sum-currency').textContent = c || '—';
+  document.getElementById('sum-user').textContent     = u || '—';
+  document.getElementById('sum-color-dot').style.background = swColor;
+  document.getElementById('sum-color-txt').textContent = swColor;
 }
 
 async function completeSetup() {
-  const btn = document.getElementById('setup-finish-btn');
-  btn.disabled = true;
-  btn.textContent = 'Kaydediliyor...';
+  const name  = document.getElementById('s1-name').value.trim();
+  const user  = document.getElementById('s4-user').value.trim();
+  const pass  = document.getElementById('s4-pass').value;
+  const pass2 = document.getElementById('s4-pass2').value;
+  const errEl = document.getElementById('setup-err');
 
-  const data = {
-    restaurantName: document.getElementById('setup-name').value.trim(),
-    slogan:         document.getElementById('setup-slogan').value.trim(),
-    currency:       document.getElementById('setup-currency').value,
-    heroEyebrow:    document.getElementById('setup-eyebrow').value.trim(),
-    phone:          document.getElementById('setup-phone').value.trim(),
-    whatsapp:       document.getElementById('setup-wa').value.trim(),
-    email:          document.getElementById('setup-email').value.trim(),
-    address:        document.getElementById('setup-address').value.trim(),
-    primaryColor:   setupColor,
+  const showErr = (msg) => {
+    errEl.textContent = msg; errEl.style.display = 'block';
+    document.getElementById('setup-overlay').scrollTo(0, 9999);
+  };
+
+  if (!name)       return showErr('Restoran adı zorunlu (Adım 1).');
+  if (!user)       return showErr('Kullanıcı adı zorunlu.');
+  if (user.includes(' ')) return showErr('Kullanıcı adında boşluk olamaz.');
+  if (pass.length < 6)    return showErr('Şifre en az 6 karakter olmalı.');
+  if (pass !== pass2)     return showErr('Şifreler eşleşmiyor.');
+
+  const btn = document.getElementById('finish-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span style="width:16px;height:16px;border:2px solid rgba(0,0,0,.2);border-top-color:#000;border-radius:50%;animation:spin .6s linear infinite;display:inline-block"></span> Kaydediliyor...';
+
+  const payload = {
+    restaurantName: name,
+    slogan:         document.getElementById('s1-slogan').value.trim(),
+    currency:       document.getElementById('s1-currency').value,
+    heroEyebrow:    document.getElementById('s1-eyebrow').value.trim(),
+    phone:          document.getElementById('s2-phone').value.trim(),
+    whatsapp:       document.getElementById('s2-wa').value.trim(),
+    email:          document.getElementById('s2-email').value.trim(),
+    address:        document.getElementById('s2-address').value.trim(),
+    primaryColor:   swColor,
+    adminUser:      user,
+    adminPass:      pass,
   };
 
   try {
     const r = await fetch('/api/setup', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json', 'Authorization': 'Basic ' + btoa('admin:GucluBirSifre123!')},
-      body: JSON.stringify(data)
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
     });
     const j = await r.json();
     if (j.ok) {
-      hideSetup();
-      // Admin paneli yenile
-      if(typeof initAll === 'function') initAll();
+      // Yeni credentials ile devam et
+      window._adminCreds = btoa(user + ':' + pass);
+      // Overlay kapat
+      document.getElementById('setup-overlay').style.display = 'none';
+      document.body.style.overflow = '';
+      // Admin paneli başlat
+      if (typeof initAll === 'function') initAll();
     } else {
-      alert('Hata: ' + (j.error || 'Bilinmeyen hata'));
-      btn.disabled = false; btn.textContent = '🚀 Kurulumu Tamamla';
+      btn.disabled = false;
+      btn.innerHTML = '🚀 Kurulumu Tamamla';
+      showErr(j.error || 'Bilinmeyen hata oluştu.');
     }
   } catch(e) {
-    alert('Sunucu hatası: ' + e.message);
-    btn.disabled = false; btn.textContent = '🚀 Kurulumu Tamamla';
+    btn.disabled = false;
+    btn.innerHTML = '🚀 Kurulumu Tamamla';
+    showErr('Sunucu hatası: ' + e.message);
   }
 }
-// Sayfa yüklenince kurulum kontrolü yap
+
 document.addEventListener('DOMContentLoaded', checkSetup);
 </script>
+<style>
+@keyframes shake {
+  0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)}
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+
 
 
 <div class="layout">
@@ -1187,10 +1424,20 @@ const COLOR_PRESETS = [
 // ═══════════════════════════════════════════════════
 //  API
 // ═══════════════════════════════════════════════════
-const creds = btoa('admin:GucluBirSifre123!');
-const AH = {'Content-Type':'application/json','Authorization':'Basic '+creds};
+// Kimlik bilgileri HTTP Basic Auth ile tarayıcı tarafından yönetilir
+// Kurulum sonrası sayfa yenilenir, tarayıcı yeni bilgileri ister
+const creds = (()=>{
+  // URL'den auth varsa kullan (test için), yoksa tarayıcı sorar
+  return btoa(
+    (window._adminUser || '') + ':' + (window._adminPass || '')
+  );
+})();
+// Tarayıcı HTTP Basic Auth'u otomatik yönetir
+// Kurulumda belirlenen kullanıcı adı/şifre ile giriş yapılır
+const AH = {'Content-Type':'application/json'};
+// credentials: 'include' tarayıcının kaydettiği auth'u gönderir
 async function api(method,path,body){
-  const opts={method,headers:AH};
+  const opts={method,headers:getAH(),credentials:'include'};
   if(body!==undefined)opts.body=JSON.stringify(body);
   const r=await fetch(path,opts);
   if(!r.ok)throw new Error(await r.text());
@@ -1217,7 +1464,7 @@ async function uploadFiles(files, ctx) {
     document.getElementById(barId).style.width=Math.round((i/files.length)*90)+'%';
     const fd=new FormData(); fd.append('file',file,file.name);
     try{
-      const r=await fetch('/api/upload',{method:'POST',headers:{'Authorization':'Basic '+creds},body:fd});
+      const r=await fetch('/api/upload',{method:'POST',headers:{'Authorization':'Basic '+(window._adminCreds||creds)},body:fd});
       const j=await r.json();
       if(j.url)results.push(j);
     }catch(e){toast('Hata: '+file.name,'err');}
@@ -1237,7 +1484,7 @@ async function uploadInline(input,inputId,prevId){
   toast('Yükleniyor...','info');
   const fd=new FormData(); fd.append('file',input.files[0],input.files[0].name);
   try{
-    const r=await fetch('/api/upload',{method:'POST',headers:{'Authorization':'Basic '+creds},body:fd});
+    const r=await fetch('/api/upload',{method:'POST',headers:{'Authorization':'Basic '+(window._adminCreds||creds)},body:fd});
     const j=await r.json();
     if(j.url){
       document.getElementById(inputId).value=j.url;
@@ -1253,7 +1500,7 @@ async function uploadInline(input,inputId,prevId){
 
 async function deleteMedia(fname){
   if(!confirm('Bu dosyayı silmek istediğinizden emin misiniz?'))return;
-  await fetch('/api/uploads/'+encodeURIComponent(fname),{method:'DELETE',headers:AH});
+  await fetch('/api/uploads/'+encodeURIComponent(fname),{method:'DELETE',headers:getAH()});
   await loadMedia();
   renderMediaLib('media-lib-main',false);
   renderMediaLib('media-lib-picker',true);
@@ -1311,6 +1558,10 @@ function setupDropZone(zoneId,ctx){
 // ═══════════════════════════════════════════════════
 async function initAll(){
   try{
+    // Önce settings ile auth kontrol et
+    const testResp = await fetch('/api/settings', {headers:getAH()});
+    if (testResp.status === 401) { showLoginScreen(); return; }
+
     const [settings,menuItems,menuCategories,gallery,reservations,testimonials,messages]=await Promise.all([
       GET('settings'),GET('menuItems'),GET('menuCategories'),GET('gallery'),GET('reservations'),GET('testimonials'),GET('messages')
     ]);
