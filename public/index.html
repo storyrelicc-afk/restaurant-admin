@@ -258,14 +258,14 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="ld-logo" id="ld-logo">Ember &amp; Oak</div>
+  <div class="ld-logo" id="ld-logo">Yükleniyor...</div>
   <div class="ld-bar"><div class="ld-prog"></div></div>
 </div>
 
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-i">
-    <a href="#hero" class="logo" id="nav-logo">Ember <span>&amp;</span> Oak</a>
+    <a href="#hero" class="logo" id="nav-logo"></a>
     <ul class="nav-ul">
       <li><a href="#about">Hikayemiz</a></li>
       <li><a href="#menu-section">Menü</a></li>
@@ -303,8 +303,8 @@
     </h1>
     <p class="hero-tag reveal d2" id="hero-slogan">Where fire meets finesse, and every plate tells a story.</p>
     <div class="hero-acts reveal d3">
-      <a href="#reservation" class="btn-gold">Rezervasyon Yap</a>
-      <a href="#menu-section" class="btn-out">Menüyü İncele</a>
+      <a href="#reservation" class="btn-gold" id="hero-btn1">Rezervasyon Yap</a>
+      <a href="#menu-section" class="btn-out" id="hero-btn2">Menüyü İncele</a>
     </div>
   </div>
   <div class="scroll-ind" onclick="scrollTo('#about')">
@@ -314,14 +314,14 @@
 </section>
 
 <!-- STATS -->
-<div class="stats-bar">
+<div class="stats-bar" id="section-stats">
   <div class="container">
     <div class="stats-g" id="stats-grid"></div>
   </div>
 </div>
 
 <!-- ABOUT -->
-<section id="about" class="sp">
+<section id="about" class="sp" id="section-about">
   <div class="container">
     <div class="about-g">
       <div class="about-img rev-l">
@@ -330,8 +330,8 @@
           <img id="about-img" src="" alt="Restoran atmosferi" loading="lazy"/>
         </div>
         <div class="about-badge glass">
-          <div class="n">3★</div>
-          <div class="l">Ödüllü<br>Restoran</div>
+          <div class="n" id="about-badge-num">3★</div>
+          <div class="l" id="about-badge-txt">Ödüllü<br>Restoran</div>
         </div>
       </div>
       <div class="rev-r">
@@ -342,7 +342,7 @@
         <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
         <p class="body-l" id="about-text-1"></p>
         <p class="body-m" id="about-text-2" style="margin-top:1rem"></p>
-        <div class="chef-card">
+        <div class="chef-card" id="chef-section">
           <img class="chef-av" id="chef-img" src="" alt="Şef"/>
           <div>
             <div class="chef-n" id="chef-name"></div>
@@ -355,7 +355,7 @@
 </section>
 
 <!-- MENU -->
-<section id="menu-section" class="sp">
+<section id="menu-section" class="sp" id="section-menu">
   <div class="container">
     <div class="reveal" style="margin-bottom:clamp(3rem,6vw,5rem);max-width:600px">
       <span class="eyebrow" style="display:block;margin-bottom:1rem">Mutfak Yolculuğu</span>
@@ -368,7 +368,7 @@
 </section>
 
 <!-- GALLERY -->
-<section id="gallery" class="sp" style="background:var(--bg)">
+<section id="gallery" class="sp" style="background:var(--bg)" id="section-gallery">
   <div class="container">
     <div class="reveal" style="margin-bottom:clamp(3rem,6vw,5rem);max-width:600px">
       <span class="eyebrow" style="display:block;margin-bottom:1rem">Görsel Şölen</span>
@@ -388,7 +388,7 @@
 </div>
 
 <!-- RESERVATION -->
-<section id="reservation" class="sp">
+<section id="reservation" class="sp" id="section-reservation">
   <div class="container">
     <div class="res-g">
       <div class="rev-l">
@@ -440,7 +440,7 @@
 </section>
 
 <!-- TESTIMONIALS -->
-<section id="testimonials" class="sp" style="background:var(--bg2)">
+<section id="testimonials" class="sp" style="background:var(--bg2)" id="section-testimonials">
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto clamp(3rem,6vw,5rem)">
       <span class="eyebrow" style="display:block;margin-bottom:1rem">Misafir Yorumları</span>
@@ -459,7 +459,7 @@
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="sp">
+<section id="contact" class="sp" id="section-contact">
   <div class="container">
     <div class="cont-g">
       <div class="rev-l">
@@ -473,10 +473,12 @@
       </div>
       <div class="rev-r">
         <div class="map-f" id="map-container">
-          <div class="map-grid"></div>
-          <div class="map-pin">
-            <div class="pin-dot"></div>
-            <div class="pin-lbl" id="map-lbl">Ember &amp; Oak</div>
+          <div id="map-frame-embed" style="width:100%;height:100%">
+            <div class="map-grid"></div>
+            <div class="map-pin">
+              <div class="pin-dot"></div>
+              <div class="pin-lbl" id="map-lbl">Ember &amp; Oak</div>
+            </div>
           </div>
         </div>
         <a href="https://maps.google.com" target="_blank" class="btn-gh">Yol Tarifi Al →</a>
@@ -490,7 +492,7 @@
   <div class="container">
     <div class="foot-g">
       <div class="foot-brand">
-        <div class="logo" style="font-size:1.7rem;font-family:var(--fd);font-weight:400;letter-spacing:.04em" id="foot-logo">Ember <span style="color:var(--gold)">&amp;</span> Oak</div>
+        <div class="logo" style="font-size:1.7rem;font-family:var(--fd);font-weight:400;letter-spacing:.04em" id="foot-logo"></div>
         <p class="foot-p" id="foot-desc">Ödüllü fine dining deneyimi – açık ateş pişirme sanatının modern yorumu. Rezervasyon önerilir.</p>
         <div class="soc">
           <a href="#" class="soc-a" id="soc-ig">ig</a>
@@ -574,47 +576,176 @@ async function init(){
 }
 
 function applySettings(){
-  // Colors
+  const name = S.restaurantName||'Ember & Oak';
+
+  // ── Renk ─────────────────────────────────────────
   document.documentElement.style.setProperty('--gold', S.primaryColor||'#c9a84c');
-  // Titles
-  document.title = (S.restaurantName||'Restaurant') + ' – Fine Dining';
-  document.getElementById('page-title').textContent = document.title;
-  // Hero
-  document.getElementById('hero-bg').style.backgroundImage = `url('${S.heroImage}')`;
-  const parts = (S.restaurantName||'Ember & Oak').split('&');
-  document.getElementById('hero-name-1').textContent = parts[0]?.trim()||'Ember';
-  document.getElementById('hero-name-2').innerHTML = parts[1] ? `&amp; ${parts[1].trim()}` : (S.restaurantName||'');
-  document.getElementById('hero-slogan').textContent = S.slogan||'';
-  document.getElementById('hero-eyebrow').textContent = 'Est. 2014 – İstanbul & Ötesi';
-  // About
-  document.getElementById('about-img').src = S.aboutImage||'';
-  document.getElementById('about-text-1').textContent = S.aboutText||'';
-  document.getElementById('about-text-2').textContent = S.aboutText2||'';
-  document.getElementById('chef-img').src = S.chefImage||'';
-  document.getElementById('chef-name').textContent = S.chefName||'';
-  document.getElementById('chef-title').textContent = S.chefTitle||'';
-  // Nav/logo
-  document.getElementById('nav-logo').innerHTML = (S.restaurantName||'Ember &amp; Oak').replace('&','<span>&amp;</span>');
-  // Contact
-  document.getElementById('c-address').textContent = S.address||'';
-  const ph=document.getElementById('c-phone-a'); ph.textContent=S.phone||''; ph.href='tel:'+S.phone;
-  const em=document.getElementById('c-email-a'); em.textContent=S.email||''; em.href='mailto:'+S.email;
-  document.getElementById('f-addr').textContent = S.address||'';
-  document.getElementById('f-phone').textContent = S.phone||'';
-  document.getElementById('f-email').textContent = S.email||'';
-  document.getElementById('f-rname').textContent = S.restaurantName||'';
-  document.getElementById('map-lbl').textContent = S.restaurantName||'Restoran';
-  document.getElementById('wa-btn').href = `https://wa.me/${(S.whatsapp||'').replace(/\D/g,'')}`;
-  document.getElementById('soc-ig').href = S.socialInstagram||'#';
-  document.getElementById('soc-fb').href = S.socialFacebook||'#';
-  document.getElementById('soc-tw').href = S.socialTwitter||'#';
-  // Hours
+
+  // ── Sayfa başlığı ────────────────────────────────
+  document.title = name + ' – Fine Dining';
+  const pt = document.getElementById('page-title'); if(pt) pt.textContent = document.title;
+
+  // ── Yükleme ekranı yazısı ─────────────────────────
+  // Loader, restaurantName'e bağlı; loadingText varsa onu kullan
+  const loaderText = S.loadingText || name;
+  const ldLogo = document.getElementById('ld-logo');
+  if(ldLogo) ldLogo.textContent = loaderText;
+
+  // ── Logo / Navbar ─────────────────────────────────
+  // Eğer logoUrl varsa resim göster, yoksa sadece text (& işareti ile renklendirme)
+  const navLogo  = document.getElementById('nav-logo');
+  const footLogo = document.getElementById('foot-logo');
+  function buildLogoHTML(el, imgSize) {
+    if(!el) return;
+    if(S.logoUrl) {
+      el.innerHTML = `<img src="${S.logoUrl}" alt="${name}" style="height:${imgSize}px;object-fit:contain;max-width:180px;display:block"/>`;
+    } else {
+      // Sadece adı göster - & varsa altın renkle yaz, yoksa düz yaz
+      const escaped = name.replace(/&/g,'<span style="color:var(--gold)">&amp;</span>');
+      el.innerHTML = escaped;
+    }
+  }
+  buildLogoHTML(navLogo, 36);
+  buildLogoHTML(footLogo, 42);
+
+  // ── Hero ──────────────────────────────────────────
+  const heroBg = document.getElementById('hero-bg');
+  if(heroBg && S.heroImage) heroBg.style.backgroundImage = `url('${S.heroImage}')`;
+
+  // Hero başlık: & yoksa sadece tek satır göster, varsa iki satır
+  const h1el = document.getElementById('hero-name-1');
+  const h2el = document.getElementById('hero-name-2');
+  if(h1el && h2el) {
+    const amp = name.indexOf('&');
+    if(amp !== -1) {
+      h1el.textContent = name.slice(0, amp).trim();
+      h2el.innerHTML   = '&amp; ' + name.slice(amp+1).trim();
+    } else {
+      h1el.textContent = name;
+      h2el.innerHTML   = '';
+    }
+  }
+
+  const heroSlogan  = document.getElementById('hero-slogan');
+  if(heroSlogan) heroSlogan.textContent = S.slogan||'';
+
+  const heroEyebrow = document.getElementById('hero-eyebrow');
+  if(heroEyebrow) heroEyebrow.textContent = S.heroEyebrow||'Est. 2014 – İstanbul & Ötesi';
+
+  // Hero buton metinleri
+  const hBtn1 = document.getElementById('hero-btn1');
+  const hBtn2 = document.getElementById('hero-btn2');
+  if(hBtn1 && S.heroBtnPrimary)   hBtn1.textContent = S.heroBtnPrimary;
+  if(hBtn2 && S.heroBtnSecondary) hBtn2.textContent = S.heroBtnSecondary;
+
+  // Hero overlay karartma
+  if(heroBg && S.heroOverlayOpacity !== undefined) {
+    const op = S.heroOverlayOpacity;
+    heroBg.style.background = `linear-gradient(180deg,rgba(0,0,0,${op*0.4}) 0%,rgba(0,0,0,${op*0.8}) 40%,rgba(10,10,10,${op+0.3>1?1:op+0.3}) 100%), url('${S.heroImage}') center/cover no-repeat`;
+  }
+
+  // ── About ─────────────────────────────────────────
+  const aboutImg = document.getElementById('about-img');
+  if(aboutImg) aboutImg.src = S.aboutImage||'';
+
+  const aboutT1 = document.getElementById('about-text-1');
+  const aboutT2 = document.getElementById('about-text-2');
+  if(aboutT1) aboutT1.textContent = S.aboutText||'';
+  if(aboutT2) aboutT2.textContent = S.aboutText2||'';
+
+  // About rozeti
+  const badgeNum = document.getElementById('about-badge-num');
+  const badgeTxt = document.getElementById('about-badge-txt');
+  if(badgeNum) badgeNum.textContent = S.aboutBadgeNum||'3★';
+  if(badgeTxt) badgeTxt.textContent = S.aboutBadgeText||'Ödüllü Restoran';
+
+  // ── Şef ───────────────────────────────────────────
+  const chefSection = document.getElementById('chef-section');
+  const chefImg   = document.getElementById('chef-img');
+  const chefNameEl  = document.getElementById('chef-name');
+  const chefTitleEl = document.getElementById('chef-title');
+  if(chefImg)   chefImg.src = S.chefImage||'';
+  if(chefNameEl)  chefNameEl.textContent  = S.chefName||'';
+  if(chefTitleEl) chefTitleEl.textContent = S.chefTitle||'';
+  // showChef toggle
+  if(chefSection) chefSection.style.display = (S.showChef===false) ? 'none' : '';
+
+  // ── Section visibility ────────────────────────────
+  const sectionMap = {
+    'section-stats':       S.showStats,
+    'section-about':       S.showAbout,
+    'section-menu':        S.showMenu,
+    'section-gallery':     S.showGallery,
+    'section-reservation': S.showReservation,
+    'section-testimonials':S.showTestimonials,
+    'section-contact':     S.showContact,
+    'wa-btn':              S.showWhatsapp,
+  };
+  Object.entries(sectionMap).forEach(([id, visible]) => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = (visible===false) ? 'none' : '';
+  });
+
+  // ── Rezervasyon arka planı ─────────────────────────
+  const resSec = document.getElementById('section-reservation');
+  if(resSec && S.reservationBgImage) {
+    resSec.style.backgroundImage = `linear-gradient(180deg,rgba(10,10,10,.6),rgba(10,10,10,.88)),url('${S.reservationBgImage}') center/cover fixed`;
+  }
+
+  // ── İletişim ──────────────────────────────────────
+  const cAddr = document.getElementById('c-address');
+  if(cAddr) cAddr.textContent = S.address||'';
+
+  const ph = document.getElementById('c-phone-a');
+  if(ph){ ph.textContent = S.phone||''; ph.href = 'tel:'+S.phone; }
+
+  const em = document.getElementById('c-email-a');
+  if(em){ em.textContent = S.email||''; em.href = 'mailto:'+S.email; }
+
+  const fAddr  = document.getElementById('f-addr');
+  const fPhone = document.getElementById('f-phone');
+  const fEmail = document.getElementById('f-email');
+  const fRname = document.getElementById('f-rname');
+  if(fAddr)  fAddr.textContent  = S.address||'';
+  if(fPhone) fPhone.textContent = S.phone||'';
+  if(fEmail) fEmail.textContent = S.email||'';
+  if(fRname) fRname.textContent = name;
+
+  // Footer açıklaması
+  const footDesc = document.getElementById('foot-desc');
+  if(footDesc && S.footerText) footDesc.textContent = S.footerText;
+
+  const mapLbl = document.getElementById('map-lbl');
+  if(mapLbl) mapLbl.textContent = name;
+
+  // Google Maps embed
+  const mapFrame = document.getElementById('map-frame-embed');
+  if(mapFrame && S.mapEmbed) {
+    mapFrame.innerHTML = `<iframe src="${S.mapEmbed}" width="100%" height="100%" style="border:0;border-radius:14px;" allowfullscreen loading="lazy"></iframe>`;
+  }
+
+  // ── WhatsApp ──────────────────────────────────────
+  const waBtn = document.getElementById('wa-btn');
+  if(waBtn) waBtn.href = `https://wa.me/${(S.whatsapp||'').replace(/\D/g,'')}`;
+
+  // ── Sosyal medya ──────────────────────────────────
+  const socIG = document.getElementById('soc-ig');
+  const socFB = document.getElementById('soc-fb');
+  const socTW = document.getElementById('soc-tw');
+  if(socIG) socIG.href = S.socialInstagram||'#';
+  if(socFB) socFB.href = S.socialFacebook||'#';
+  if(socTW) socTW.href = S.socialTwitter||'#';
+
+  // ── Çalışma saatleri ─────────────────────────────
   const hrs = S.hours||[];
-  document.getElementById('hours-list').innerHTML = hrs.map(h=>`<div class="h-row"><span class="day">${h.day}</span><span class="time">${h.time}</span></div>`).join('');
-  document.getElementById('c-hours').innerHTML = hrs.map(h=>`${h.day}: ${h.time}`).join('<br>');
-  // Reservation min date
-  const d=new Date(); d.setDate(d.getDate()+1);
-  document.getElementById('r-date').min=d.toISOString().split('T')[0];
+  const hoursList = document.getElementById('hours-list');
+  const cHours    = document.getElementById('c-hours');
+  if(hoursList) hoursList.innerHTML = hrs.map(h=>`<div class="h-row"><span class="day">${h.day}</span><span class="time">${h.time}</span></div>`).join('');
+  if(cHours) cHours.innerHTML = hrs.map(h=>`${h.day}: ${h.time}`).join('<br>');
+
+  // ── Rezervasyon min tarih ─────────────────────────
+  const rDate = document.getElementById('r-date');
+  if(rDate){ const d=new Date(); d.setDate(d.getDate()+1); rDate.min=d.toISOString().split('T')[0]; }
 }
 
 function renderStats(){
