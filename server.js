@@ -14,14 +14,10 @@ const ADMIN_USER = process.env.ADMIN_USER || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'GucluBirSifre123!';
 
 // ─── PERSISTENT STORAGE ───────────────────────────────────────
-// Railway Volume mount path: /app/data
-// Railway'de Volume ekleyince bu klasör deploy'larda korunur.
-// Volume yoksa proje klasöründeki data/ kullanılır (localhost için).
-const DATA_DIR   = process.env.DATA_DIR || path.join(__dirname, 'data');
+// Railway Volume: Mount Path = /app/data
+// Variables'a ekle: DATA_DIR=/app/data  UPLOAD_DIR=/app/data/uploads
+const DATA_DIR   = process.env.DATA_DIR   || path.join(__dirname, 'data');
 const DATA_FILE  = path.join(DATA_DIR, 'db.json');
-
-// Upload'lar da kalıcı olsun:
-// Volume mount path: /app/data → uploads/ altında sakla
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'public', 'uploads');
 
 // ─── MIME TYPES ───────────────────────────────────────────────
@@ -35,14 +31,8 @@ const MIME = {
 
 // ─── DB HELPERS ───────────────────────────────────────────────
 function readDB() {
-  let db;
-  try { db = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
-  catch { db = getDefaultDB(); }
-  // Environment variable'lar her zaman öncelikli - Railway deploy'da db sıfırlanmasın diye
-  Object.entries(ENV).forEach(([k,v]) => {
-    if (v !== null) db.settings[k] = v;
-  });
-  return db;
+  try { return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
+  catch { return getDefaultDB(); }
 }
 function writeDB(data) { fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2)); }
 function nextId(arr) { return arr.length ? Math.max(...arr.map(x => x.id||0))+1 : 1; }
