@@ -1,49 +1,53 @@
 {
   "settings": {
-    "restaurantName": "",
-    "slogan": "",
-    "phone": "",
-    "whatsapp": "",
-    "email": "",
-    "address": "",
+    "restaurantName": "Restoran Adınız",
+    "slogan": "Eşsiz lezzetler, unutulmaz anlar.",
+    "phone": "+90 555 000 00 00",
+    "whatsapp": "+905550000000",
+    "email": "info@restoranim.com",
+    "address": "Örnek Mah. Lezzet Cad. No:1, İstanbul",
     "mapEmbed": "",
     "logoUrl": "",
     "faviconUrl": "",
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80",
     "heroOverlayOpacity": 0.5,
     "aboutImage": "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80",
-    "aboutText": "",
-    "aboutText2": "",
-    "chefName": "",
-    "chefTitle": "",
-    "chefImage": "",
-    "aboutBadgeNum": "★",
+    "aboutText": "Restoranımız, yılların deneyimi ve tutku ile hazırlanan özel tariflerimizle misafirlerine unutulmaz bir lezzet yolculuğu sunmaktadır.",
+    "aboutText2": "Her tabak, özenle seçilmiş malzemeler ve ustanın elinden çıkan bir sanat eseridir. Sizleri aramızda görmekten mutluluk duyarız.",
+    "chefName": "Şef Adı Soyadı",
+    "chefTitle": "Executive Chef & Kurucu",
+    "chefImage": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80",
+    "aboutBadgeNum": "3★",
     "aboutBadgeText": "Ödüllü Restoran",
     "hours": [
       {
-        "day": "Pazartesi – Cuma",
+        "day": "Pazartesi – Perşembe",
         "time": "12:00 – 23:00"
       },
       {
-        "day": "Cumartesi – Pazar",
-        "time": "12:00 – 00:00"
+        "day": "Cuma – Cumartesi",
+        "time": "12:00 – 00:30"
+      },
+      {
+        "day": "Pazar",
+        "time": "12:00 – 22:00"
       }
     ],
     "stats": [
       {
-        "num": "—",
+        "num": "10+",
         "label": "Yıllık Deneyim"
       },
       {
-        "num": "—",
+        "num": "50k",
         "label": "Mutlu Misafir"
       },
       {
-        "num": "—",
+        "num": "4.9",
         "label": "Ortalama Puan"
       },
       {
-        "num": "—",
+        "num": "3",
         "label": "Ödül"
       }
     ],
@@ -57,7 +61,7 @@
     "fontDisplay": "Cormorant Garamond",
     "fontBody": "Inter",
     "currency": "₺",
-    "footerText": "",
+    "footerText": "Eşsiz lezzet deneyimi için tasarlandı.",
     "showHero": true,
     "showStats": true,
     "showAbout": true,
@@ -68,16 +72,315 @@
     "showTestimonials": true,
     "showContact": true,
     "showWhatsapp": true,
-    "heroEyebrow": "",
+    "heroEyebrow": "Est. 2015 – İstanbul",
     "heroBtnPrimary": "Rezervasyon Yap",
     "heroBtnSecondary": "Menüyü İncele",
     "reservationBgImage": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80",
-    "setupDone": false
+    "setupDone": false,
+    "adminUser": "",
+    "adminPass": ""
   },
-  "menuCategories": [],
-  "menuItems": [],
-  "gallery": [],
+  "menuCategories": [
+    {
+      "id": 1,
+      "name": "Başlangıçlar",
+      "slug": "starters",
+      "icon": "🥗",
+      "active": true
+    },
+    {
+      "id": 2,
+      "name": "Ana Yemekler",
+      "slug": "mains",
+      "icon": "🍽️",
+      "active": true
+    },
+    {
+      "id": 3,
+      "name": "Izgaralar",
+      "slug": "grills",
+      "icon": "🔥",
+      "active": true
+    },
+    {
+      "id": 4,
+      "name": "Tatlılar",
+      "slug": "desserts",
+      "icon": "🍮",
+      "active": true
+    },
+    {
+      "id": 5,
+      "name": "İçecekler",
+      "slug": "drinks",
+      "icon": "🍷",
+      "active": true
+    }
+  ],
+  "menuItems": [
+    {
+      "id": 1,
+      "name": "Mevsim Salatası",
+      "desc": "Taze mevsim yeşillikleri, kiraz domates, zeytin, balsamik sos",
+      "price": 180,
+      "cat": "starters",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "name": "Mantar Çorbası",
+      "desc": "Kremalı orman mantarı çorbası, trüf yağı, kruton",
+      "price": 145,
+      "cat": "starters",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80",
+      "order": 2
+    },
+    {
+      "id": 3,
+      "name": "Karides Kokteyl",
+      "desc": "İskandinav usulü karides, avokado, limon mayonezi",
+      "price": 245,
+      "cat": "starters",
+      "featured": true,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80",
+      "order": 3
+    },
+    {
+      "id": 4,
+      "name": "Levrek Fileto",
+      "desc": "Fırında levrek, limon tereyağı sosu, sebze garnitürü",
+      "price": 520,
+      "cat": "mains",
+      "featured": true,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80",
+      "order": 1
+    },
+    {
+      "id": 5,
+      "name": "Mantarlı Risotto",
+      "desc": "Arborio pirinci, porcini mantar, parmesan, taze kekik",
+      "price": 380,
+      "cat": "mains",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&q=80",
+      "order": 2
+    },
+    {
+      "id": 6,
+      "name": "Izgara Bonfile",
+      "desc": "250g dana bonfile, mantar sos, patates garnitürü",
+      "price": 680,
+      "cat": "grills",
+      "featured": true,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",
+      "order": 1
+    },
+    {
+      "id": 7,
+      "name": "Kuzu Pirzola",
+      "desc": "Frenk üzümü sosu, ızgara sebze, nane jölesi",
+      "price": 590,
+      "cat": "grills",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80",
+      "order": 2
+    },
+    {
+      "id": 8,
+      "name": "Tavuk Şiş",
+      "desc": "Marine edilmiş tavuk, közlenmiş biber, pilav, cacık",
+      "price": 320,
+      "cat": "grills",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=600&q=80",
+      "order": 3
+    },
+    {
+      "id": 9,
+      "name": "Çikolatalı Sufle",
+      "desc": "Sıcak çikolata sufle, vanilyalı dondurma, çilek",
+      "price": 165,
+      "cat": "desserts",
+      "featured": true,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80",
+      "order": 1
+    },
+    {
+      "id": 10,
+      "name": "Crème Brûlée",
+      "desc": "Geleneksel Fransız tatlısı, karamelize şeker, mevsim meyvesi",
+      "price": 145,
+      "cat": "desserts",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80",
+      "order": 2
+    },
+    {
+      "id": 11,
+      "name": "Limonata",
+      "desc": "Taze sıkılmış limon, nane, şurup — soğuk veya soda ile",
+      "price": 75,
+      "cat": "drinks",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=600&q=80",
+      "order": 1
+    },
+    {
+      "id": 12,
+      "name": "Türk Kahvesi",
+      "desc": "Geleneksel pişirme, lokum ikramı ile",
+      "price": 65,
+      "cat": "drinks",
+      "featured": false,
+      "active": true,
+      "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80",
+      "order": 2
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+      "alt": "Restoran iç mekan",
+      "cls": "tall",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": 2,
+      "img": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80",
+      "alt": "Özel tabak sunumu",
+      "cls": "",
+      "active": true,
+      "order": 2
+    },
+    {
+      "id": 3,
+      "img": "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=600&q=80",
+      "alt": "Şef mutfakta",
+      "cls": "",
+      "active": true,
+      "order": 3
+    },
+    {
+      "id": 4,
+      "img": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80",
+      "alt": "Akşam yemeği ortamı",
+      "cls": "wide",
+      "active": true,
+      "order": 4
+    },
+    {
+      "id": 5,
+      "img": "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",
+      "alt": "Izgara biftek",
+      "cls": "",
+      "active": true,
+      "order": 5
+    },
+    {
+      "id": 6,
+      "img": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80",
+      "alt": "Şarap servisi",
+      "cls": "",
+      "active": true,
+      "order": 6
+    },
+    {
+      "id": 7,
+      "img": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a318?w=600&q=80",
+      "alt": "Tatlı sunumu",
+      "cls": "tall",
+      "active": true,
+      "order": 7
+    },
+    {
+      "id": 8,
+      "img": "https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=600&q=80",
+      "alt": "Özel yemek odası",
+      "cls": "",
+      "active": true,
+      "order": 8
+    },
+    {
+      "id": 9,
+      "img": "https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=600&q=80",
+      "alt": "Restoran girişi",
+      "cls": "",
+      "active": true,
+      "order": 9
+    }
+  ],
   "reservations": [],
-  "testimonials": [],
+  "testimonials": [
+    {
+      "id": 1,
+      "text": "\"Yıllar içinde gittiğim en iyi restoran. Her tabak bir sanat eseri, servis mükemmeldi.\"",
+      "name": "Ahmet Y.",
+      "via": "Google Reviews",
+      "stars": 5,
+      "active": true,
+      "featured": true
+    },
+    {
+      "id": 2,
+      "text": "\"Özel günümüzü burada kutladık. Atmosfer, yemekler ve ilgi — hepsi harikaydı. Kesinlikle tavsiye!\"",
+      "name": "Selin K.",
+      "via": "TripAdvisor",
+      "stars": 5,
+      "active": true,
+      "featured": true
+    },
+    {
+      "id": 3,
+      "text": "\"Izgara bonfile hayatımda yediğim en iyi biftek. Şefe selam olsun!\"",
+      "name": "Mehmet D.",
+      "via": "Google Reviews",
+      "stars": 5,
+      "active": true,
+      "featured": false
+    },
+    {
+      "id": 4,
+      "text": "\"Her detay düşünülmüş. Masa örtüsünden müziğe, yemekten servise — kusursuz bir deneyim.\"",
+      "name": "Ayşe & Can T.",
+      "via": "Google Reviews",
+      "stars": 5,
+      "active": true,
+      "featured": false
+    },
+    {
+      "id": 5,
+      "text": "\"İş yemeği için mükemmel bir mekan. Profesyonel servis, sessiz ortam ve harika mutfak.\"",
+      "name": "Kemal B.",
+      "via": "OpenTable",
+      "stars": 5,
+      "active": true,
+      "featured": true
+    },
+    {
+      "id": 6,
+      "text": "\"Şehrin en iyi restoranlarından biri. Fiyat performans açısından da çok başarılı.\"",
+      "name": "Zeynep A.",
+      "via": "Yelp",
+      "stars": 5,
+      "active": true,
+      "featured": false
+    }
+  ],
   "messages": []
 }
