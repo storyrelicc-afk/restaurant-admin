@@ -415,20 +415,26 @@ const server = http.createServer(async (req, res) => {
   const parsed   = url.parse(req.url);
   const pathname = parsed.pathname;
 
-  // Public endpoint'ler - auth gerektirmez
-  const isPublicAPI = pathname === '/api/setup-status'
-    || pathname === '/api/setup'
-    || (pathname === '/api/reservations' && req.method === 'POST');
+  // Public GET endpoint'ler — ana site bunları okur, auth gerekmez
+  const publicGETs = [
+    '/api/settings', '/api/menuItems', '/api/menuCategories',
+    '/api/gallery', '/api/testimonials', '/api/setup-status'
+  ];
+  const isPublicGET = req.method === 'GET' && publicGETs.includes(pathname);
 
-  // Admin HTML her zaman yüklenir — içindeki JS kurulum/auth kontrolü yapar
+  // Public POST endpoint'ler
+  const isPublicPOST = pathname === '/api/setup'
+    || pathname === '/api/reservations'   // ziyaretçi rezervasyon yapabilir
+    || pathname === '/api/messages';       // ziyaretçi mesaj gönderebilir
+
+  const isPublicAPI = isPublicGET || isPublicPOST;
+
+  // Admin HTML her zaman yüklenir — içindeki JS auth kontrolü yapar
   const isAdminHTML = (pathname === '/admin' || pathname === '/admin/' || pathname === '/admin/index.html');
 
-  // API koruması — WWW-Authenticate header'ı YOK (tarayıcı popup açmasın)
-  const isWriteAPI  = pathname.startsWith('/api/') && !['GET','OPTIONS'].includes(req.method);
-  const isReadAPI   = pathname.startsWith('/api/') && req.method === 'GET';
-  const isUploadAPI = pathname.startsWith('/api/upload');
-  const needsAuth   = !isPublicAPI && !isAdminHTML && (isWriteAPI || isReadAPI || isUploadAPI);
-  if (needsAuth && !checkAdmin(req)) {
+  // Sadece admin işlemleri korumalı (yazma, silme, upload, stats)
+  const isProtected = !isPublicAPI && !isAdminHTML && pathname.startsWith('/api/');
+  if (isProtected && !checkAdmin(req)) {
     res.writeHead(401, {'Content-Type':'application/json'});
     return res.end(JSON.stringify({error:'Yetkisiz',code:401}));
   }
