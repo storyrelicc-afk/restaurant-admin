@@ -552,18 +552,27 @@ let S={}, cats=[], items=[], gallery=[], testimonials=[];
 let lbIdx=0, tesIdx=0, tesVis=3;
 
 async function init(){
+  // Her durumda max 4sn'de loader'ı kapat
+  const safeClose = setTimeout(()=>{
+    const l=document.getElementById('loader'); if(l)l.classList.add('out');
+  }, 4000);
   try{
     [S,cats,items,gallery,testimonials] = await Promise.all([
       get('/api/settings'), get('/api/menuCategories'),
       get('/api/menuItems'), get('/api/gallery'), get('/api/testimonials')
     ]);
   } catch(e){
-    console.warn('API bağlantısı yok, demo veriler kullanılıyor');
-    S = {restaurantName:'',slogan:'',primaryColor:'#c9a84c',heroImage:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80',aboutImage:'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80',aboutText:'Born from a love of open-flame cooking.',aboutText2:'Every dish is exceptional.',chefName:'',chefTitle:'',chefImage:'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80',phone:'',whatsapp:'',email:'',address:'',hours:[{day:'Pzt–Prş',time:'12:00–23:00'},{day:'Cum–Cmt',time:'12:00–00:30'}],stats:[{num:'10+',label:'Yıllık Deneyim'},{num:'38k',label:'Mutlu Misafir'},{num:'4.9',label:'Puan'},{num:'3',label:'Ödül'}],socialInstagram:'#',socialFacebook:'#',socialTwitter:'#',currency:'₺'};
-    cats=[{id:1,name:'Başlangıçlar',slug:'starters',active:true},{id:2,name:'Izgaralar',slug:'grills',active:true},{id:3,name:'Tatlılar',slug:'desserts',active:true}];
-    items=[{id:1,name:'Beef Tartare',desc:'El çekilmiş bonfile',price:285,cat:'starters',featured:true,active:true,img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=80'},{id:2,name:'T-Bone Biftek',desc:'45 gün dry-aged',price:890,cat:'grills',featured:true,active:true,img:'https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80'},{id:3,name:'Crème Brûlée',desc:'Fransız vanilyalı',price:145,cat:'desserts',featured:false,active:true,img:'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80'}];
-    gallery=[{id:1,img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',alt:'İç mekan',cls:'tall',active:true},{id:2,img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',alt:'Tabak',cls:'',active:true},{id:3,img:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',alt:'Ortam',cls:'wide',active:true},{id:4,img:'https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80',alt:'Biftek',cls:'',active:true}];
-    testimonials=[{id:1,text:'"İstanbul\'da yediğim en iyi biftek buydu."',name:'James W.',via:'Google',stars:5,active:true},{id:2,text:'"Harikaydı, çok tavsiye ederim."',name:'Lena H.',via:'TripAdvisor',stars:5,active:true},{id:3,text:'"Özel geceyi burada geçirdik, mükemmeldi."',name:'Ali K.',via:'Google',stars:5,active:true}];
+    console.warn('API hatası:', e.message);
+    S={restaurantName:'',slogan:'',primaryColor:'#c9a84c',
+      heroImage:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80',
+      aboutImage:'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80',
+      aboutText:'',aboutText2:'',chefName:'',chefTitle:'',chefImage:'',
+      phone:'',whatsapp:'',email:'',address:'',
+      hours:[{day:'Pzt–Prş',time:'12:00–23:00'},{day:'Cum–Cmt',time:'12:00–00:30'}],
+      stats:[{num:'—',label:'Yıllık Deneyim'},{num:'—',label:'Mutlu Misafir'},
+             {num:'—',label:'Puan'},{num:'—',label:'Ödül'}],
+      socialInstagram:'#',socialFacebook:'#',socialTwitter:'#',currency:'₺'};
+    cats=[];items=[];gallery=[];testimonials=[];
   }
   applySettings();
   renderStats();
@@ -572,10 +581,9 @@ async function init(){
   renderTestimonials();
   renderContact();
   observeAll();
-  setTimeout(()=>document.getElementById('loader').classList.add('out'),1400);
-  // Yılı otomatik güncelle
-  const fyear = document.getElementById('f-year');
-  if(fyear) fyear.textContent = new Date().getFullYear();
+  clearTimeout(safeClose);
+  const l=document.getElementById('loader'); if(l)l.classList.add('out');
+  const fyear=document.getElementById('f-year'); if(fyear)fyear.textContent=new Date().getFullYear();
 }
 
 function applySettings(){

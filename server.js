@@ -194,16 +194,22 @@ function checkAdmin(req) {
   const u = decoded.slice(0, colonIdx);
   const p = decoded.slice(colonIdx + 1);
 
-  // 1. Önce Railway Variables'dan bak (kalıcı, deploy'da silinmez)
-  if (ENV_ADMIN_USER && ENV_ADMIN_PASS) {
-    return u === ENV_ADMIN_USER && p === ENV_ADMIN_PASS;
-  }
-  // 2. Yoksa db.json'dan bak (kurulum sihirbazından kaydedildi)
   try {
     const db = readDB();
-    if (!db.settings.setupDone) return false;
-    return u === (db.settings.adminUser||'') && p === (db.settings.adminPass||'');
+    // db'de adminUser/Pass kaydedilmişse onu kullan (kurulum sihirbazından)
+    if (db.settings.adminUser && db.settings.adminPass) {
+      return u === db.settings.adminUser && p === db.settings.adminPass;
+    }
+    // Yoksa ENV Variables'a bak (Railway'de elle eklendiyse)
+    if (ENV_ADMIN_USER && ENV_ADMIN_PASS) {
+      return u === ENV_ADMIN_USER && p === ENV_ADMIN_PASS;
+    }
+    return false;
   } catch {
+    // db okunamazsa ENV'e bak
+    if (ENV_ADMIN_USER && ENV_ADMIN_PASS) {
+      return u === ENV_ADMIN_USER && p === ENV_ADMIN_PASS;
+    }
     return false;
   }
 }
