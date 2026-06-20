@@ -86,18 +86,52 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:1000;display:f
 .cat-section-count{font-size:.75rem;color:var(--gray);letter-spacing:.05em}
 
 .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:1.5rem}
-.mc{background:var(--bg3);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.05);transition:var(--r);cursor:pointer;opacity:0;transform:translateY(20px)}
+.mc{background:var(--bg3);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.05);transition:border-color var(--r), box-shadow var(--r), transform var(--r);opacity:0;transform:translateY(20px)}
 .mc.show{opacity:1;transform:translateY(0)}
 .mc:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+
+/* Çoklu fotoğraf karuseli */
 .mc-img{aspect-ratio:16/10;overflow:hidden;position:relative;background:var(--bg4)}
-.mc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.mc:hover .mc-img img{transform:scale(1.06)}
-.mc-badge{position:absolute;top:.9rem;left:.9rem;background:var(--gold);color:var(--bg);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px}
+.mc-carousel{display:flex;width:100%;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1);touch-action:pan-y}
+.mc-carousel-slide{flex:0 0 100%;width:100%;height:100%;position:relative;cursor:zoom-in}
+.mc-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.mc:hover .mc-carousel-slide img{transform:scale(1.04)}
+.mc-dots{position:absolute;bottom:.7rem;left:0;right:0;display:flex;justify-content:center;gap:.35rem;z-index:3}
+.mc-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);transition:.2s;cursor:pointer}
+.mc-dot.active{background:var(--gold);width:18px;border-radius:3px}
+.mc-nav-arrow{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;z-index:4;opacity:0;transition:.2s;cursor:pointer}
+.mc-img:hover .mc-nav-arrow{opacity:1}
+.mc-nav-prev{left:.5rem}
+.mc-nav-next{right:.5rem}
+.mc-nav-arrow:hover{background:rgba(201,168,76,.85);color:#000}
+.mc-photo-count{position:absolute;top:.7rem;right:.7rem;background:rgba(0,0,0,.55);color:#fff;font-size:.65rem;font-weight:600;padding:.2rem .5rem;border-radius:999px;display:flex;align-items:center;gap:.25rem;z-index:3}
+
+.mc-badge{position:absolute;top:.9rem;left:.9rem;background:var(--gold);color:var(--bg);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px;z-index:3}
 .mc-body{padding:1.4rem}
 .mc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.5rem}
 .mc-name{font-family:var(--fd);font-size:1.25rem;font-weight:400;color:var(--white);line-height:1.2}
 .mc-price{font-family:var(--fd);font-size:1.3rem;font-weight:500;color:var(--gold);white-space:nowrap}
 .mc-desc{font-size:.85rem;color:var(--gray);line-height:1.6}
+
+/* Lightbox (büyütülmüş görüntüleme) */
+.mlb{display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.94);backdrop-filter:blur(10px);align-items:center;justify-content:center}
+.mlb.open{display:flex;animation:mlbFadeIn .2s ease}
+@keyframes mlbFadeIn{from{opacity:0}to{opacity:1}}
+.mlb-img-wrap{max-width:92vw;max-height:88vh;position:relative}
+.mlb-img-wrap img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:8px;box-shadow:0 30px 100px rgba(0,0,0,.8);display:block}
+.mlb-caption{text-align:center;margin-top:1rem;color:var(--white);font-family:var(--fd);font-size:1.2rem}
+.mlb-counter{text-align:center;margin-top:.4rem;color:var(--gray);font-size:.8rem;letter-spacing:.05em}
+.mlb-x{position:absolute;top:1.5rem;right:1.5rem;color:#fff;font-size:1.8rem;cursor:pointer;width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.2s;z-index:10}
+.mlb-x:hover{background:rgba(255,255,255,.1)}
+.mlb-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:1.6rem;cursor:pointer;width:50px;height:50px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);transition:.2s;z-index:10}
+.mlb-nav:hover{background:rgba(201,168,76,.85);color:#000}
+.mlb-prev{left:1.5rem}
+.mlb-next{right:1.5rem}
+@media(max-width:640px){
+  .mlb-nav{width:40px;height:40px;font-size:1.3rem}
+  .mlb-prev{left:.5rem}.mlb-next{right:.5rem}
+  .mlb-x{top:1rem;right:1rem}
+}
 
 /* Empty state */
 .empty-state{text-align:center;padding:4rem 1rem;color:var(--gray)}
@@ -158,6 +192,20 @@ nav{position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:1000;display:f
   </div>
 </main>
 
+<!-- LIGHTBOX -->
+<div class="mlb" id="mlb">
+  <div class="mlb-x" id="mlb-x">✕</div>
+  <div class="mlb-nav mlb-prev" id="mlb-prev">‹</div>
+  <div class="mlb-img-wrap">
+    <img id="mlb-img" src="" alt=""/>
+  </div>
+  <div class="mlb-nav mlb-next" id="mlb-next">›</div>
+</div>
+<div style="position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9001;text-align:center;display:none" id="mlb-meta">
+  <div class="mlb-caption" id="mlb-caption"></div>
+  <div class="mlb-counter" id="mlb-counter"></div>
+</div>
+
 <a class="wa" id="wa-btn" href="#" target="_blank" aria-label="WhatsApp">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
@@ -217,18 +265,12 @@ function applyUIText(){
   document.documentElement.lang = getCurrentLang();
   const eb = document.getElementById('menu-hero-eyebrow'); if(eb) eb.textContent = t('menu_eyebrow');
   const tt = document.getElementById('menu-hero-title'); if(tt) tt.textContent = t('menu_title');
-  const bt = document.getElementById('menu-back-text'); if(bt) bt.textContent = t('nav_about')==='Our Story' ? 'Home' : 'Ana Sayfa';
+  const bt = document.getElementById('menu-back-text'); if(bt) bt.textContent = t('nav_home');
   const rb = document.getElementById('nav-reserve-btn'); if(rb) rb.textContent = t('nav_reserve');
-  const sub = document.getElementById('menu-hero-sub');
-  if(sub) sub.textContent = tf(S.aboutTextML) ? '' : '';
   const search = document.getElementById('menu-search');
-  if(search) search.placeholder = (getCurrentLang()==='tr') ? 'Ürün ara...' : (getCurrentLang()==='en' ? 'Search dishes...' : (getCurrentLang()==='ja' ? '料理を検索...' : (getCurrentLang()==='zh' ? '搜索菜品...' : (getCurrentLang()==='ru' ? 'Поиск блюд...' : 'Gerichte suchen...'))));
+  if(search) search.placeholder = t('menu_search_ph');
   const ept = document.getElementById('empty-state-text');
-  if(ept) ept.textContent = (getCurrentLang()==='tr') ? 'Sonuç bulunamadı' : (getCurrentLang()==='en' ? 'No results found' : (getCurrentLang()==='ja' ? '結果が見つかりません' : (getCurrentLang()==='zh' ? '未找到结果' : (getCurrentLang()==='ru' ? 'Результатов не найдено' : 'Keine Ergebnisse gefunden'))));
-  // Back link text properly
-  const backTxt = {tr:'Ana Sayfa',en:'Home',ja:'ホーム',zh:'首页',ru:'Главная',de:'Startseite'};
-  const blk = document.getElementById('menu-back-text');
-  if(blk) blk.textContent = backTxt[getCurrentLang()] || 'Ana Sayfa';
+  if(ept) ept.textContent = t('menu_empty');
 }
 
 function renderCatNav(){
@@ -262,6 +304,13 @@ function setupSearch(){
   });
 }
 
+// Bir ürünün fotoğraf dizisini döndürür (images[] varsa onu, yoksa eski img tekil alanını kullanır)
+function getItemImages(item){
+  if(Array.isArray(item.images) && item.images.length) return item.images;
+  if(item.img) return [item.img];
+  return [];
+}
+
 function renderMenuSections(){
   const cur = S.currency || '₺';
   const activeCatsAll = [...new Set(items.filter(i=>i.active).map(i=>i.cat))];
@@ -293,11 +342,25 @@ function renderMenuSections(){
         <span class="cat-section-count">${catItems.length}</span>
       </div>
       <div class="menu-grid">
-        ${catItems.map(item=>`
-          <article class="mc">
+        ${catItems.map(item=>{
+          const imgs = getItemImages(item);
+          const multi = imgs.length > 1;
+          return `
+          <article class="mc" data-item-id="${item.id}">
             <div class="mc-img">
-              <img src="${item.img||''}" alt="${tf(item.name)}" loading="lazy"/>
+              <div class="mc-carousel" data-idx="0">
+                ${imgs.length ? imgs.map((src,i)=>`
+                  <div class="mc-carousel-slide" data-i="${i}">
+                    <img src="${src}" alt="${tf(item.name)}" loading="lazy"/>
+                  </div>`).join('') : `<div class="mc-carousel-slide"><img src="" alt="${tf(item.name)}"/></div>`}
+              </div>
               ${item.featured?`<span class="mc-badge">${t('menu_chef_pick')}</span>`:''}
+              ${multi?`<span class="mc-photo-count">📷 ${imgs.length}</span>`:''}
+              ${multi?`
+                <div class="mc-nav-arrow mc-nav-prev">‹</div>
+                <div class="mc-nav-arrow mc-nav-next">›</div>
+                <div class="mc-dots">${imgs.map((_,i)=>`<span class="mc-dot ${i===0?'active':''}" data-i="${i}"></span>`).join('')}</div>
+              `:''}
             </div>
             <div class="mc-body">
               <div class="mc-row">
@@ -306,7 +369,8 @@ function renderMenuSections(){
               </div>
               <p class="mc-desc">${tf(item.desc)}</p>
             </div>
-          </article>`).join('')}
+          </article>`;
+        }).join('')}
       </div>
     </section>`;
   }).join('');
@@ -319,7 +383,111 @@ function renderMenuSections(){
   cards.forEach((card, i)=>{
     setTimeout(()=> card.classList.add('show'), Math.min(i,12)*40);
   });
+
+  setupCardCarousels(container);
 }
+
+// ── Kart içi swipe / ok navigasyonu ──────────────────────────
+function setupCardCarousels(container){
+  container.querySelectorAll('.mc').forEach(card => {
+    const itemId = parseInt(card.dataset.itemId);
+    const item = items.find(i=>i.id===itemId);
+    const imgs = item ? getItemImages(item) : [];
+    const carousel = card.querySelector('.mc-carousel');
+    const dots = card.querySelectorAll('.mc-dot');
+    const prevBtn = card.querySelector('.mc-nav-prev');
+    const nextBtn = card.querySelector('.mc-nav-next');
+    let idx = 0;
+
+    function goTo(i){
+      idx = ((i % imgs.length) + imgs.length) % imgs.length;
+      carousel.style.transform = `translateX(-${idx*100}%)`;
+      carousel.dataset.idx = idx;
+      dots.forEach((d,j)=>d.classList.toggle('active', j===idx));
+    }
+
+    if(prevBtn) prevBtn.addEventListener('click', (e)=>{ e.stopPropagation(); goTo(idx-1); });
+    if(nextBtn) nextBtn.addEventListener('click', (e)=>{ e.stopPropagation(); goTo(idx+1); });
+    dots.forEach(d => d.addEventListener('click', (e)=>{ e.stopPropagation(); goTo(parseInt(d.dataset.i)); }));
+
+    // Touch swipe desteği
+    let startX = 0, isDragging = false;
+    carousel.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; isDragging = true; }, {passive:true});
+    carousel.addEventListener('touchend', e=>{
+      if(!isDragging) return;
+      const diff = e.changedTouches[0].clientX - startX;
+      if(Math.abs(diff) > 40){ diff > 0 ? goTo(idx-1) : goTo(idx+1); }
+      isDragging = false;
+    }, {passive:true});
+
+    // Resme tıklayınca lightbox aç
+    card.querySelectorAll('.mc-carousel-slide').forEach(slide => {
+      slide.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        if(imgs.length) openLightbox(imgs, idx, tf(item.name));
+      });
+    });
+  });
+}
+
+// ── LIGHTBOX (büyütülmüş görüntüleme) ────────────────────────
+let lbImages = [];
+let lbIndex = 0;
+let lbCaption = '';
+
+function openLightbox(images, startIdx, caption){
+  lbImages = images;
+  lbIndex = startIdx || 0;
+  lbCaption = caption || '';
+  updateLightboxImg();
+  document.getElementById('mlb').classList.add('open');
+  document.getElementById('mlb-meta').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('mlb').classList.remove('open');
+  document.getElementById('mlb-meta').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function updateLightboxImg(){
+  const img = document.getElementById('mlb-img');
+  if(img) img.src = lbImages[lbIndex] || '';
+  const cap = document.getElementById('mlb-caption');
+  if(cap) cap.textContent = lbCaption;
+  const counter = document.getElementById('mlb-counter');
+  if(counter) counter.textContent = lbImages.length > 1 ? `${lbIndex+1} / ${lbImages.length}` : '';
+  const prevBtn = document.getElementById('mlb-prev');
+  const nextBtn = document.getElementById('mlb-next');
+  const showNav = lbImages.length > 1;
+  if(prevBtn) prevBtn.style.display = showNav ? 'flex' : 'none';
+  if(nextBtn) nextBtn.style.display = showNav ? 'flex' : 'none';
+}
+function lbGoTo(i){
+  lbIndex = ((i % lbImages.length) + lbImages.length) % lbImages.length;
+  updateLightboxImg();
+}
+
+document.getElementById('mlb-x').addEventListener('click', closeLightbox);
+document.getElementById('mlb').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeLightbox(); });
+document.getElementById('mlb-prev').addEventListener('click', ()=> lbGoTo(lbIndex-1));
+document.getElementById('mlb-next').addEventListener('click', ()=> lbGoTo(lbIndex+1));
+document.addEventListener('keydown', e=>{
+  if(!document.getElementById('mlb').classList.contains('open')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowLeft') lbGoTo(lbIndex-1);
+  if(e.key==='ArrowRight') lbGoTo(lbIndex+1);
+});
+// Lightbox touch swipe
+(function(){
+  let startX = 0;
+  const wrap = document.querySelector('.mlb-img-wrap');
+  if(!wrap) return;
+  wrap.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; }, {passive:true});
+  wrap.addEventListener('touchend', e=>{
+    const diff = e.changedTouches[0].clientX - startX;
+    if(Math.abs(diff) > 50){ diff > 0 ? lbGoTo(lbIndex-1) : lbGoTo(lbIndex+1); }
+  }, {passive:true});
+})();
 
 init();
 </script>

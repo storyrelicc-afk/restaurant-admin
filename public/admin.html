@@ -152,6 +152,23 @@ textarea.f-ctrl{resize:vertical;min-height:72px}
 .img-preview-box.sq{aspect-ratio:1}.img-preview-box.portrait{aspect-ratio:3/4}
 .img-preview-box.logo-box{aspect-ratio:auto;height:80px;max-width:260px;width:260px}
 
+/* ── ÇOKLU FOTOĞRAF GALERİSİ (ürün/kategori için) ─────────── */
+.img-multi-wrap{display:flex;flex-direction:column;gap:.6rem}
+.img-multi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.6rem}
+.img-multi-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--bg4);border:2px solid rgba(255,255,255,.06);cursor:grab;transition:var(--r)}
+.img-multi-item.cover{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.img-multi-item.dragging{opacity:.4}
+.img-multi-item img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.img-multi-cover-badge{position:absolute;top:.3rem;left:.3rem;background:var(--gold);color:#000;font-size:.6rem;font-weight:700;padding:.15rem .4rem;border-radius:4px;display:none;align-items:center;gap:.2rem;z-index:2}
+.img-multi-item.cover .img-multi-cover-badge{display:flex}
+.img-multi-star{position:absolute;top:.3rem;right:.3rem;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;cursor:pointer;transition:.2s;z-index:2}
+.img-multi-star:hover{background:var(--gold);color:#000}
+.img-multi-item.cover .img-multi-star{color:var(--gold);background:rgba(0,0,0,.7)}
+.img-multi-del{position:absolute;bottom:.3rem;right:.3rem;width:22px;height:22px;border-radius:50%;background:rgba(239,68,68,.85);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;opacity:0;transition:.2s;z-index:2}
+.img-multi-item:hover .img-multi-del{opacity:1}
+.img-multi-empty{grid-column:1/-1;text-align:center;padding:2rem 1rem;color:var(--gray);font-size:.82rem;border:1px dashed rgba(255,255,255,.1);border-radius:8px}
+.img-multi-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+
 .media-lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:.5rem;max-height:360px;overflow-y:auto;padding:.5rem}
 .media-item{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:1;cursor:pointer;border:2px solid transparent;transition:var(--r);background:var(--bg4)}
 .media-item:hover{border-color:rgba(201,168,76,.5)}
@@ -1324,14 +1341,14 @@ document.addEventListener('DOMContentLoaded', checkSetup);
         </div>
 
         <div class="fg full">
-          <label>Görsel</label>
-          <div class="img-picker">
-            <div class="img-picker-row">
-              <input class="f-ctrl" id="im-img" placeholder="URL veya /uploads/..." oninput="previewBox('im-img','im-img-prev')"/>
-              <button class="btn blue sm" onclick="openPicker('im-img','im-img-prev')">📁 Kütüphane</button>
-              <div style="position:relative"><button class="btn ghost sm">⬆ Yükle</button><input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="uploadInline(this,'im-img','im-img-prev')"/></div>
+          <label>Fotoğraflar (Birden fazla eklenebilir — kapak fotoğrafını seçin)</label>
+          <div class="img-multi-wrap">
+            <div class="img-multi-grid" id="im-images-grid"></div>
+            <div class="img-multi-actions">
+              <button class="btn blue sm" onclick="openPickerMulti('im')">📁 Kütüphaneden Ekle</button>
+              <div style="position:relative"><button class="btn ghost sm">⬆ Bilgisayardan Yükle</button><input type="file" accept="image/*" multiple style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="uploadMultiInline(this,'im')"/></div>
             </div>
-            <div class="img-preview-box" id="im-img-prev"><img src="" alt=""/><span>Görsel seç</span></div>
+            <div style="font-size:.7rem;color:var(--gray-l);margin-top:.4rem">💡 Fotoğraf üzerindeki ★ ikonuna basarak kapak fotoğrafını değiştirebilirsiniz. Sürükleyerek sırayı değiştirin.</div>
           </div>
         </div>
         <div class="fg" style="justify-content:center">
@@ -1445,6 +1462,8 @@ let DB = {settings:{},menuItems:[],menuCategories:[],gallery:[],reservations:[],
 let MEDIA = [];
 let editId = null;
 let imFeat=false, imActive=true, cmActive=true, gmActive=true, tmFeat=false, ldShow=true, chefVis=true;
+let imImages=[]; // Ürün modalında düzenlenen fotoğraf dizisi: [{url:'...'}]
+let multiPickerTarget=null; // openPickerMulti çağrıldığında hangi prefix için seçim yapılıyor
 let pickerInput=null, pickerPreview=null, pickerSel=null;
 
 const SECTIONS = [
@@ -1519,7 +1538,8 @@ async function uploadFiles(files, ctx) {
   setTimeout(()=>{ document.getElementById(wrapId).style.display='none'; document.getElementById(barId).style.width='0%'; },700);
   await loadMedia();
   renderMediaLib('media-lib-main',false);
-  renderMediaLib('media-lib-picker',true);
+  if(multiPickerTarget) renderMediaLibMulti();
+  else renderMediaLib('media-lib-picker',true);
   document.getElementById('media-count').textContent=MEDIA.length+' dosya';
   if(results.length)toast('✓ '+results.length+' dosya yüklendi','ok');
   return results;
@@ -1579,12 +1599,23 @@ function pickMedia(url){
 
 function openPicker(inputId,prevId){
   pickerInput=inputId; pickerPreview=prevId;
+  multiPickerTarget=null; // tekli mod
   pickerSel=document.getElementById(inputId)?.value||null;
   renderMediaLib('media-lib-picker',true);
   openModal('picker-modal');
 }
 
 function confirmPick(){
+  // Çoklu seçim modu (ürün fotoğraf galerisi gibi)
+  if(multiPickerTarget){
+    if(!multiPickerSelected.size){toast('En az bir fotoğraf seçin','err');return;}
+    multiPickerSelected.forEach(url => imImages.push({url}));
+    renderImagesGrid(multiPickerTarget);
+    multiPickerTarget=null;
+    closeModal('picker-modal');
+    return;
+  }
+  // Tekli seçim modu (logo, hero, vb.)
   if(!pickerSel){toast('Bir fotoğraf seçin','err');return;}
   if(pickerInput)document.getElementById(pickerInput).value=pickerSel;
   if(pickerPreview)previewBox(pickerInput,pickerPreview);
@@ -2115,16 +2146,24 @@ function autoTranslateCat() { runAutoTranslate('cm', CAT_ML_FIELDS); }
 function openItemModal(id){
   editId=id||null;const it=id?DB.menuItems.find(i=>i.id===id):null;
   document.getElementById('item-modal-title').textContent=id?'Ürün Düzenle':'Ürün Ekle';
-  sv('im-price',it?.price||'');sv('im-img',it?.img||'');
+  sv('im-price',it?.price||'');
   document.getElementById('im-cat').innerHTML='<option value="">Kategori seçin</option>'+DB.menuCategories.map(c=>`<option value="${c.slug}"${it?.cat===c.slug?' selected':''}>${c.icon||''} ${tf(c.name)}</option>`).join('');
   imFeat=it?.featured||false;imActive=it?.active!==false;
   setTog('im-feat-t','im-feat-l',imFeat);setTog('im-active-t','im-active-l',imActive);
-  clearPrev('im-img-prev');if(it?.img)previewBox('im-img','im-img-prev');
   mlActiveTab['im'] = 'tr';
   renderMLInput('im', ITEM_ML_FIELDS, {
     name: (it && typeof it.name === 'object') ? it.name : {tr: it?.name||''},
     desc: (it && typeof it.desc === 'object') ? it.desc : {tr: it?.desc||''}
   });
+  // Fotoğraf galerisini hazırla: images[] varsa onu kullan, yoksa eski img alanından migrasyon yap
+  if(it){
+    imImages = Array.isArray(it.images) && it.images.length
+      ? it.images.map(url=>({url}))
+      : (it.img ? [{url: it.img}] : []);
+  } else {
+    imImages = [];
+  }
+  renderImagesGrid('im');
   openModal('item-modal');
 }
 function tog(tId,lId,varName){
@@ -2141,12 +2180,118 @@ async function saveItem(){
     switchMLTab('im', ITEM_ML_FIELDS, 'tr');
     return;
   }
-  const d={name:mlData.name, desc:mlData.desc, price:parseFloat(gv('im-price'))||0, cat:gv('im-cat'), img:gv('im-img'), featured:imFeat, active:imActive};
+  const imageUrls = imImages.map(i=>i.url);
+  const d={
+    name:mlData.name, desc:mlData.desc, price:parseFloat(gv('im-price'))||0, cat:gv('im-cat'),
+    images: imageUrls,
+    img: imageUrls[0] || '', // geriye dönük uyumluluk - ilk/kapak fotoğraf
+    featured:imFeat, active:imActive
+  };
   if(editId){await PUT(`menuItems/${editId}`,d);DB.menuItems=DB.menuItems.map(i=>i.id===editId?{...i,...d}:i);}
   else{const r=await POST('menuItems',d);DB.menuItems.push(r);}
   closeModal('item-modal');renderMenuTable();renderDash();toast(editId?'Ürün güncellendi ✓':'Ürün eklendi ✓','ok');editId=null;
 }
 async function delItem(id){if(!confirm('Silinsin mi?'))return;await DEL(`menuItems/${id}`);DB.menuItems=DB.menuItems.filter(i=>i.id!==id);renderMenuTable();renderDash();toast('Ürün silindi','info');}
+
+// ═══════════════════════════════════════════════════
+//  ÇOKLU FOTOĞRAF GALERİSİ (kapak seçimi + sıralama)
+// ═══════════════════════════════════════════════════
+function renderImagesGrid(prefix){
+  const grid = document.getElementById(prefix+'-images-grid');
+  if(!grid) return;
+  if(!imImages.length){
+    grid.innerHTML = `<div class="img-multi-empty">Henüz fotoğraf eklenmedi. Yukarıdaki butonlarla ekleyin.</div>`;
+    return;
+  }
+  grid.innerHTML = imImages.map((img,i)=>`
+    <div class="img-multi-item ${i===0?'cover':''}" draggable="true" data-i="${i}">
+      <div class="img-multi-cover-badge">★ Kapak</div>
+      <img src="${img.url}" alt=""/>
+      <div class="img-multi-star" onclick="setCoverImage(${i})" title="Kapak fotoğrafı yap">★</div>
+      <div class="img-multi-del" onclick="removeImageAt(${i})" title="Sil">✕</div>
+    </div>
+  `).join('');
+  setupImageDragReorder(grid);
+}
+
+function setCoverImage(i){
+  if(i===0 || i>=imImages.length) return;
+  const [picked] = imImages.splice(i,1);
+  imImages.unshift(picked);
+  renderImagesGrid('im');
+}
+
+function removeImageAt(i){
+  imImages.splice(i,1);
+  renderImagesGrid('im');
+}
+
+function setupImageDragReorder(grid){
+  let dragSrcIdx = null;
+  grid.querySelectorAll('.img-multi-item').forEach(item=>{
+    item.addEventListener('dragstart', e=>{
+      dragSrcIdx = parseInt(item.dataset.i);
+      item.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('dragend', ()=> item.classList.remove('dragging'));
+    item.addEventListener('dragover', e=> e.preventDefault());
+    item.addEventListener('drop', e=>{
+      e.preventDefault();
+      const targetIdx = parseInt(item.dataset.i);
+      if(dragSrcIdx===null || dragSrcIdx===targetIdx) return;
+      const [moved] = imImages.splice(dragSrcIdx,1);
+      imImages.splice(targetIdx,0,moved);
+      renderImagesGrid('im');
+    });
+  });
+}
+
+// Birden fazla dosya yükleme (bilgisayardan)
+async function uploadMultiInline(input, prefix){
+  if(!input.files||!input.files.length) return;
+  toast(`${input.files.length} fotoğraf yükleniyor...`,'info');
+  for(const file of Array.from(input.files)){
+    const fd = new FormData();
+    fd.append('file', file, file.name);
+    try{
+      const r = await fetch('/api/upload', {method:'POST', headers:{'Authorization':'Basic '+(window._adminCreds||creds)}, body:fd});
+      const j = await r.json();
+      if(j.url) imImages.push({url:j.url});
+    }catch(e){ toast('Yükleme hatası: '+file.name,'err'); }
+  }
+  await loadMedia();
+  renderImagesGrid(prefix);
+  toast('✓ Fotoğraflar yüklendi','ok');
+}
+
+// Medya kütüphanesinden çoklu seçim
+let multiPickerSelected = new Set();
+function openPickerMulti(prefix){
+  multiPickerTarget = prefix;
+  multiPickerSelected = new Set();
+  renderMediaLibMulti();
+  openModal('picker-modal');
+}
+function renderMediaLibMulti(){
+  const el = document.getElementById('media-lib-picker');
+  if(!el) return;
+  if(!MEDIA.length){el.innerHTML='<div style="padding:2rem;text-align:center;color:var(--gray);font-size:.82rem">Henüz yüklenmiş fotoğraf yok</div>';return;}
+  el.innerHTML = MEDIA.map(m=>`
+    <div class="media-item ${multiPickerSelected.has(m.url)?'sel':''}" data-url="${m.url}" data-fn="${m.filename}" onclick="toggleMultiPick('${m.url}')">
+      <img src="${m.url}" alt="${m.filename}" loading="lazy"/>
+      <div class="media-sz">${fmtSize(m.size)}</div>
+      <button class="del-btn" onclick="event.stopPropagation();deleteMedia('${m.filename}')">✕</button>
+      <div class="sel-mark">✓</div>
+    </div>`).join('');
+}
+function toggleMultiPick(url){
+  if(multiPickerSelected.has(url)) multiPickerSelected.delete(url);
+  else multiPickerSelected.add(url);
+  document.querySelectorAll('#media-lib-picker .media-item').forEach(el=>{
+    el.classList.toggle('sel', multiPickerSelected.has(el.dataset.url));
+  });
+}
 
 // CAT MODAL
 function openCatModal(id){
@@ -2207,7 +2352,7 @@ function previewBox(inputId,boxId){
 }
 function clearPrev(boxId){const box=document.getElementById(boxId);if(!box)return;const img=box.querySelector('img');const ph=box.querySelector('span');if(img){img.src='';img.classList.remove('show');}if(ph)ph.style.display='';}
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';editId=null;pickerSel=null;}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';editId=null;pickerSel=null;if(id==='picker-modal'){multiPickerTarget=null;multiPickerSelected=new Set();}}
 document.querySelectorAll('.modal-ov').forEach(ov=>ov.addEventListener('click',e=>{if(e.target===ov)closeModal(ov.id);}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-ov.open').forEach(m=>closeModal(m.id));});
 function timeAgo(iso){const d=new Date(iso),now=new Date(),diff=(now-d)/1000;if(diff<60)return 'Az önce';if(diff<3600)return Math.floor(diff/60)+'dk önce';if(diff<86400)return Math.floor(diff/3600)+'sa önce';return d.toLocaleDateString('tr-TR');}

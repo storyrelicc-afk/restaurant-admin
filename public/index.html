@@ -847,10 +847,12 @@ function renderMenuPreview(){
   const list = featured.length ? featured : items.filter(i=>i.active).slice(0,6);
   const g=document.getElementById('menu-preview-grid');
   if(!g) return;
-  g.innerHTML = list.map(item=>`
+  g.innerHTML = list.map(item=>{
+    const coverImg = (Array.isArray(item.images) && item.images.length) ? item.images[0] : (item.img||'');
+    return `
     <article class="mc reveal">
       <div class="mc-img">
-        <img src="${item.img}" alt="${tf(item.name)}" loading="lazy"/>
+        <img src="${coverImg}" alt="${tf(item.name)}" loading="lazy"/>
         ${item.featured?`<span class="mc-badge">${t('menu_chef_pick')}</span>`:''}
       </div>
       <div class="mc-body">
@@ -860,7 +862,8 @@ function renderMenuPreview(){
         </div>
         <p class="mc-desc">${tf(item.desc)}</p>
       </div>
-    </article>`).join('');
+    </article>`;
+  }).join('');
   g.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 }
 

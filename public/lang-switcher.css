@@ -1,19 +1,20 @@
 /* ── DİL SEÇİCİ ───────────────────────────────────────────── */
-.lang-switcher{position:relative}
+.lang-switcher{position:relative;flex-shrink:0}
 .lang-btn{
-  display:flex;align-items:center;gap:.4rem;
-  padding:.5rem .8rem;
+  display:flex;align-items:center;gap:.35rem;
+  padding:.45rem .7rem;
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.12);
   border-radius:999px;
   color:var(--white,#f5f0e8);
-  font-size:.78rem;font-weight:600;
+  font-size:.72rem;font-weight:600;
   cursor:pointer;transition:.2s;
+  white-space:nowrap;
 }
 .lang-btn:hover{border-color:var(--gold,#c9a84c);background:rgba(201,168,76,.08)}
+.lang-btn .flag-icon{font-size:1rem;line-height:1}
 .lang-code{letter-spacing:.05em}
-.lang-arrow{font-size:.6rem;opacity:.6;transition:.2s}
-.lang-dropdown.open ~ .lang-btn .lang-arrow,
+.lang-arrow{font-size:.55rem;opacity:.6;transition:.2s}
 .lang-switcher:has(.lang-dropdown.open) .lang-arrow{transform:rotate(180deg)}
 .lang-dropdown{
   position:absolute;top:calc(100% + 8px);right:0;
@@ -22,27 +23,29 @@
   border:1px solid rgba(201,168,76,.2);
   border-radius:10px;
   padding:.4rem;
-  min-width:160px;
+  min-width:155px;
   box-shadow:0 20px 50px rgba(0,0,0,.5);
   display:none;
   flex-direction:column;
-  gap:2px;
+  gap:1px;
   z-index:2000;
+  max-height:320px;
+  overflow-y:auto;
 }
 .lang-dropdown.open{display:flex;animation:langDropIn .2s ease}
 @keyframes langDropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .lang-opt{
   display:flex;align-items:center;gap:.6rem;
-  padding:.6rem .7rem;border-radius:7px;
+  padding:.55rem .65rem;border-radius:7px;
   cursor:pointer;transition:.15s;
-  font-size:.85rem;color:#d4d4d4;
+  font-size:.82rem;color:#d4d4d4;
   position:relative;
 }
 .lang-opt:hover{background:rgba(201,168,76,.1);color:#fff}
-.lang-opt.active{color:var(--gold,#c9a84c);font-weight:600}
-.lang-flag{font-size:1.1rem}
-.lang-check{position:absolute;right:.7rem;color:var(--gold,#c9a84c);font-size:.75rem}
+.lang-opt.active{color:var(--gold,#c9a84c);font-weight:600;background:rgba(201,168,76,.06)}
+.lang-flag{font-size:1.05rem}
+.lang-check{position:absolute;right:.65rem;color:var(--gold,#c9a84c);font-size:.7rem}
 
 @media(max-width:900px){
-  .lang-btn{padding:.45rem .65rem;font-size:.72rem}
+  .lang-btn{padding:.4rem .6rem;font-size:.7rem}
 }

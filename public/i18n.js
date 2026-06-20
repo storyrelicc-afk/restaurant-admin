@@ -7,7 +7,9 @@ const UI_TEXT = {
   tr: {
     nav_about: "Hikayemiz", nav_menu: "Menü", nav_gallery: "Galeri",
     nav_reviews: "Yorumlar", nav_contact: "İletişim", nav_reserve: "Rezervasyon",
+    nav_home: "Ana Sayfa",
     hero_scroll: "Kaydır",
+    menu_search_ph: "Ürün ara...", menu_empty: "Sonuç bulunamadı",
     about_eyebrow: "Hikayemiz", about_title_1: "Tutku", about_title_2: "Ateşle", about_title_3: "Yaratıldı",
     menu_eyebrow: "Mutfak Yolculuğu", menu_title: "Menümüz",
     menu_view_all: "Tüm Menüyü Görüntüle →", menu_all_cat: "Tümü",
@@ -36,8 +38,9 @@ const UI_TEXT = {
   },
   en: {
     nav_about: "Our Story", nav_menu: "Menu", nav_gallery: "Gallery",
-    nav_reviews: "Reviews", nav_contact: "Contact", nav_reserve: "Reservation",
+    nav_reviews: "Reviews", nav_contact: "Contact", nav_reserve: "Reservation", nav_home: "Home",
     hero_scroll: "Scroll",
+    menu_search_ph: "Search dishes...", menu_empty: "No results found",
     about_eyebrow: "Our Story", about_title_1: "Crafted with", about_title_2: "Passion", about_title_3: "& Fire",
     menu_eyebrow: "Culinary Journey", menu_title: "Our Menu",
     menu_view_all: "View Full Menu →", menu_all_cat: "All",
@@ -66,8 +69,9 @@ const UI_TEXT = {
   },
   ja: {
     nav_about: "私たちの物語", nav_menu: "メニュー", nav_gallery: "ギャラリー",
-    nav_reviews: "レビュー", nav_contact: "お問い合わせ", nav_reserve: "予約",
+    nav_reviews: "レビュー", nav_contact: "お問い合わせ", nav_reserve: "予約", nav_home: "ホーム",
     hero_scroll: "スクロール",
+    menu_search_ph: "料理を検索...", menu_empty: "結果が見つかりません",
     about_eyebrow: "私たちの物語", about_title_1: "情熱で", about_title_2: "つくられた", about_title_3: "炎の味",
     menu_eyebrow: "美食の旅", menu_title: "メニュー",
     menu_view_all: "全メニューを見る →", menu_all_cat: "すべて",
@@ -96,8 +100,9 @@ const UI_TEXT = {
   },
   zh: {
     nav_about: "我们的故事", nav_menu: "菜单", nav_gallery: "画廊",
-    nav_reviews: "评价", nav_contact: "联系我们", nav_reserve: "预订",
+    nav_reviews: "评价", nav_contact: "联系我们", nav_reserve: "预订", nav_home: "首页",
     hero_scroll: "向下滚动",
+    menu_search_ph: "搜索菜品...", menu_empty: "未找到结果",
     about_eyebrow: "我们的故事", about_title_1: "用激情", about_title_2: "与火焰", about_title_3: "精心打造",
     menu_eyebrow: "美食之旅", menu_title: "我们的菜单",
     menu_view_all: "查看完整菜单 →", menu_all_cat: "全部",
@@ -126,8 +131,9 @@ const UI_TEXT = {
   },
   ru: {
     nav_about: "Наша история", nav_menu: "Меню", nav_gallery: "Галерея",
-    nav_reviews: "Отзывы", nav_contact: "Контакты", nav_reserve: "Бронирование",
+    nav_reviews: "Отзывы", nav_contact: "Контакты", nav_reserve: "Бронирование", nav_home: "Главная",
     hero_scroll: "Прокрутите",
+    menu_search_ph: "Поиск блюд...", menu_empty: "Результатов не найдено",
     about_eyebrow: "Наша история", about_title_1: "Создано", about_title_2: "со страстью", about_title_3: "и огнём",
     menu_eyebrow: "Кулинарное путешествие", menu_title: "Наше меню",
     menu_view_all: "Посмотреть всё меню →", menu_all_cat: "Все",
@@ -156,8 +162,9 @@ const UI_TEXT = {
   },
   de: {
     nav_about: "Unsere Geschichte", nav_menu: "Speisekarte", nav_gallery: "Galerie",
-    nav_reviews: "Bewertungen", nav_contact: "Kontakt", nav_reserve: "Reservierung",
+    nav_reviews: "Bewertungen", nav_contact: "Kontakt", nav_reserve: "Reservierung", nav_home: "Startseite",
     hero_scroll: "Scrollen",
+    menu_search_ph: "Gerichte suchen...", menu_empty: "Keine Ergebnisse gefunden",
     about_eyebrow: "Unsere Geschichte", about_title_1: "Mit Leidenschaft", about_title_2: "und Feuer", about_title_3: "geschaffen",
     menu_eyebrow: "Kulinarische Reise", menu_title: "Unsere Speisekarte",
     menu_view_all: "Komplette Speisekarte ansehen →", menu_all_cat: "Alle",
@@ -183,6 +190,37 @@ const UI_TEXT = {
     toast_required: "⚠ Name und Datum sind erforderlich.",
     toast_success: "✓ Reservierung erhalten! Wir bestätigen innerhalb von 2 Stunden.",
     whatsapp_tip: "Auf WhatsApp chatten",
+  },
+  ko: {
+    nav_about: "우리의 이야기", nav_menu: "메뉴", nav_gallery: "갤러리",
+    nav_reviews: "리뷰", nav_contact: "문의하기", nav_reserve: "예약", nav_home: "홈",
+    hero_scroll: "스크롤",
+    menu_search_ph: "요리 검색...", menu_empty: "결과를 찾을 수 없습니다",
+    about_eyebrow: "우리의 이야기", about_title_1: "열정으로", about_title_2: "그리고 불로", about_title_3: "만들어진",
+    menu_eyebrow: "미식 여행", menu_title: "저희 메뉴",
+    menu_view_all: "전체 메뉴 보기 →", menu_all_cat: "전체",
+    menu_chef_pick: "셰프의 추천",
+    menu_back: "← 홈으로 돌아가기",
+    gallery_eyebrow: "비주얼 향연", gallery_title: "저희 갤러리",
+    res_eyebrow: "예약", res_title_1: "잊지 못할", res_title_2: "저녁을", res_title_3: "예약하세요",
+    res_subtitle: "주말 저녁에는 최소 48시간 전에 예약하시는 것을 권장합니다.",
+    res_name: "성명", res_phone: "전화번호", res_email: "이메일", res_guests: "인원",
+    res_date: "날짜", res_time: "시간", res_notes: "특별 요청",
+    res_notes_ph: "알레르기, 특별한 날, 좌석 선호 등...",
+    res_select_guests: "인원 선택", res_select_time: "시간 선택",
+    res_submit: "예약 확정",
+    res_note: "2시간 이내에 전화 또는 이메일로 확인해 드리겠습니다.",
+    res_guest_opts: ["1명","2명","3명","4명","5명","6명","7–10명","10명 이상"],
+    testi_eyebrow: "고객 리뷰", testi_title: "고객님들의 후기",
+    contact_eyebrow: "오시는 길", contact_title_1: "저희 레스토랑에", contact_title_2: "방문해 주세요",
+    contact_address: "주소", contact_phone: "전화번호", contact_email: "이메일", contact_hours: "영업시간",
+    contact_directions: "길 안내 받기 →",
+    footer_nav: "내비게이션", footer_exp: "경험", footer_contact: "문의하기",
+    footer_private: "프라이빗 다이닝", footer_corp: "기업 행사", footer_wine: "와인 셀러", footer_chef: "셰프 테이블",
+    footer_rights: "모든 권리 보유.",
+    toast_required: "⚠ 이름과 날짜는 필수입니다.",
+    toast_success: "✓ 예약이 접수되었습니다! 2시간 이내에 확인해 드리겠습니다.",
+    whatsapp_tip: "WhatsApp으로 채팅하기",
   }
 };
 
@@ -192,7 +230,8 @@ const LANG_META = {
   ja: { label: "日本語",   flag: "🇯🇵" },
   zh: { label: "中文",     flag: "🇨🇳" },
   ru: { label: "Русский", flag: "🇷🇺" },
-  de: { label: "Deutsch", flag: "🇩🇪" }
+  de: { label: "Deutsch", flag: "🇩🇪" },
+  ko: { label: "한국어",   flag: "🇰🇷" }
 };
 
 // ── Dil yönetimi ──────────────────────────────────────────────
@@ -227,18 +266,22 @@ function tf(obj, fallbackLang) {
 }
 
 // Dil seçici dropdown'ı oluşturup verilen container'a ekler
+// containerId'ye özel benzersiz id'ler kullanır (birden fazla switcher aynı sayfada olabilir)
 function renderLangSwitcher(containerId, onChangeCallback) {
   const container = document.getElementById(containerId);
   if (!container) return;
   const current = getCurrentLang();
+  const btnId = 'lang-btn-toggle-' + containerId;
+  const ddId  = 'lang-dropdown-' + containerId;
+
   container.innerHTML = `
-    <div class="lang-switcher" id="lang-switcher-root">
-      <button class="lang-btn" id="lang-btn-toggle" aria-label="Dil seçimi">
+    <div class="lang-switcher">
+      <button class="lang-btn" id="${btnId}" aria-label="Dil seçimi" type="button">
         <span>${LANG_META[current].flag}</span>
         <span class="lang-code">${current.toUpperCase()}</span>
         <span class="lang-arrow">▾</span>
       </button>
-      <div class="lang-dropdown" id="lang-dropdown">
+      <div class="lang-dropdown" id="${ddId}">
         ${Object.keys(LANG_META).map(code => `
           <div class="lang-opt ${code===current?'active':''}" data-lang="${code}">
             <span class="lang-flag">${LANG_META[code].flag}</span>
@@ -249,13 +292,26 @@ function renderLangSwitcher(containerId, onChangeCallback) {
       </div>
     </div>`;
 
-  const btn = document.getElementById('lang-btn-toggle');
-  const dropdown = document.getElementById('lang-dropdown');
+  const btn = document.getElementById(btnId);
+  const dropdown = document.getElementById(ddId);
+  if (!btn || !dropdown) return;
+
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
+    // Diğer açık dropdown'ları kapat (varsa)
+    document.querySelectorAll('.lang-dropdown.open').forEach(d => { if(d!==dropdown) d.classList.remove('open'); });
     dropdown.classList.toggle('open');
   });
-  document.addEventListener('click', () => dropdown.classList.remove('open'));
+
+  // Her render'da yeni bir document click listener eklenmesin diye
+  // window üzerinde tek bir global handler tutuyoruz.
+  if (!window.__langDropdownGlobalHandlerSet) {
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.lang-dropdown.open').forEach(d => d.classList.remove('open'));
+    });
+    window.__langDropdownGlobalHandlerSet = true;
+  }
+
   dropdown.querySelectorAll('.lang-opt').forEach(opt => {
     opt.addEventListener('click', (e) => {
       e.stopPropagation();
