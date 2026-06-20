@@ -341,7 +341,7 @@
       <div class="rev-r">
         <span class="eyebrow" id="about-eyebrow-t" style="display:block;margin-bottom:1rem">Hikayemiz</span>
         <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">
-          Tutku <em style="font-style:italic;color:var(--gold)">&amp; Ateşle</em><br>Yaratıldı
+          <span id="about-title-1">Tutku</span> <em style="font-style:italic;color:var(--gold)" id="about-title-em">&amp; Ateşle</em><br><span id="about-title-3">Yaratıldı</span>
         </h2>
         <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
         <p class="body-l" id="about-text-1"></p>
@@ -398,10 +398,10 @@
   <div class="container">
     <div class="res-g">
       <div class="rev-l">
-        <span class="eyebrow" style="display:block;margin-bottom:1rem">Rezervasyon</span>
-        <h2 class="res-h">Unutulmaz Bir<br><em style="font-style:italic;color:var(--gold)">Akşam</em><br>Ayırtın</h2>
+        <span class="eyebrow" id="res-eyebrow-t" style="display:block;margin-bottom:1rem">Rezervasyon</span>
+        <h2 class="res-h"><span id="res-title-1">Unutulmaz Bir</span><br><em style="font-style:italic;color:var(--gold)" id="res-title-em">Akşam</em><br><span id="res-title-3">Ayırtın</span></h2>
         <div class="ornament" style="max-width:300px"><span class="orn-i">✦ ✦ ✦</span></div>
-        <p class="body-m" style="margin-bottom:2rem">Hafta sonu akşamları için en az 48 saat öncesinden rezervasyon öneriyoruz.</p>
+        <p class="body-m" id="res-subtitle-t" style="margin-bottom:2rem">Hafta sonu akşamları için en az 48 saat öncesinden rezervasyon öneriyoruz.</p>
         <div id="hours-list"></div>
       </div>
       <div class="rev-r">
@@ -470,7 +470,7 @@
     <div class="cont-g">
       <div class="rev-l">
         <span class="eyebrow" id="contact-eyebrow-t" style="display:block;margin-bottom:1rem">Bizi Bulun</span>
-        <h2 class="cont-h">Restoranımıza<br><em style="font-style:italic;color:var(--gold)">Bekleriz</em></h2>
+        <h2 class="cont-h"><span id="contact-title-1">Restoranımıza</span><br><em style="font-style:italic;color:var(--gold)" id="contact-title-em">Bekleriz</em></h2>
         <div class="ornament" style="max-width:280px"><span class="orn-i">✦ ✦ ✦</span></div>
         <div class="cd"><div class="cd-ico">📍</div><div class="cd-txt"><strong id="contact-address-lbl">Adres</strong><span id="c-address"></span></div></div>
         <div class="cd"><div class="cd-ico">📞</div><div class="cd-txt"><strong id="contact-phone-lbl">Telefon</strong><a id="c-phone-a" style="color:var(--gold)"></a></div></div>
@@ -667,8 +667,10 @@ function applySettings(){
   // Hero buton metinleri — UI dil sistemi öncelikli, settings varsa onu kullan
   const hBtn1 = document.getElementById('hero-btn1');
   const hBtn2 = document.getElementById('hero-btn2');
-  if(hBtn1) hBtn1.textContent = tf(S.heroBtnPrimaryML) || t('res_submit');
-  if(hBtn2) hBtn2.textContent = tf(S.heroBtnSecondaryML) || t('menu_view_all');
+  // Hero butonları: admin bu dilde özel metin girmişse onu kullan, girmemişse UI'nin
+  // standart çevirisini göster (TR'ye sessizce düşmesin)
+  if(hBtn1) hBtn1.textContent = tfOrUI(S.heroBtnPrimaryML, 'res_submit');
+  if(hBtn2) hBtn2.textContent = tfOrUI(S.heroBtnSecondaryML, 'menu_view_all');
 
   // Hero overlay karartma
   if(heroBg && S.heroOverlayOpacity !== undefined) {
@@ -684,6 +686,15 @@ function applySettings(){
   const aboutT2 = document.getElementById('about-text-2');
   if(aboutT1) aboutT1.textContent = tf(S.aboutTextML)||'';
   if(aboutT2) aboutT2.textContent = tf(S.aboutText2ML)||'';
+
+  // About başlığı: "Tutku & Ateşle Yaratıldı" — admin özelleştirebilir, yoksa UI dilinde gösterilir
+  const at = S.aboutTitleML || {};
+  const at1 = document.getElementById('about-title-1');
+  const atEm = document.getElementById('about-title-em');
+  const at3 = document.getElementById('about-title-3');
+  if(at1) at1.textContent = tfML(at.line1, 'about_title_1');
+  if(atEm) atEm.textContent = tfML(at.lineEm, 'about_title_2');
+  if(at3) at3.textContent = tfML(at.line3, 'about_title_3');
 
   // About rozeti
   const badgeNum = document.getElementById('about-badge-num');
@@ -723,6 +734,22 @@ function applySettings(){
   if(resSec && S.reservationBgImage) {
     resSec.style.backgroundImage = `linear-gradient(180deg,rgba(10,10,10,.6),rgba(10,10,10,.88)),url('${S.reservationBgImage}') center/cover fixed`;
   }
+
+  // Rezervasyon başlığı: "Unutulmaz Bir Akşam Ayırtın"
+  const rt = S.resTitleML || {};
+  const rt1 = document.getElementById('res-title-1');
+  const rtEm = document.getElementById('res-title-em');
+  const rt3 = document.getElementById('res-title-3');
+  if(rt1) rt1.textContent = tfML(rt.line1, 'res_title_1');
+  if(rtEm) rtEm.textContent = tfML(rt.lineEm, 'res_title_2');
+  if(rt3) rt3.textContent = tfML(rt.line3, 'res_title_3');
+
+  // İletişim başlığı: "Restoranımıza Bekleriz"
+  const ct = S.contactTitleML || {};
+  const ct1 = document.getElementById('contact-title-1');
+  const ctEm = document.getElementById('contact-title-em');
+  if(ct1) ct1.textContent = tfML(ct.line1, 'contact_title_1');
+  if(ctEm) ctEm.textContent = tfML(ct.lineEm, 'contact_title_2');
 
   // ── İletişim ──────────────────────────────────────
   const cAddr = document.getElementById('c-address');

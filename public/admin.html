@@ -812,7 +812,8 @@ document.addEventListener('DOMContentLoaded', checkSetup);
     <div class="sb-item" data-p="design-hero"><span class="ico">🌄</span>Hero Bölümü</div>
     <div class="sb-item" data-p="design-about"><span class="ico">📖</span>Hakkımızda</div>
     <div class="sb-item" data-p="design-chef"><span class="ico">👨‍🍳</span>Şef Bölümü</div>
-    <div class="sb-item" data-p="design-reservation"><span class="ico">🪑</span>Rezervasyon Görseli</div>
+    <div class="sb-item" data-p="design-reservation"><span class="ico">🪑</span>Rezervasyon Bölümü</div>
+    <div class="sb-item" data-p="design-contact"><span class="ico">📍</span>İletişim Başlığı</div>
     <div class="sb-sec">Ayarlar</div>
     <div class="sb-item" data-p="settings-general"><span class="ico">🏠</span>Genel Bilgiler</div>
     <div class="sb-item" data-p="settings-hours"><span class="ico">🕐</span>Çalışma Saatleri</div>
@@ -1023,9 +1024,13 @@ document.addEventListener('DOMContentLoaded', checkSetup);
           <input class="f-ctrl" id="s-rname" placeholder="Ember & Oak"/>
           <div style="font-size:.72rem;color:var(--gray-l);margin-top:.3rem">Navbar, footer, yükleme ekranı ve hero başlığında kullanılır. Logo yüklenirse navbar'da resim gösterilir.</div>
         </div>
-        <div class="fg">
-          <label>Slogan</label>
-          <input class="f-ctrl" id="s-slogan" placeholder="Where fire meets finesse..."/>
+        <div class="fg full sec-div"><h4>Slogan (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="slg-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('slg', SLOGAN_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="slg-ml-panels"></div>
         </div>
         <div class="sec-div"><h4>Logo Görseli (Opsiyonel – PNG / SVG önerilir)</h4></div>
         <div class="fg">
@@ -1125,17 +1130,15 @@ document.addEventListener('DOMContentLoaded', checkSetup);
           <input class="f-ctrl" id="s-hero-overlay" type="range" min="0" max="1" step="0.05" oninput="document.getElementById('hero-ov-val').textContent=this.value" style="padding:.3rem 0"/>
           <div style="font-size:.72rem;color:var(--gray-l)">0 = şeffaf / 1 = tamamen karanlık</div>
         </div>
-        <div class="fg">
-          <label>Üst Küçük Metin (Eyebrow)</label>
-          <input class="f-ctrl" id="s-hero-eyebrow" placeholder="Est. 2014 – İstanbul & Ötesi"/>
-        </div>
-        <div class="fg">
-          <label>Ana Buton Metni</label>
-          <input class="f-ctrl" id="s-hero-btn1" placeholder="Rezervasyon Yap"/>
-        </div>
-        <div class="fg">
-          <label>İkincil Buton Metni</label>
-          <input class="f-ctrl" id="s-hero-btn2" placeholder="Menüyü İncele"/>
+
+        <div class="fg full sec-div"><h4>Üst Küçük Metin & Butonlar (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="hro-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('hro', HERO_TEXT_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="hro-ml-panels"></div>
+          <div style="font-size:.7rem;color:var(--gray-l);margin-top:.4rem">💡 Buton metinlerini boş bırakırsanız, sitenin standart dil çevirisi otomatik kullanılır.</div>
         </div>
       </div>
       <div style="margin-top:1.25rem;display:flex;justify-content:flex-end">
@@ -1151,7 +1154,7 @@ document.addEventListener('DOMContentLoaded', checkSetup);
     <div class="card-h"><div class="card-title">📖 Hakkımızda Bölümü</div></div>
     <div class="card-body">
       <div class="fg-grid">
-        <div class="fg">
+        <div class="fg full">
           <label>Hakkımızda Görseli</label>
           <div class="img-picker">
             <div class="img-picker-row">
@@ -1159,16 +1162,37 @@ document.addEventListener('DOMContentLoaded', checkSetup);
               <button class="btn blue sm" onclick="openPicker('s-about-img','about-img-prev')">📁</button>
               <div style="position:relative"><button class="btn ghost sm">⬆</button><input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="uploadInline(this,'s-about-img','about-img-prev')"/></div>
             </div>
-            <div class="img-preview-box portrait" id="about-img-prev"><img src="" alt=""/><span>Görsel seç</span></div>
+            <div class="img-preview-box portrait" id="about-img-prev" style="max-width:280px"><img src="" alt=""/><span>Görsel seç</span></div>
           </div>
         </div>
-        <div class="fg" style="display:flex;flex-direction:column;gap:.75rem">
-          <div class="fg"><label>1. Paragraf</label><textarea class="f-ctrl" id="s-about-txt1" rows="5"></textarea></div>
-          <div class="fg"><label>2. Paragraf</label><textarea class="f-ctrl" id="s-about-txt2" rows="5"></textarea></div>
+
+        <div class="fg full sec-div"><h4>Başlık: "Tutku & Ateşle Yaratıldı" (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="abt-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('abt', ABOUT_TITLE_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="abt-ml-panels"></div>
         </div>
-        <div class="sec-div"><h4>Rozet (Sağ Alt Köşe)</h4></div>
-        <div class="fg"><label>Rozet Büyük Metin</label><input class="f-ctrl" id="s-badge-num" placeholder="3★"/></div>
-        <div class="fg"><label>Rozet Küçük Metin</label><input class="f-ctrl" id="s-badge-txt" placeholder="Ödüllü Restoran"/></div>
+
+        <div class="fg full sec-div"><h4>Açıklama Paragrafları (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="abp-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('abp', ABOUT_PARA_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="abp-ml-panels"></div>
+        </div>
+
+        <div class="fg full sec-div"><h4>Rozet (Sağ Alt Köşe)</h4></div>
+        <div class="fg"><label>Rozet Büyük Metin (Sembol, tüm dillerde aynı)</label><input class="f-ctrl" id="s-badge-num" placeholder="3★"/></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="abb-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('abb', ABOUT_BADGE_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="abb-ml-panels"></div>
+        </div>
       </div>
       <div style="margin-top:1.25rem;display:flex;justify-content:flex-end">
         <button class="btn primary" onclick="saveAbout()">💾 Kaydet</button>
@@ -1189,8 +1213,15 @@ document.addEventListener('DOMContentLoaded', checkSetup);
     </div>
     <div class="card-body">
       <div class="fg-grid">
-        <div class="fg"><label>Şef Adı Soyadı</label><input class="f-ctrl" id="s-chef-name" placeholder="Chef Mehmet Arslan"/></div>
-        <div class="fg"><label>Şef Unvanı</label><input class="f-ctrl" id="s-chef-title" placeholder="Executive Chef & Co-Founder"/></div>
+        <div class="fg full"><label>Şef Adı Soyadı (tüm dillerde aynı gösterilir)</label><input class="f-ctrl" id="s-chef-name" placeholder="Chef Mehmet Arslan"/></div>
+        <div class="fg full sec-div"><h4>Şef Unvanı (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="cht-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('cht', CHEF_TITLE_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="cht-ml-panels"></div>
+        </div>
         <div class="fg full">
           <label>Şef Fotoğrafı</label>
           <div class="img-picker">
@@ -1210,24 +1241,64 @@ document.addEventListener('DOMContentLoaded', checkSetup);
   </div>
 </div>
 
-<!-- DESIGN: RESERVATION BG -->
+<!-- DESIGN: RESERVATION -->
 <div class="panel" id="panel-design-reservation">
   <div class="card">
-    <div class="card-h"><div class="card-title">🪑 Rezervasyon Bölümü Arka Planı</div></div>
+    <div class="card-h"><div class="card-title">🪑 Rezervasyon Bölümü</div></div>
     <div class="card-body">
-      <div class="fg">
-        <label>Arka Plan Görseli</label>
-        <div class="img-picker">
-          <div class="img-picker-row">
-            <input class="f-ctrl" id="s-res-bg" placeholder="URL veya /uploads/..." oninput="previewBox('s-res-bg','res-bg-prev')"/>
-            <button class="btn blue sm" onclick="openPicker('s-res-bg','res-bg-prev')">📁 Kütüphane</button>
-            <div style="position:relative"><button class="btn ghost sm">⬆ Yükle</button><input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="uploadInline(this,'s-res-bg','res-bg-prev')"/></div>
+      <div class="fg-grid">
+        <div class="fg full">
+          <label>Arka Plan Görseli</label>
+          <div class="img-picker">
+            <div class="img-picker-row">
+              <input class="f-ctrl" id="s-res-bg" placeholder="URL veya /uploads/..." oninput="previewBox('s-res-bg','res-bg-prev')"/>
+              <button class="btn blue sm" onclick="openPicker('s-res-bg','res-bg-prev')">📁 Kütüphane</button>
+              <div style="position:relative"><button class="btn ghost sm">⬆ Yükle</button><input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="uploadInline(this,'s-res-bg','res-bg-prev')"/></div>
+            </div>
+            <div class="img-preview-box" id="res-bg-prev" style="max-width:380px"><img src="" alt=""/><span>Görsel seç</span></div>
           </div>
-          <div class="img-preview-box" id="res-bg-prev"><img src="" alt=""/><span>Görsel seç</span></div>
+        </div>
+        <div class="fg full sec-div"><h4>Başlık: "Unutulmaz Bir Akşam Ayırtın" (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="rst-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('rst', RES_TITLE_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="rst-ml-panels"></div>
+        </div>
+        <div class="fg full sec-div"><h4>Alt Başlık & Açıklama (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="rss-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('rss', RES_SUB_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="rss-ml-panels"></div>
         </div>
       </div>
       <div style="margin-top:1.25rem;display:flex;justify-content:flex-end">
         <button class="btn primary" onclick="saveResBg()">💾 Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DESIGN: CONTACT TITLE -->
+<div class="panel" id="panel-design-contact">
+  <div class="card">
+    <div class="card-h"><div class="card-title">📍 İletişim Bölümü Başlığı</div></div>
+    <div class="card-body">
+      <div class="fg-grid">
+        <div class="fg full sec-div"><h4>Başlık: "Restoranımıza Bekleriz" (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="cnt-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('cnt', CONTACT_TITLE_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="cnt-ml-panels"></div>
+        </div>
+      </div>
+      <div style="margin-top:1.25rem;display:flex;justify-content:flex-end">
+        <button class="btn primary" onclick="saveContactTitle()">💾 Kaydet</button>
       </div>
     </div>
   </div>
@@ -1242,9 +1313,16 @@ document.addEventListener('DOMContentLoaded', checkSetup);
         <div class="fg"><label>Telefon</label><input class="f-ctrl" id="s-phone" placeholder="+90 212 219 12 34"/></div>
         <div class="fg"><label>WhatsApp (+ ile)</label><input class="f-ctrl" id="s-whatsapp" placeholder="+902122191234"/></div>
         <div class="fg"><label>E-Posta</label><input class="f-ctrl" id="s-email" type="email"/></div>
-        <div class="fg"><label>Footer Alt Metin</label><input class="f-ctrl" id="s-footer-txt"/></div>
         <div class="fg full"><label>Adres</label><input class="f-ctrl" id="s-address"/></div>
         <div class="fg full"><label>Google Maps Embed URL (iframe src)</label><input class="f-ctrl" id="s-map" placeholder="https://www.google.com/maps/embed?pb=..."/></div>
+        <div class="fg full sec-div"><h4>Footer Alt Metni (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="ftr-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateGeneric('ftr', FOOTER_TEXT_FIELDS)">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="ftr-ml-panels"></div>
+        </div>
       </div>
       <div style="margin-top:1.25rem;display:flex;justify-content:flex-end">
         <button class="btn primary" onclick="saveGeneral()">💾 Kaydet</button>
@@ -1882,10 +1960,13 @@ function populateForms(){
   sv('s-currency',s.currency||'₺');
   previewFonts(); renderColorPresets();
   // Logo
-  sv('s-rname',s.restaurantName); sv('s-slogan',s.slogan);
+  sv('s-rname',s.restaurantName);
   sv('s-logo-url',s.logoUrl); sv('s-favicon-url',s.faviconUrl);
   if(s.logoUrl)previewBox('s-logo-url','logo-prev');
   if(s.faviconUrl)previewBox('s-favicon-url','fav-prev');
+  // Slogan (çok dilli)
+  mlActiveTab['slg'] = 'tr';
+  renderMLInput('slg', SLOGAN_FIELDS, { text: s.slogan || {tr:''} });
   // Loader
   sv('s-loader-text',s.loadingText||'');
   sv('s-loader-duration',s.loaderDuration||1400);
@@ -1896,24 +1977,64 @@ function populateForms(){
   sv('s-hero-img',s.heroImage);
   sv('s-hero-overlay',s.heroOverlayOpacity??0.5);
   document.getElementById('hero-ov-val').textContent=s.heroOverlayOpacity??0.5;
-  sv('s-hero-eyebrow',s.heroEyebrow);
-  sv('s-hero-btn1',s.heroBtnPrimary||'Rezervasyon Yap');
-  sv('s-hero-btn2',s.heroBtnSecondary||'Menüyü İncele');
+  mlActiveTab['hro'] = 'tr';
+  renderMLInput('hro', HERO_TEXT_FIELDS, {
+    eyebrow: s.heroEyebrowML || {tr:''},
+    btn1: s.heroBtnPrimaryML || {tr:''},
+    btn2: s.heroBtnSecondaryML || {tr:''}
+  });
   if(s.heroImage)previewBox('s-hero-img','hero-img-prev');
   // About
-  sv('s-about-img',s.aboutImage); sv('s-about-txt1',s.aboutText); sv('s-about-txt2',s.aboutText2);
-  sv('s-badge-num',s.aboutBadgeNum||'3★'); sv('s-badge-txt',s.aboutBadgeText||'Ödüllü Restoran');
+  sv('s-about-img',s.aboutImage);
+  sv('s-badge-num',s.aboutBadgeNum||'3★');
   if(s.aboutImage)previewBox('s-about-img','about-img-prev');
+  mlActiveTab['abt'] = 'tr';
+  renderMLInput('abt', ABOUT_TITLE_FIELDS, {
+    line1: (s.aboutTitleML && s.aboutTitleML.line1) || {tr:''},
+    lineEm: (s.aboutTitleML && s.aboutTitleML.lineEm) || {tr:''},
+    line3: (s.aboutTitleML && s.aboutTitleML.line3) || {tr:''}
+  });
+  mlActiveTab['abp'] = 'tr';
+  renderMLInput('abp', ABOUT_PARA_FIELDS, {
+    p1: s.aboutTextML || {tr:''},
+    p2: s.aboutText2ML || {tr:''}
+  });
+  mlActiveTab['abb'] = 'tr';
+  renderMLInput('abb', ABOUT_BADGE_FIELDS, {
+    text: s.aboutBadgeTextML || {tr:''}
+  });
   // Chef
-  sv('s-chef-name',s.chefName); sv('s-chef-title',s.chefTitle); sv('s-chef-img',s.chefImage);
+  sv('s-chef-name',s.chefName); sv('s-chef-img',s.chefImage);
   if(s.chefImage)previewBox('s-chef-img','chef-img-prev');
   chefVis=s.showChef!==false; setTog('chef-vis-t','chef-vis-l',chefVis);
-  // Res bg
+  mlActiveTab['cht'] = 'tr';
+  renderMLInput('cht', CHEF_TITLE_FIELDS, {
+    title: s.chefTitleML || {tr:''}
+  });
+  // Reservation
   sv('s-res-bg',s.reservationBgImage);
   if(s.reservationBgImage)previewBox('s-res-bg','res-bg-prev');
+  mlActiveTab['rst'] = 'tr';
+  renderMLInput('rst', RES_TITLE_FIELDS, {
+    line1: (s.resTitleML && s.resTitleML.line1) || {tr:''},
+    lineEm: (s.resTitleML && s.resTitleML.lineEm) || {tr:''},
+    line3: (s.resTitleML && s.resTitleML.line3) || {tr:''}
+  });
+  mlActiveTab['rss'] = 'tr';
+  renderMLInput('rss', RES_SUB_FIELDS, {
+    subtitle: s.resSubtitleML || {tr:''}
+  });
+  // Contact title
+  mlActiveTab['cnt'] = 'tr';
+  renderMLInput('cnt', CONTACT_TITLE_FIELDS, {
+    line1: (s.contactTitleML && s.contactTitleML.line1) || {tr:''},
+    lineEm: (s.contactTitleML && s.contactTitleML.lineEm) || {tr:''}
+  });
   // General
   sv('s-phone',s.phone); sv('s-whatsapp',s.whatsapp); sv('s-email',s.email);
-  sv('s-address',s.address); sv('s-map',s.mapEmbed); sv('s-footer-txt',s.footerText);
+  sv('s-address',s.address); sv('s-map',s.mapEmbed);
+  mlActiveTab['ftr'] = 'tr';
+  renderMLInput('ftr', FOOTER_TEXT_FIELDS, { text: s.footerTextML || {tr:''} });
   // Hours & Stats
   renderHoursEd(); renderStatsEd();
   // Social
@@ -1966,7 +2087,8 @@ async function saveBrand(){
   renderColorPresets();toast('Marka ayarları kaydedildi ✓','ok');
 }
 async function saveLogo(){
-  const upd={restaurantName:gv('s-rname'),slogan:gv('s-slogan'),logoUrl:gv('s-logo-url'),faviconUrl:gv('s-favicon-url')};
+  const sloganData = collectMLData('slg', SLOGAN_FIELDS);
+  const upd={restaurantName:gv('s-rname'), slogan:sloganData.text, logoUrl:gv('s-logo-url'), faviconUrl:gv('s-favicon-url')};
   await PUT('settings',upd);DB.settings={...DB.settings,...upd};
   document.getElementById('sb-rname').textContent=upd.restaurantName||'Restaurant';
   toast('Logo ayarları kaydedildi ✓','ok');
@@ -1977,50 +2099,137 @@ async function saveLoader(){
 }
 function toggleLD(){ldShow=!ldShow;setTog('ld-show-t','ld-show-l',ldShow);}
 async function saveHero(){
-  const upd={heroImage:gv('s-hero-img'),heroOverlayOpacity:parseFloat(gv('s-hero-overlay'))||0.5,heroEyebrow:gv('s-hero-eyebrow'),heroBtnPrimary:gv('s-hero-btn1'),heroBtnSecondary:gv('s-hero-btn2')};
+  const heroData = collectMLData('hro', HERO_TEXT_FIELDS);
+  const upd={
+    heroImage:gv('s-hero-img'), heroOverlayOpacity:parseFloat(gv('s-hero-overlay'))||0.5,
+    heroEyebrowML:heroData.eyebrow, heroBtnPrimaryML:heroData.btn1, heroBtnSecondaryML:heroData.btn2
+  };
   await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('Hero bölümü kaydedildi ✓','ok');
 }
 async function saveAbout(){
-  const upd={aboutImage:gv('s-about-img'),aboutText:gv('s-about-txt1'),aboutText2:gv('s-about-txt2'),aboutBadgeNum:gv('s-badge-num'),aboutBadgeText:gv('s-badge-txt')};
+  const titleData = collectMLData('abt', ABOUT_TITLE_FIELDS);
+  const paraData = collectMLData('abp', ABOUT_PARA_FIELDS);
+  const badgeData = collectMLData('abb', ABOUT_BADGE_FIELDS);
+  const upd={
+    aboutImage:gv('s-about-img'),
+    aboutTitleML:{line1:titleData.line1, lineEm:titleData.lineEm, line3:titleData.line3},
+    aboutTextML:paraData.p1, aboutText2ML:paraData.p2,
+    aboutBadgeNum:gv('s-badge-num'), aboutBadgeTextML:badgeData.text
+  };
   await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('Hakkımızda kaydedildi ✓','ok');
 }
 async function saveChef(){
-  const upd={chefName:gv('s-chef-name'),chefTitle:gv('s-chef-title'),chefImage:gv('s-chef-img'),showChef:chefVis};
+  const titleData = collectMLData('cht', CHEF_TITLE_FIELDS);
+  const upd={chefName:gv('s-chef-name'), chefTitleML:titleData.title, chefImage:gv('s-chef-img'), showChef:chefVis};
   await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('Şef bölümü kaydedildi ✓','ok');
 }
 async function saveResBg(){
-  const upd={reservationBgImage:gv('s-res-bg')};
-  await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('Rezervasyon görseli kaydedildi ✓','ok');
+  const titleData = collectMLData('rst', RES_TITLE_FIELDS);
+  const subData = collectMLData('rss', RES_SUB_FIELDS);
+  const upd={
+    reservationBgImage:gv('s-res-bg'),
+    resTitleML:{line1:titleData.line1, lineEm:titleData.lineEm, line3:titleData.line3},
+    resSubtitleML:subData.subtitle
+  };
+  await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('Rezervasyon bölümü kaydedildi ✓','ok');
+}
+async function saveContactTitle(){
+  const titleData = collectMLData('cnt', CONTACT_TITLE_FIELDS);
+  const upd={ contactTitleML:{line1:titleData.line1, lineEm:titleData.lineEm} };
+  await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('İletişim başlığı kaydedildi ✓','ok');
 }
 async function saveGeneral(){
-  const upd={phone:gv('s-phone'),whatsapp:gv('s-whatsapp'),email:gv('s-email'),address:gv('s-address'),mapEmbed:gv('s-map'),footerText:gv('s-footer-txt')};
+  const footerData = collectMLData('ftr', FOOTER_TEXT_FIELDS);
+  const upd={phone:gv('s-phone'),whatsapp:gv('s-whatsapp'),email:gv('s-email'),address:gv('s-address'),mapEmbed:gv('s-map'),footerTextML:footerData.text};
   await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('İletişim bilgileri kaydedildi ✓','ok');
 }
 async function saveSocial(){
   const upd={socialInstagram:gv('s-ig'),socialFacebook:gv('s-fb'),socialTwitter:gv('s-tw'),socialTripadvisor:gv('s-ta')};
   await PUT('settings',upd);DB.settings={...DB.settings,...upd};toast('Sosyal medya kaydedildi ✓','ok');
 }
+// ── ÇALIŞMA SAATLERİ (gün adları çok dilli) ──────────────────
+let hoursState = []; // [{day:{tr,en,...}, time:'12:00-23:00'}]
 function renderHoursEd(){
-  document.getElementById('hours-ed').innerHTML=(DB.settings.hours||[]).map(h=>`
-    <div class="edit-row"><input class="f-ctrl hr-day" value="${h.day||''}" placeholder="Pazartesi – Perşembe"/><input class="f-ctrl hr-time" value="${h.time||''}" placeholder="12:00 – 23:00" style="max-width:175px"/><button class="row-del" onclick="this.parentElement.remove()">✕</button></div>`).join('');
+  hoursState = JSON.parse(JSON.stringify(DB.settings.hoursML || []));
+  renderHoursRows();
 }
-function addHour(){const d=document.createElement('div');d.className='edit-row';d.innerHTML=`<input class="f-ctrl hr-day" placeholder="Gün"/><input class="f-ctrl hr-time" placeholder="Saat aralığı" style="max-width:175px"/><button class="row-del" onclick="this.parentElement.remove()">✕</button>`;document.getElementById('hours-ed').appendChild(d);}
+function renderHoursRows(){
+  const ed = document.getElementById('hours-ed');
+  if(!ed) return;
+  ed.innerHTML = hoursState.map((h,i)=>`
+    <div class="hour-row-card" style="background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.85rem;margin-bottom:.6rem">
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem">
+        <input class="f-ctrl hr-day-tr" data-i="${i}" value="${(h.day&&h.day.tr)||''}" placeholder="Gün (Türkçe) — örn: Pazartesi – Perşembe" oninput="updateHourDay(${i},this.value)" style="flex:1"/>
+        <input class="f-ctrl hr-time" data-i="${i}" value="${h.time||''}" placeholder="12:00 – 23:00" style="max-width:160px" oninput="updateHourTime(${i},this.value)"/>
+        <button class="btn blue xs" onclick="autoTranslateHourDay(${i})" title="Bu günü 7 dile çevir">🌐</button>
+        <button class="row-del" onclick="removeHourRow(${i})">✕</button>
+      </div>
+      <div style="font-size:.68rem;color:var(--gray-l);padding-left:.2rem">
+        ${LANGS.filter(l=>l.code!=='tr').map(l=>`<span style="margin-right:.7rem">${l.flag} ${(h.day&&h.day[l.code])?'✓':'—'}</span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function updateHourDay(i,val){ if(!hoursState[i].day) hoursState[i].day={}; hoursState[i].day.tr=val; }
+function updateHourTime(i,val){ hoursState[i].time=val; }
+function removeHourRow(i){ hoursState.splice(i,1); renderHoursRows(); }
+function addHour(){ hoursState.push({day:{tr:''}, time:''}); renderHoursRows(); }
+async function autoTranslateHourDay(i){
+  const trText = (hoursState[i].day && hoursState[i].day.tr) || '';
+  if(!trText.trim()){ toast('Önce Türkçe gün adını yazın','err'); return; }
+  try{
+    const targetLangs = LANGS.filter(l=>l.code!=='tr').map(l=>l.code);
+    const r = await POST('translate', {text: trText, targetLangs});
+    const translations = r.translations || {};
+    hoursState[i].day = {...hoursState[i].day, ...translations};
+    renderHoursRows();
+    toast('🌐 Çevrildi','ok');
+  }catch(e){ toast('Çeviri hatası','err'); }
+}
 async function saveHours(){
-  const days=[...document.querySelectorAll('.hr-day')].map(e=>e.value.trim());
-  const times=[...document.querySelectorAll('.hr-time')].map(e=>e.value.trim());
-  const hours=days.map((d,i)=>({day:d,time:times[i]})).filter(h=>h.day);
-  await PUT('settings',{hours});DB.settings.hours=hours;toast('Çalışma saatleri kaydedildi ✓','ok');
+  const hours = hoursState.filter(h => h.day && h.day.tr && h.day.tr.trim());
+  await PUT('settings',{hoursML:hours});DB.settings.hoursML=hours;toast('Çalışma saatleri kaydedildi ✓','ok');
 }
+// ── İSTATİSTİK KARTLARI (label çok dilli) ────────────────────
+let statsState = [];
 function renderStatsEd(){
-  document.getElementById('stats-ed').innerHTML=(DB.settings.stats||[]).map(s=>`
-    <div class="edit-row"><input class="f-ctrl st-num" value="${s.num||''}" placeholder="10+" style="max-width:95px"/><input class="f-ctrl st-lbl" value="${s.label||''}" placeholder="Yıllık Deneyim"/><button class="row-del" onclick="this.parentElement.remove()">✕</button></div>`).join('');
+  statsState = JSON.parse(JSON.stringify(DB.settings.statsML || []));
+  renderStatsRows();
 }
-function addStat(){const d=document.createElement('div');d.className='edit-row';d.innerHTML=`<input class="f-ctrl st-num" placeholder="100+" style="max-width:95px"/><input class="f-ctrl st-lbl" placeholder="Açıklama"/><button class="row-del" onclick="this.parentElement.remove()">✕</button>`;document.getElementById('stats-ed').appendChild(d);}
+function renderStatsRows(){
+  const ed = document.getElementById('stats-ed');
+  if(!ed) return;
+  ed.innerHTML = statsState.map((s,i)=>`
+    <div class="hour-row-card" style="background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.85rem;margin-bottom:.6rem">
+      <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem">
+        <input class="f-ctrl" value="${s.num||''}" placeholder="10+" style="max-width:95px" oninput="updateStatNum(${i},this.value)"/>
+        <input class="f-ctrl" value="${(s.label&&s.label.tr)||''}" placeholder="Açıklama (Türkçe) — örn: Yıllık Deneyim" oninput="updateStatLabel(${i},this.value)" style="flex:1"/>
+        <button class="btn blue xs" onclick="autoTranslateStatLabel(${i})" title="Bu etiketi 7 dile çevir">🌐</button>
+        <button class="row-del" onclick="removeStatRow(${i})">✕</button>
+      </div>
+      <div style="font-size:.68rem;color:var(--gray-l);padding-left:.2rem">
+        ${LANGS.filter(l=>l.code!=='tr').map(l=>`<span style="margin-right:.7rem">${l.flag} ${(s.label&&s.label[l.code])?'✓':'—'}</span>`).join('')}
+      </div>
+    </div>`).join('');
+}
+function updateStatNum(i,val){ statsState[i].num=val; }
+function updateStatLabel(i,val){ if(!statsState[i].label) statsState[i].label={}; statsState[i].label.tr=val; }
+function removeStatRow(i){ statsState.splice(i,1); renderStatsRows(); }
+function addStat(){ statsState.push({num:'', label:{tr:''}}); renderStatsRows(); }
+async function autoTranslateStatLabel(i){
+  const trText = (statsState[i].label && statsState[i].label.tr) || '';
+  if(!trText.trim()){ toast('Önce Türkçe etiketi yazın','err'); return; }
+  try{
+    const targetLangs = LANGS.filter(l=>l.code!=='tr').map(l=>l.code);
+    const r = await POST('translate', {text: trText, targetLangs});
+    const translations = r.translations || {};
+    statsState[i].label = {...statsState[i].label, ...translations};
+    renderStatsRows();
+    toast('🌐 Çevrildi','ok');
+  }catch(e){ toast('Çeviri hatası','err'); }
+}
 async function saveStats(){
-  const nums=[...document.querySelectorAll('.st-num')].map(e=>e.value.trim());
-  const lbls=[...document.querySelectorAll('.st-lbl')].map(e=>e.value.trim());
-  const stats=nums.map((n,i)=>({num:n,label:lbls[i]})).filter(s=>s.num);
-  await PUT('settings',{stats});DB.settings.stats=stats;toast('İstatistikler kaydedildi ✓','ok');
+  const stats = statsState.filter(s => s.num && s.num.trim());
+  await PUT('settings',{statsML:stats});DB.settings.statsML=stats;toast('İstatistikler kaydedildi ✓','ok');
 }
 
 // ═══════════════════════════════════════════════════
@@ -2136,9 +2345,52 @@ const ITEM_ML_FIELDS = [
 const CAT_ML_FIELDS = [
   {key:'name', label:'Kategori Adı', type:'input'},
 ];
+const SLOGAN_FIELDS = [
+  {key:'text', label:'Slogan', type:'input'},
+];
+const HERO_TEXT_FIELDS = [
+  {key:'eyebrow', label:'Üst Küçük Metin (Eyebrow)', type:'input'},
+  {key:'btn1', label:'Ana Buton Metni', type:'input'},
+  {key:'btn2', label:'İkincil Buton Metni', type:'input'},
+];
+// Hakkımızda başlığı: "Tutku & Ateşle Yaratıldı" -> {line1, lineEm, line3}
+const ABOUT_TITLE_FIELDS = [
+  {key:'line1', label:'1. Satır', type:'input'},
+  {key:'lineEm', label:'Vurgulu Kısım (altın renkli)', type:'input'},
+  {key:'line3', label:'3. Satır', type:'input'},
+];
+const ABOUT_PARA_FIELDS = [
+  {key:'p1', label:'1. Paragraf', type:'textarea'},
+  {key:'p2', label:'2. Paragraf', type:'textarea'},
+];
+const ABOUT_BADGE_FIELDS = [
+  {key:'text', label:'Rozet Açıklaması', type:'input'},
+];
+const CHEF_TITLE_FIELDS = [
+  {key:'title', label:'Şef Unvanı', type:'input'},
+];
+// Rezervasyon başlığı: "Unutulmaz Bir Akşam Ayırtın" -> {line1, lineEm, line3}
+const RES_TITLE_FIELDS = [
+  {key:'line1', label:'1. Satır', type:'input'},
+  {key:'lineEm', label:'Vurgulu Kısım (altın renkli)', type:'input'},
+  {key:'line3', label:'3. Satır', type:'input'},
+];
+const RES_SUB_FIELDS = [
+  {key:'subtitle', label:'Alt Açıklama Metni', type:'textarea'},
+];
+// İletişim başlığı: "Restoranımıza Bekleriz" -> {line1, lineEm}
+const CONTACT_TITLE_FIELDS = [
+  {key:'line1', label:'1. Satır', type:'input'},
+  {key:'lineEm', label:'Vurgulu Kısım (altın renkli)', type:'input'},
+];
+const FOOTER_TEXT_FIELDS = [
+  {key:'text', label:'Footer Alt Metni', type:'input'},
+];
 
 function autoTranslateItem() { runAutoTranslate('im', ITEM_ML_FIELDS); }
 function autoTranslateCat() { runAutoTranslate('cm', CAT_ML_FIELDS); }
+// Genel amaçlı: herhangi bir prefix + field listesi için otomatik çeviri çalıştırır
+function autoTranslateGeneric(prefix, fields) { runAutoTranslate(prefix, fields); }
 
 // ═══════════════════════════════════════════════════
 //  ITEM MODAL
@@ -2362,7 +2614,7 @@ function toast(msg,type='info'){const el=document.getElementById('toast');el.tex
 // ═══════════════════════════════════════════════════
 //  NAV
 // ═══════════════════════════════════════════════════
-const TITLES={dashboard:'Dashboard',menu:'Menü Yönetimi',gallery:'Galeri',testimonials:'Yorumlar',media:'Medya Kütüphanesi',reservations:'Rezervasyonlar',messages:'Mesajlar','design-sections':'Bölüm Görünürlüğü','design-brand':'Marka & Renkler','design-logo':'Logo & Favicon','design-loader':'Yükleme Ekranı','design-hero':'Hero Bölümü','design-about':'Hakkımızda','design-chef':'Şef Bölümü','design-reservation':'Rezervasyon Görseli','settings-general':'Genel Bilgiler','settings-hours':'Çalışma Saatleri','settings-stats':'İstatistik Kartları','settings-social':'Sosyal Medya'};
+const TITLES={dashboard:'Dashboard',menu:'Menü Yönetimi',gallery:'Galeri',testimonials:'Yorumlar',media:'Medya Kütüphanesi',reservations:'Rezervasyonlar',messages:'Mesajlar','design-sections':'Bölüm Görünürlüğü','design-brand':'Marka & Renkler','design-logo':'Logo & Favicon','design-loader':'Yükleme Ekranı','design-hero':'Hero Bölümü','design-about':'Hakkımızda','design-chef':'Şef Bölümü','design-reservation':'Rezervasyon Bölümü','design-contact':'İletişim Başlığı','settings-general':'Genel Bilgiler','settings-hours':'Çalışma Saatleri','settings-stats':'İstatistik Kartları','settings-social':'Sosyal Medya'};
 function nav(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));

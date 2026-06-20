@@ -265,6 +265,24 @@ function tf(obj, fallbackLang) {
   return obj[lang] || obj[fallbackLang||'tr'] || obj.tr || obj.en || Object.values(obj)[0] || '';
 }
 
+// tfOrUI(obj, uiKey) — admin tarafından bu DİL için özel olarak doldurulmuş bir
+// değer varsa onu kullanır; doldurulmamışsa (obj[lang] boşsa) sessizce TR'ye
+// DÜŞMEZ, bunun yerine standart UI çevirisini (UI_TEXT[lang][uiKey]) gösterir.
+// Bu, "Menüyü İncele" gibi buton metinlerinin admin TR dışında bir dil
+// girmediği durumda bile doğru dilde görünmesini sağlar.
+function tfOrUI(obj, uiKey) {
+  const lang = getCurrentLang();
+  if (obj && typeof obj === 'object' && obj[lang] && obj[lang].trim()) {
+    return obj[lang];
+  }
+  if (typeof obj === 'string' && obj.trim() && lang === 'tr') {
+    return obj; // eski tek-dilli veri, sadece TR için
+  }
+  return t(uiKey);
+}
+// tfML — tfOrUI ile aynı mantık, kısa isim (3 parçalı başlıklarda kullanılır)
+const tfML = tfOrUI;
+
 // Dil seçici dropdown'ı oluşturup verilen container'a ekler
 // containerId'ye özel benzersiz id'ler kullanır (birden fazla switcher aynı sayfada olabilir)
 function renderLangSwitcher(containerId, onChangeCallback) {

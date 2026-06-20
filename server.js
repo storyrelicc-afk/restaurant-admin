@@ -241,15 +241,33 @@ function getDefaultDB() {
     settings: {
       restaurantName: "Restoran Adınız",
       // ── ÇOK DİLLİ ALANLAR (TR/EN/JA/ZH/RU/DE) ─────────────────
-      slogan: {tr:"Eşsiz lezzetler, unutulmaz anlar.",en:"Unique flavors, unforgettable moments.",ja:"唯一の味、忘れられない瞬間。",zh:"独特风味，难忘时刻。",ru:"Уникальные вкусы, незабываемые моменты.",de:"Einzigartige Aromen, unvergessliche Momente."},
-      heroEyebrowML: {tr:"Est. 2015 – İstanbul",en:"Est. 2015 – Istanbul",ja:"創業 2015年 – イスタンブール",zh:"创立于2015年 – 伊斯坦布尔",ru:"Основан в 2015 – Стамбул",de:"Gegründet 2015 – Istanbul"},
-      heroBtnPrimaryML:   {tr:"Rezervasyon Yap",en:"Make a Reservation",ja:"予約する",zh:"立即预订",ru:"Забронировать",de:"Tisch reservieren"},
-      heroBtnSecondaryML: {tr:"Menüyü İncele",en:"View Menu",ja:"メニューを見る",zh:"查看菜单",ru:"Посмотреть меню",de:"Speisekarte ansehen"},
-      aboutTextML:  {tr:"Restoranımız, yılların deneyimi ve tutku ile hazırlanan özel tariflerimizle misafirlerine unutulmaz bir lezzet yolculuğu sunmaktadır.",en:"Our restaurant offers an unforgettable culinary journey with special recipes prepared with years of experience and passion.",ja:"当レストランは、長年の経験と情熱で作られた特別なレシピで、忘れられない美食の旅をお届けします。",zh:"我们的餐厅以多年的经验和热情打造的特色菜谱，为您呈现难忘的美食之旅。",ru:"Наш ресторан предлагает незабываемое гастрономическое путешествие с особыми рецептами, созданными с многолетним опытом и страстью.",de:"Unser Restaurant bietet eine unvergessliche kulinarische Reise mit besonderen Rezepten, die mit jahrelanger Erfahrung und Leidenschaft zubereitet werden."},
-      aboutText2ML: {tr:"Her tabak, özenle seçilmiş malzemeler ve ustanın elinden çıkan bir sanat eseridir. Sizleri aramızda görmekten mutluluk duyarız.",en:"Every dish is a work of art, crafted from carefully selected ingredients by our master chef. We would be delighted to welcome you.",ja:"すべての料理は、丁寧に選ばれた食材とシェフの手による芸術作品です。皆様のご来店を心よりお待ちしております。",zh:"每一道菜都是精选食材与大厨匠心制作的艺术品。我们期待您的光临。",ru:"Каждое блюдо — это произведение искусства, созданное из тщательно отобранных ингредиентов руками мастера. Будем рады видеть вас у нас.",de:"Jedes Gericht ist ein Kunstwerk aus sorgfältig ausgewählten Zutaten, das von unserem Küchenchef zubereitet wird. Wir freuen uns, Sie bei uns willkommen zu heißen."},
-      chefTitleML: {tr:"Executive Chef & Kurucu",en:"Executive Chef & Founder",ja:"エグゼクティブシェフ＆創業者",zh:"行政总厨兼创始人",ru:"Шеф-повар и основатель",de:"Küchenchef & Gründer"},
-      aboutBadgeTextML: {tr:"Ödüllü Restoran",en:"Award-Winning Restaurant",ja:"受賞レストラン",zh:"获奖餐厅",ru:"Ресторан, удостоенный наград",de:"Preisgekröntes Restaurant"},
-      footerTextML: {tr:"Eşsiz lezzet deneyimi için tasarlandı.",en:"Designed for a unique culinary experience.",ja:"唯一の美食体験のためにデザインされました。",zh:"为独特美食体验而设计。",ru:"Создан для уникального гастрономического опыта.",de:"Entwickelt für ein einzigartiges kulinarisches Erlebnis."},
+      slogan: {tr:"Eşsiz lezzetler, unutulmaz anlar.",en:"Unique flavors, unforgettable moments.",ja:"唯一の味、忘れられない瞬間。",zh:"独特风味，难忘时刻。",ru:"Уникальные вкусы, незабываемые моменты.",de:"Einzigartige Aromen, unvergessliche Momente.",ko:"독특한 맛, 잊지 못할 순간들."},
+      heroEyebrowML: {tr:"Est. 2015 – İstanbul",en:"Est. 2015 – Istanbul",ja:"創業 2015年 – イスタンブール",zh:"创立于2015年 – 伊斯坦布尔",ru:"Основан в 2015 – Стамбул",de:"Gegründet 2015 – Istanbul",ko:"2015년 설립 – 이스탄불"},
+      heroBtnPrimaryML:   {tr:"Rezervasyon Yap",en:"Make a Reservation",ja:"予約する",zh:"立即预订",ru:"Забронировать",de:"Tisch reservieren",ko:"예약하기"},
+      heroBtnSecondaryML: {tr:"Menüyü İncele",en:"View Menu",ja:"メニューを見る",zh:"查看菜单",ru:"Посмотреть меню",de:"Speisekarte ansehen",ko:"메뉴 보기"},
+      aboutTextML:  {tr:"Restoranımız, yılların deneyimi ve tutku ile hazırlanan özel tariflerimizle misafirlerine unutulmaz bir lezzet yolculuğu sunmaktadır.",en:"Our restaurant offers an unforgettable culinary journey with special recipes prepared with years of experience and passion.",ja:"当レストランは、長年の経験と情熱で作られた特別なレシピで、忘れられない美食の旅をお届けします。",zh:"我们的餐厅以多年的经验和热情打造的特色菜谱，为您呈现难忘的美食之旅。",ru:"Наш ресторан предлагает незабываемое гастрономическое путешествие с особыми рецептами, созданными с многолетним опытом и страстью.",de:"Unser Restaurant bietet eine unvergessliche kulinarische Reise mit besonderen Rezepten, die mit jahrelanger Erfahrung und Leidenschaft zubereitet werden.",ko:"저희 레스토랑은 수년간의 경험과 열정으로 준비한 특별한 레시피로 잊지 못할 미식 여행을 선사합니다."},
+      aboutText2ML: {tr:"Her tabak, özenle seçilmiş malzemeler ve ustanın elinden çıkan bir sanat eseridir. Sizleri aramızda görmekten mutluluk duyarız.",en:"Every dish is a work of art, crafted from carefully selected ingredients by our master chef. We would be delighted to welcome you.",ja:"すべての料理は、丁寧に選ばれた食材とシェフの手による芸術作品です。皆様のご来店を心よりお待ちしております。",zh:"每一道菜都是精选食材与大厨匠心制作的艺术品。我们期待您的光临。",ru:"Каждое блюдо — это произведение искусства, созданное из тщательно отобранных ингредиентов руками мастера. Будем рады видеть вас у нас.",de:"Jedes Gericht ist ein Kunstwerk aus sorgfältig ausgewählten Zutaten, das von unserem Küchenchef zubereitet wird. Wir freuen uns, Sie bei uns willkommen zu heißen.",ko:"모든 요리는 정성껏 선별한 재료와 셰프의 손길로 만들어진 예술 작품입니다. 여러분을 모실 수 있어 기쁩니다."},
+      chefTitleML: {tr:"Executive Chef & Kurucu",en:"Executive Chef & Founder",ja:"エグゼクティブシェフ＆創業者",zh:"行政总厨兼创始人",ru:"Шеф-повар и основатель",de:"Küchenchef & Gründer",ko:"총괄 셰프 & 창립자"},
+      aboutBadgeTextML: {tr:"Ödüllü Restoran",en:"Award-Winning Restaurant",ja:"受賞レストラン",zh:"获奖餐厅",ru:"Ресторан, удостоенный наград",de:"Preisgekröntes Restaurant",ko:"수상 경력 레스토랑"},
+      footerTextML: {tr:"Eşsiz lezzet deneyimi için tasarlandı.",en:"Designed for a unique culinary experience.",ja:"唯一の美食体験のためにデザインされました。",zh:"为独特美食体验而设计。",ru:"Создан для уникального гастрономического опыта.",de:"Entwickelt für ein einzigartiges kulinarisches Erlebnis.",ko:"특별한 미식 경험을 위해 디자인되었습니다."},
+      // ── Bölüm başlıkları (3 satırlı başlıklar) ─────────────────
+      // Hakkımızda: "Tutku & Ateşle Yaratıldı" -> {line1, lineEm, line3}
+      aboutTitleML: {
+        line1:{tr:"Tutku",en:"Crafted with",ja:"情熱と",zh:"用激情",ru:"Создано",de:"Mit Leidenschaft",ko:"열정과"},
+        lineEm:{tr:"& Ateşle",en:"Passion & Fire",ja:"炎で",zh:"与火焰",ru:"со страстью и огнём",de:"und Feuer",ko:"불로"},
+        line3:{tr:"Yaratıldı",en:"",ja:"作られました",zh:"精心打造",ru:"",de:"geschaffen",ko:"만들어졌습니다"}
+      },
+      // Rezervasyon: "Unutulmaz Bir Akşam Ayırtın" -> {line1, lineEm, line3}
+      resTitleML: {
+        line1:{tr:"Unutulmaz Bir",en:"Reserve a",ja:"忘れられない",zh:"预订一个",ru:"Забронируйте",de:"Reservieren Sie einen",ko:"잊지 못할"},
+        lineEm:{tr:"Akşam",en:"Memorable",ja:"夜を",zh:"难忘的",ru:"незабываемый",de:"unvergesslichen",ko:"저녁을"},
+        line3:{tr:"Ayırtın",en:"Evening",ja:"予約する",zh:"夜晚",ru:"вечер",de:"Abend",ko:"예약하세요"}
+      },
+      // İletişim: "Restoranımıza Bekleriz" -> {line1, lineEm}
+      contactTitleML: {
+        line1:{tr:"Restoranımıza",en:"Come & Visit",ja:"ご来店を",zh:"欢迎光临",ru:"Приходите в",de:"Besuchen Sie",ko:"저희 레스토랑에"},
+        lineEm:{tr:"Bekleriz",en:"Our Restaurant",ja:"お待ちしております",zh:"我们的餐厅",ru:"наш ресторан",de:"unser Restaurant",ko:"방문해 주세요"}
+      },
       // ── Tek dilli alanlar (kişisel/sabit bilgi) ───────────────
       phone:          "+90 555 000 00 00",
       whatsapp:       "+905550000000",
@@ -265,7 +283,7 @@ function getDefaultDB() {
       chefImage:      "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80",
       aboutBadgeNum:  "3★",
       // ── Dil ayarları ───────────────────────────────────────
-      enabledLanguages: ["tr","en","ja","zh","ru","de"],
+      enabledLanguages: ["tr","en","ja","zh","ru","de","ko"],
       defaultLanguage:  "tr",
       hoursML: [
         {day:{tr:"Pazartesi – Perşembe",en:"Monday – Thursday",ja:"月曜日–木曜日",zh:"周一至周四",ru:"Понедельник – Четверг",de:"Montag – Donnerstag"}, time:"12:00 – 23:00"},
