@@ -271,6 +271,23 @@ textarea.f-ctrl{resize:vertical;min-height:72px}
 </div>
 
 <script>
+// ═══════════════════════════════════════════════════
+// CREDENTIALS — en üstte tanımlı, tüm scriptler kullanabilir
+// localStorage'da saklanır, sayfa yenilense de kaybolmaz
+function getStoredCreds() {
+  try { return localStorage.getItem('adminCreds') || null; }
+  catch { return null; }
+}
+function setStoredCreds(c) {
+  try { localStorage.setItem('adminCreds', c); } catch {}
+  window._adminCreds = c;
+}
+function clearStoredCreds() {
+  try { localStorage.removeItem('adminCreds'); } catch {}
+  window._adminCreds = null;
+}
+window._adminCreds = getStoredCreds();
+
 function showLoginScreen() {
   document.getElementById('login-overlay').style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -302,7 +319,7 @@ async function doLogin() {
       headers: {'Authorization': 'Basic ' + testCreds}
     });
     if (r.ok) {
-      window._adminCreds = testCreds;
+      setStoredCreds(testCreds);
       hideLoginScreen();
       if (typeof initAll === 'function') initAll();
     } else {
@@ -709,12 +726,9 @@ async function completeSetup() {
     });
     const j = await r.json();
     if (j.ok) {
-      // Yeni credentials ile devam et
-      window._adminCreds = btoa(user + ':' + pass);
-      // Overlay kapat
+      setStoredCreds(btoa(user + ':' + pass));
       document.getElementById('setup-overlay').style.display = 'none';
       document.body.style.overflow = '';
-      // Admin paneli başlat
       if (typeof initAll === 'function') initAll();
     } else {
       btn.disabled = false;
@@ -1424,11 +1438,8 @@ const COLOR_PRESETS = [
 // ═══════════════════════════════════════════════════
 //  API
 // ═══════════════════════════════════════════════════
-// Kimlik bilgileri HTTP Basic Auth ile tarayıcı tarafından yönetilir
-// Kurulum sonrası sayfa yenilenir, tarayıcı yeni bilgileri ister
-// Credentials: kurulum wizard'dan set edilir (window._adminCreds)
-// Sonraki ziyaretlerde login ekranından set edilir
-const creds = btoa('admin:GucluBirSifre123!'); // fallback - hiçbir zaman kullanılmaz
+// Credentials zaten en üstteki script'te tanımlandı (getStoredCreds vs.)
+const creds = btoa('admin:GucluBirSifre123!'); // fallback - kullanılmaz
 function getAH() {
   const c = window._adminCreds || creds;
   return {'Content-Type':'application/json', 'Authorization': 'Basic ' + c};
@@ -1437,6 +1448,11 @@ async function api(method,path,body){
   const opts={method,headers:getAH()};
   if(body!==undefined)opts.body=JSON.stringify(body);
   const r=await fetch(path,opts);
+  if(r.status===401){
+    clearStoredCreds();
+    showLoginScreen();
+    throw new Error('401: Oturum süresi doldu');
+  }
   if(!r.ok)throw new Error(await r.text());
   return r.json();
 }
@@ -1686,7 +1702,22 @@ function renderRes(){
     </div>`).join(''):'<div style="padding:2rem;text-align:center;color:var(--gray)">Rezervasyon bulunamadı</div>';
 }
 function statusBadge(s){const m={confirmed:['green','✓ Onaylı'],pending:['orange','⏳ Bekliyor'],cancelled:['red','✕ İptal']};const[c,l]=m[s]||['gray',s];return `<span class="badge ${c}">${l}</span>`;}
-async function setResStatus(id,status){await PUT(`reservations/${id}`,{status});DB.reservations=DB.reservations.map(r=>r.id===id?{...r,status}:r);renderRes();renderDash();updateBadges();toast(status==='confirmed'?'✓ Onaylandı':'✕ İptal edildi',status==='confirmed'?'ok':'info');}
+async function setResStatus(id,status){
+  try {
+    await PUT(`reservations/${id}`,{status});
+    DB.reservations=DB.reservations.map(r=>r.id===id?{...r,status}:r);
+    renderRes();renderDash();updateBadges();
+    toast(status==='confirmed'?'✓ Onaylandı':'✕ İptal edildi',status==='confirmed'?'ok':'info');
+  } catch(e) {
+    if (String(e.message).includes('401') || String(e.message).includes('Yetkisiz')) {
+      clearStoredCreds();
+      toast('Oturum süresi doldu, yeniden giriş yapın','err');
+      showLoginScreen();
+    } else {
+      toast('Hata: '+e.message,'err');
+    }
+  }
+}
 async function delRes(id){if(!confirm('Silinsin mi?'))return;await DEL(`reservations/${id}`);DB.reservations=DB.reservations.filter(r=>r.id!==id);renderRes();renderDash();updateBadges();toast('Silindi','info');}
 function viewRes(id){
   const r=DB.reservations.find(r=>r.id===id);if(!r)return;
