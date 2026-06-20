@@ -95,6 +95,21 @@ tr:hover td{background:rgba(255,255,255,.015)}
 .tab{padding:.65rem 1rem;font-size:.8rem;font-weight:600;color:var(--gray-l);cursor:pointer;border-bottom:2px solid transparent;transition:.2s;margin-bottom:-1px}
 .tab:hover{color:var(--white)}.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
+/* ── ÇOK DİLLİ GİRİŞ TAB'LARI ──────────────────────────────── */
+.ml-tabs{display:flex;gap:.3rem;flex-wrap:wrap}
+.ml-tab{display:flex;align-items:center;gap:.35rem;padding:.4rem .75rem;font-size:.74rem;font-weight:600;color:var(--gray-l);background:var(--bg3);border:1px solid rgba(255,255,255,.08);border-radius:6px;cursor:pointer;transition:var(--r)}
+.ml-tab:hover{border-color:rgba(201,168,76,.4);color:var(--white)}
+.ml-tab.active{background:rgba(201,168,76,.12);border-color:var(--gold);color:var(--gold)}
+.ml-tab .flag{font-size:.9rem}
+.ml-tab .filled-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.ml-tab .empty-dot{width:6px;height:6px;border-radius:50%;background:var(--bg5);flex-shrink:0}
+.ml-panel{display:none}
+.ml-panel.active{display:block;animation:mlFadeIn .15s ease}
+@keyframes mlFadeIn{from{opacity:0}to{opacity:1}}
+.ml-panel .fg{margin-bottom:.7rem}
+.ml-translating{opacity:.5;pointer-events:none;position:relative}
+.ml-translating::after{content:'Çeviriliyor...';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);border-radius:6px;font-size:.78rem;color:var(--gold)}
+
 .fg-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
 .fg-grid.c3{grid-template-columns:1fr 1fr 1fr}.fg-grid.c1{grid-template-columns:1fr}
 .fg{display:flex;flex-direction:column;gap:.35rem}
@@ -1295,10 +1310,19 @@ document.addEventListener('DOMContentLoaded', checkSetup);
     <div class="modal-h"><div class="modal-title" id="item-modal-title">Ürün Ekle</div><button class="modal-x" onclick="closeModal('item-modal')">✕</button></div>
     <div class="modal-body">
       <div class="fg-grid">
-        <div class="fg full"><label>Ürün Adı</label><input class="f-ctrl" id="im-name" placeholder="Biftek Tartare"/></div>
         <div class="fg"><label>Kategori</label><select class="f-ctrl" id="im-cat"><option value="">Seçin</option></select></div>
         <div class="fg"><label>Fiyat</label><input class="f-ctrl" id="im-price" type="number" placeholder="285"/></div>
-        <div class="fg full"><label>Açıklama</label><textarea class="f-ctrl" id="im-desc" rows="3" placeholder="Malzemeler..."></textarea></div>
+
+        <!-- Çok dilli isim/açıklama girişi -->
+        <div class="fg full sec-div"><h4>Ürün Adı & Açıklama (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="im-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateItem()">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="im-ml-panels"></div>
+        </div>
+
         <div class="fg full">
           <label>Görsel</label>
           <div class="img-picker">
@@ -1325,13 +1349,22 @@ document.addEventListener('DOMContentLoaded', checkSetup);
 </div>
 
 <div class="modal-ov" id="cat-modal">
-  <div class="modal">
+  <div class="modal lg">
     <div class="modal-h"><div class="modal-title" id="cat-modal-title">Kategori Ekle</div><button class="modal-x" onclick="closeModal('cat-modal')">✕</button></div>
     <div class="modal-body">
       <div class="fg-grid">
-        <div class="fg"><label>Kategori Adı</label><input class="f-ctrl" id="cm-name" placeholder="Izgaralar"/></div>
-        <div class="fg"><label>Slug (İngilizce)</label><input class="f-ctrl" id="cm-slug" placeholder="grills"/></div>
+        <div class="fg"><label>Slug (İngilizce, benzersiz)</label><input class="f-ctrl" id="cm-slug" placeholder="grills"/></div>
         <div class="fg"><label>İkon (emoji)</label><input class="f-ctrl" id="cm-icon" placeholder="🔥"/></div>
+
+        <div class="fg full sec-div"><h4>Kategori Adı (Çok Dilli)</h4></div>
+        <div class="fg full">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
+            <div class="ml-tabs" id="cm-ml-tabs"></div>
+            <button class="btn blue sm" onclick="autoTranslateCat()">🌐 Tümünü Otomatik Çevir</button>
+          </div>
+          <div id="cm-ml-panels"></div>
+        </div>
+
         <div class="fg" style="justify-content:center"><label>Aktif</label>
           <div class="toggle" onclick="tog('cm-active-t','cm-active-l','cmActive')"><div class="tog-track on" id="cm-active-t"><div class="tog-thumb"></div></div><span class="tog-lbl" id="cm-active-l">Evet</span></div>
         </div>
@@ -1633,17 +1666,17 @@ function renderDash(){
 function renderCatFilter(){
   const cf=document.getElementById('menu-cf');
   if(!cf)return;
-  cf.innerHTML='<option value="">Tüm kategoriler</option>'+DB.menuCategories.map(c=>`<option value="${c.slug}">${c.icon||''} ${c.name}</option>`).join('');
+  cf.innerHTML='<option value="">Tüm kategoriler</option>'+DB.menuCategories.map(c=>`<option value="${c.slug}">${c.icon||''} ${tf(c.name)}</option>`).join('');
 }
 function renderMenuTable(){
   const q=(document.getElementById('menu-q')?.value||'').toLowerCase();
   const cf=document.getElementById('menu-cf')?.value||'';
   const cur=DB.settings.currency||'₺';
-  const list=DB.menuItems.filter(i=>(!q||(i.name+''+i.desc).toLowerCase().includes(q))&&(!cf||i.cat===cf));
+  const list=DB.menuItems.filter(i=>(!q||(tf(i.name)+''+tf(i.desc)).toLowerCase().includes(q))&&(!cf||i.cat===cf));
   document.getElementById('menu-tbody').innerHTML=list.length?list.map(i=>`
     <tr>
-      <td><img class="td-img" src="${i.img||''}" alt="${i.name}" onerror="this.style.display='none'"/></td>
-      <td><div style="font-weight:600;font-size:.84rem">${i.name}</div></td>
+      <td><img class="td-img" src="${i.img||''}" alt="${tf(i.name)}" onerror="this.style.display='none'"/></td>
+      <td><div style="font-weight:600;font-size:.84rem">${tf(i.name)}</div></td>
       <td>${catBadge(i.cat)}</td>
       <td style="font-weight:700;color:var(--gold)">${cur}${i.price}</td>
       <td>${i.featured?'<span class="badge gold">✓ Chef Pick</span>':'<span class="badge gray">—</span>'}</td>
@@ -1655,14 +1688,14 @@ function renderCatsTable(){
   document.getElementById('cats-tbody').innerHTML=DB.menuCategories.map(c=>`
     <tr>
       <td style="font-size:1.25rem">${c.icon||'•'}</td>
-      <td style="font-weight:600">${c.name}</td>
+      <td style="font-weight:600">${tf(c.name)}</td>
       <td><code style="background:var(--bg3);padding:.15rem .45rem;border-radius:4px;font-size:.75rem">${c.slug}</code></td>
       <td style="color:var(--gray-l)">${DB.menuItems.filter(i=>i.cat===c.slug).length}</td>
       <td>${c.active?'<span class="badge green">Aktif</span>':'<span class="badge gray">Pasif</span>'}</td>
       <td><div style="display:flex;gap:.3rem;justify-content:flex-end"><button class="btn ghost sm" onclick="openCatModal(${c.id})">✏️</button><button class="btn danger sm" onclick="delCat(${c.id})">🗑️</button></div></td>
     </tr>`).join('');
 }
-function catBadge(slug){const c=DB.menuCategories.find(c=>c.slug===slug);return c?`<span class="badge blue">${c.icon||''} ${c.name}</span>`:`<span class="badge gray">${slug}</span>`;}
+function catBadge(slug){const c=DB.menuCategories.find(c=>c.slug===slug);return c?`<span class="badge blue">${c.icon||''} ${tf(c.name)}</span>`:`<span class="badge gray">${slug}</span>`;}
 
 // ═══════════════════════════════════════════════════
 //  GALLERY
@@ -1672,7 +1705,7 @@ function renderGallery(){
   document.getElementById('gal-count').textContent=`${list.filter(g=>g.active).length} aktif / ${list.length} toplam`;
   document.getElementById('gal-admin-grid').innerHTML=list.map(g=>`
     <div class="gal-item-admin">
-      <img src="${g.img}" alt="${g.alt||''}" loading="lazy"/>
+      <img src="${g.img}" alt="${tf(g.alt)}" loading="lazy"/>
       ${g.cls?`<div class="gal-cls-badge">${g.cls}</div>`:''}
       ${!g.active?'<div class="gal-inactive">Pasif</div>':''}
       <div class="ov"><button class="btn ghost xs" onclick="openGalModal(${g.id})">✏️</button><button class="btn danger xs" onclick="delGal(${g.id})">🗑️</button></div>
@@ -1960,16 +1993,138 @@ async function saveStats(){
 }
 
 // ═══════════════════════════════════════════════════
+//  ÇOK DİLLİ GİRİŞ SİSTEMİ (ML = MultiLingual)
+// ═══════════════════════════════════════════════════
+const LANGS = [
+  {code:'tr', flag:'🇹🇷', label:'Türkçe'},
+  {code:'en', flag:'🇬🇧', label:'English'},
+  {code:'ja', flag:'🇯🇵', label:'日本語'},
+  {code:'zh', flag:'🇨🇳', label:'中文'},
+  {code:'ru', flag:'🇷🇺', label:'Русский'},
+  {code:'de', flag:'🇩🇪', label:'Deutsch'},
+];
+let mlActiveTab = {}; // {prefix: activeLangCode}
+
+// fields: [{key:'name', label:'Ürün Adı', type:'input'}, {key:'desc', label:'Açıklama', type:'textarea'}]
+// data: {name:{tr:'',en:'',...}, desc:{...}}
+function renderMLInput(prefix, fields, data) {
+  if (!mlActiveTab[prefix]) mlActiveTab[prefix] = 'tr';
+  const activeLang = mlActiveTab[prefix];
+
+  const tabsEl = document.getElementById(prefix + '-ml-tabs');
+  const panelsEl = document.getElementById(prefix + '-ml-panels');
+  if (!tabsEl || !panelsEl) return;
+
+  tabsEl.innerHTML = LANGS.map(l => {
+    const hasContent = fields.every(f => data[f.key] && data[f.key][l.code] && data[f.key][l.code].trim());
+    const anyContent = fields.some(f => data[f.key] && data[f.key][l.code] && data[f.key][l.code].trim());
+    const dotClass = anyContent ? 'filled-dot' : 'empty-dot';
+    return `<div class="ml-tab ${activeLang===l.code?'active':''}" data-lang="${l.code}" onclick="switchMLTab('${prefix}',${JSON.stringify(fields).replace(/"/g,'&quot;')},'${l.code}')">
+      <span class="flag">${l.flag}</span><span>${l.code.toUpperCase()}</span><span class="${dotClass}"></span>
+    </div>`;
+  }).join('');
+
+  panelsEl.innerHTML = LANGS.map(l => `
+    <div class="ml-panel ${activeLang===l.code?'active':''}" data-lang="${l.code}">
+      ${fields.map(f => `
+        <div class="fg">
+          <label>${f.label} <span style="opacity:.5">(${l.label})</span></label>
+          ${f.type==='textarea'
+            ? `<textarea class="f-ctrl ml-input" data-key="${f.key}" data-lang="${l.code}" data-prefix="${prefix}" rows="3">${escapeHtml((data[f.key]&&data[f.key][l.code])||'')}</textarea>`
+            : `<input class="f-ctrl ml-input" data-key="${f.key}" data-lang="${l.code}" data-prefix="${prefix}" value="${escapeHtml((data[f.key]&&data[f.key][l.code])||'')}"/>`
+          }
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function switchMLTab(prefix, fields, lang) {
+  mlActiveTab[prefix] = lang;
+  document.querySelectorAll(`#${prefix}-ml-tabs .ml-tab`).forEach(t => t.classList.toggle('active', t.dataset.lang===lang));
+  document.querySelectorAll(`#${prefix}-ml-panels .ml-panel`).forEach(p => p.classList.toggle('active', p.dataset.lang===lang));
+}
+
+function escapeHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Mevcut panel input'larından {key: {lang: val}} objesi çıkarır
+function collectMLData(prefix, fields) {
+  const result = {};
+  fields.forEach(f => result[f.key] = {});
+  document.querySelectorAll(`#${prefix}-ml-panels .ml-input`).forEach(input => {
+    const key = input.dataset.key, lang = input.dataset.lang;
+    if (!result[key]) result[key] = {};
+    result[key][lang] = input.value;
+  });
+  return result;
+}
+
+// Aktif dildeki (genellikle TR) değeri tüm diğer dillere otomatik çevirir
+async function runAutoTranslate(prefix, fields) {
+  const sourceData = collectMLData(prefix, fields);
+  const panelsEl = document.getElementById(prefix + '-ml-panels');
+  if (panelsEl) panelsEl.classList.add('ml-translating');
+  try {
+    for (const f of fields) {
+      const sourceText = sourceData[f.key]['tr'];
+      if (!sourceText || !sourceText.trim()) continue;
+      const targetLangs = LANGS.filter(l=>l.code!=='tr').map(l=>l.code);
+      const r = await POST('translate', {text: sourceText, targetLangs});
+      const translations = r.translations || {};
+      targetLangs.forEach(lang => {
+        const input = document.querySelector(`#${prefix}-ml-panels .ml-input[data-key="${f.key}"][data-lang="${lang}"]`);
+        if (input && translations[lang]) input.value = translations[lang];
+      });
+    }
+    toast('🌐 Otomatik çeviri tamamlandı — kontrol edip düzenleyebilirsiniz', 'ok');
+  } catch(e) {
+    toast('Çeviri hatası: ' + e.message, 'err');
+  }
+  if (panelsEl) panelsEl.classList.remove('ml-translating');
+  // Dot göstergelerini güncelle
+  refreshMLDots(prefix, fields);
+}
+
+function refreshMLDots(prefix, fields) {
+  const data = collectMLData(prefix, fields);
+  const tabsEl = document.getElementById(prefix + '-ml-tabs');
+  if (!tabsEl) return;
+  LANGS.forEach(l => {
+    const tab = tabsEl.querySelector(`.ml-tab[data-lang="${l.code}"]`);
+    if (!tab) return;
+    const anyContent = fields.some(f => data[f.key] && data[f.key][l.code] && data[f.key][l.code].trim());
+    const dot = tab.querySelector('.filled-dot, .empty-dot');
+    if (dot) { dot.className = anyContent ? 'filled-dot' : 'empty-dot'; }
+  });
+}
+
+const ITEM_ML_FIELDS = [
+  {key:'name', label:'Ürün Adı', type:'input'},
+  {key:'desc', label:'Açıklama', type:'textarea'},
+];
+const CAT_ML_FIELDS = [
+  {key:'name', label:'Kategori Adı', type:'input'},
+];
+
+function autoTranslateItem() { runAutoTranslate('im', ITEM_ML_FIELDS); }
+function autoTranslateCat() { runAutoTranslate('cm', CAT_ML_FIELDS); }
+
+// ═══════════════════════════════════════════════════
 //  ITEM MODAL
 // ═══════════════════════════════════════════════════
 function openItemModal(id){
   editId=id||null;const it=id?DB.menuItems.find(i=>i.id===id):null;
   document.getElementById('item-modal-title').textContent=id?'Ürün Düzenle':'Ürün Ekle';
-  sv('im-name',it?.name||'');sv('im-desc',it?.desc||'');sv('im-price',it?.price||'');sv('im-img',it?.img||'');
-  document.getElementById('im-cat').innerHTML='<option value="">Kategori seçin</option>'+DB.menuCategories.map(c=>`<option value="${c.slug}"${it?.cat===c.slug?' selected':''}>${c.icon||''} ${c.name}</option>`).join('');
+  sv('im-price',it?.price||'');sv('im-img',it?.img||'');
+  document.getElementById('im-cat').innerHTML='<option value="">Kategori seçin</option>'+DB.menuCategories.map(c=>`<option value="${c.slug}"${it?.cat===c.slug?' selected':''}>${c.icon||''} ${tf(c.name)}</option>`).join('');
   imFeat=it?.featured||false;imActive=it?.active!==false;
   setTog('im-feat-t','im-feat-l',imFeat);setTog('im-active-t','im-active-l',imActive);
   clearPrev('im-img-prev');if(it?.img)previewBox('im-img','im-img-prev');
+  mlActiveTab['im'] = 'tr';
+  renderMLInput('im', ITEM_ML_FIELDS, {
+    name: (it && typeof it.name === 'object') ? it.name : {tr: it?.name||''},
+    desc: (it && typeof it.desc === 'object') ? it.desc : {tr: it?.desc||''}
+  });
   openModal('item-modal');
 }
 function tog(tId,lId,varName){
@@ -1980,8 +2135,13 @@ function tog(tId,lId,varName){
   else if(varName==='tmFeat'){tmFeat=!tmFeat;setTog(tId,lId,tmFeat);}
 }
 async function saveItem(){
-  const d={name:gv('im-name'),desc:gv('im-desc'),price:parseFloat(gv('im-price'))||0,cat:gv('im-cat'),img:gv('im-img'),featured:imFeat,active:imActive};
-  if(!d.name){toast('Ürün adı zorunlu','err');return;}
+  const mlData = collectMLData('im', ITEM_ML_FIELDS);
+  if(!mlData.name['tr'] || !mlData.name['tr'].trim()){
+    toast('Ürün adı (Türkçe) zorunlu','err');
+    switchMLTab('im', ITEM_ML_FIELDS, 'tr');
+    return;
+  }
+  const d={name:mlData.name, desc:mlData.desc, price:parseFloat(gv('im-price'))||0, cat:gv('im-cat'), img:gv('im-img'), featured:imFeat, active:imActive};
   if(editId){await PUT(`menuItems/${editId}`,d);DB.menuItems=DB.menuItems.map(i=>i.id===editId?{...i,...d}:i);}
   else{const r=await POST('menuItems',d);DB.menuItems.push(r);}
   closeModal('item-modal');renderMenuTable();renderDash();toast(editId?'Ürün güncellendi ✓':'Ürün eklendi ✓','ok');editId=null;
@@ -1989,13 +2149,35 @@ async function saveItem(){
 async function delItem(id){if(!confirm('Silinsin mi?'))return;await DEL(`menuItems/${id}`);DB.menuItems=DB.menuItems.filter(i=>i.id!==id);renderMenuTable();renderDash();toast('Ürün silindi','info');}
 
 // CAT MODAL
-function openCatModal(id){editId=id||null;const c=id?DB.menuCategories.find(c=>c.id===id):null;document.getElementById('cat-modal-title').textContent=id?'Kategori Düzenle':'Kategori Ekle';sv('cm-name',c?.name||'');sv('cm-slug',c?.slug||'');sv('cm-icon',c?.icon||'');cmActive=c?.active!==false;setTog('cm-active-t','cm-active-l',cmActive);openModal('cat-modal');}
-async function saveCat(){const d={name:gv('cm-name'),slug:gv('cm-slug'),icon:gv('cm-icon'),active:cmActive};if(!d.name||!d.slug){toast('Ad ve slug zorunlu','err');return;}if(editId){await PUT(`menuCategories/${editId}`,d);DB.menuCategories=DB.menuCategories.map(c=>c.id===editId?{...c,...d}:c);}else{const r=await POST('menuCategories',d);DB.menuCategories.push(r);}closeModal('cat-modal');renderCatsTable();renderCatFilter();toast(editId?'Güncellendi ✓':'Eklendi ✓','ok');editId=null;}
+function openCatModal(id){
+  editId=id||null;const c=id?DB.menuCategories.find(c=>c.id===id):null;
+  document.getElementById('cat-modal-title').textContent=id?'Kategori Düzenle':'Kategori Ekle';
+  sv('cm-slug',c?.slug||'');sv('cm-icon',c?.icon||'');
+  cmActive=c?.active!==false;setTog('cm-active-t','cm-active-l',cmActive);
+  mlActiveTab['cm'] = 'tr';
+  renderMLInput('cm', CAT_ML_FIELDS, {
+    name: (c && typeof c.name === 'object') ? c.name : {tr: c?.name||''}
+  });
+  openModal('cat-modal');
+}
+async function saveCat(){
+  const mlData = collectMLData('cm', CAT_ML_FIELDS);
+  const slug = gv('cm-slug').trim();
+  if(!mlData.name['tr'] || !mlData.name['tr'].trim() || !slug){
+    toast('Kategori adı (Türkçe) ve slug zorunlu','err');
+    switchMLTab('cm', CAT_ML_FIELDS, 'tr');
+    return;
+  }
+  const d={name:mlData.name, slug, icon:gv('cm-icon'), active:cmActive};
+  if(editId){await PUT(`menuCategories/${editId}`,d);DB.menuCategories=DB.menuCategories.map(c=>c.id===editId?{...c,...d}:c);}
+  else{const r=await POST('menuCategories',d);DB.menuCategories.push(r);}
+  closeModal('cat-modal');renderCatsTable();renderCatFilter();toast(editId?'Güncellendi ✓':'Eklendi ✓','ok');editId=null;
+}
 async function delCat(id){if(!confirm('Silinsin mi?'))return;await DEL(`menuCategories/${id}`);DB.menuCategories=DB.menuCategories.filter(c=>c.id!==id);renderCatsTable();renderCatFilter();toast('Silindi','info');}
 
 // GAL MODAL
-function openGalModal(id){editId=id||null;const g=id?DB.gallery.find(g=>g.id===id):null;document.getElementById('gal-modal-title').textContent=id?'Fotoğraf Düzenle':'Fotoğraf Ekle';sv('gm-img',g?.img||'');sv('gm-alt',g?.alt||'');sv('gm-cls',g?.cls||'');gmActive=g?.active!==false;setTog('gm-active-t','gm-active-l',gmActive);clearPrev('gm-prev');if(g?.img)previewBox('gm-img','gm-prev');openModal('gal-modal');}
-async function saveGal(){const d={img:gv('gm-img'),alt:gv('gm-alt'),cls:gv('gm-cls'),active:gmActive};if(!d.img){toast('Görsel zorunlu','err');return;}if(editId){await PUT(`gallery/${editId}`,d);DB.gallery=DB.gallery.map(g=>g.id===editId?{...g,...d}:g);}else{const r=await POST('gallery',d);DB.gallery.push(r);}closeModal('gal-modal');renderGallery();renderDash();toast(editId?'Güncellendi ✓':'Eklendi ✓','ok');editId=null;}
+function openGalModal(id){editId=id||null;const g=id?DB.gallery.find(g=>g.id===id):null;document.getElementById('gal-modal-title').textContent=id?'Fotoğraf Düzenle':'Fotoğraf Ekle';sv('gm-img',g?.img||'');sv('gm-alt',tf(g?.alt)||'');sv('gm-cls',g?.cls||'');gmActive=g?.active!==false;setTog('gm-active-t','gm-active-l',gmActive);clearPrev('gm-prev');if(g?.img)previewBox('gm-img','gm-prev');openModal('gal-modal');}
+async function saveGal(){const d={img:gv('gm-img'),alt:{tr:gv('gm-alt')},cls:gv('gm-cls'),active:gmActive};if(!d.img){toast('Görsel zorunlu','err');return;}if(editId){await PUT(`gallery/${editId}`,d);DB.gallery=DB.gallery.map(g=>g.id===editId?{...g,...d}:g);}else{const r=await POST('gallery',d);DB.gallery.push(r);}closeModal('gal-modal');renderGallery();renderDash();toast(editId?'Güncellendi ✓':'Eklendi ✓','ok');editId=null;}
 async function delGal(id){if(!confirm('Silinsin mi?'))return;await DEL(`gallery/${id}`);DB.gallery=DB.gallery.filter(g=>g.id!==id);renderGallery();renderDash();toast('Silindi','info');}
 
 // TESTI MODAL
@@ -2008,6 +2190,13 @@ async function delTesti(id){if(!confirm('Silinsin mi?'))return;await DEL(`testim
 // ═══════════════════════════════════════════════════
 function gv(id){const el=document.getElementById(id);return el?el.value:'';}
 function sv(id,val){const el=document.getElementById(id);if(el&&val!==undefined&&val!==null)el.value=val;}
+// Çok dilli objeden admin panelinin gösterim dilini çıkarır (varsayılan: TR)
+function tf(obj, lang){
+  if(!obj) return '';
+  if(typeof obj === 'string') return obj;
+  const useLang = lang || 'tr';
+  return obj[useLang] || obj.tr || obj.en || Object.values(obj)[0] || '';
+}
 function setTog(tId,lId,on){const t=document.getElementById(tId);const l=document.getElementById(lId);if(t)t.classList.toggle('on',on);if(l)l.textContent=on?'Açık':'Kapalı';}
 function previewBox(inputId,boxId){
   const url=(document.getElementById(inputId)||{}).value||'';

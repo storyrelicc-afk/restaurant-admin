@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/lang-switcher.css"/>
+  <script src="/i18n.js"></script>
   <style>
     :root{
       --gold:#c9a84c;--gold-l:#e4c97e;--gold-d:#9a7a2e;
@@ -267,25 +269,27 @@
   <div class="nav-i">
     <a href="#hero" class="logo" id="nav-logo"></a>
     <ul class="nav-ul">
-      <li><a href="#about">Hikayemiz</a></li>
-      <li><a href="#menu-section">Menü</a></li>
-      <li><a href="#gallery">Galeri</a></li>
-      <li><a href="#testimonials">Yorumlar</a></li>
-      <li><a href="#contact">İletişim</a></li>
+      <li><a href="#about" id="t-nav-about">Hikayemiz</a></li>
+      <li><a href="/menu" id="t-nav-menu">Menü</a></li>
+      <li><a href="#gallery" id="t-nav-gallery">Galeri</a></li>
+      <li><a href="#testimonials" id="t-nav-reviews">Yorumlar</a></li>
+      <li><a href="#contact" id="t-nav-contact">İletişim</a></li>
     </ul>
-    <a href="#reservation" class="btn-gold nav-res">Rezervasyon</a>
+    <div id="lang-switcher-container" style="margin-right:.5rem"></div>
+    <a href="#reservation" class="btn-gold nav-res" id="t-nav-reserve">Rezervasyon</a>
     <button class="hamburger" id="ham" aria-label="Menü">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="mob-menu" id="mob">
-  <a href="#about">Hikayemiz</a>
-  <a href="#menu-section">Menü</a>
-  <a href="#gallery">Galeri</a>
-  <a href="#testimonials">Yorumlar</a>
-  <a href="#contact">İletişim</a>
-  <a href="#reservation" class="btn-gold">Rezervasyon</a>
+  <a href="#about" id="t-mob-about">Hikayemiz</a>
+  <a href="/menu" id="t-mob-menu">Menü</a>
+  <a href="#gallery" id="t-mob-gallery">Galeri</a>
+  <a href="#testimonials" id="t-mob-reviews">Yorumlar</a>
+  <a href="#contact" id="t-mob-contact">İletişim</a>
+  <div id="lang-switcher-container-mob" style="margin:1rem 0"></div>
+  <a href="#reservation" class="btn-gold" id="t-mob-reserve">Rezervasyon</a>
 </div>
 
 <!-- HERO -->
@@ -304,11 +308,11 @@
     <p class="hero-tag reveal d2" id="hero-slogan">Where fire meets finesse, and every plate tells a story.</p>
     <div class="hero-acts reveal d3">
       <a href="#reservation" class="btn-gold" id="hero-btn1">Rezervasyon Yap</a>
-      <a href="#menu-section" class="btn-out" id="hero-btn2">Menüyü İncele</a>
+      <a href="/menu" class="btn-out" id="hero-btn2">Menüyü İncele</a>
     </div>
   </div>
   <div class="scroll-ind" onclick="scrollTo('#about')">
-    <span>Scroll</span>
+    <span id="hero-scroll-text">Scroll</span>
     <div class="scroll-line"></div>
   </div>
 </section>
@@ -335,7 +339,7 @@
         </div>
       </div>
       <div class="rev-r">
-        <span class="eyebrow" style="display:block;margin-bottom:1rem">Hikayemiz</span>
+        <span class="eyebrow" id="about-eyebrow-t" style="display:block;margin-bottom:1rem">Hikayemiz</span>
         <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">
           Tutku <em style="font-style:italic;color:var(--gold)">&amp; Ateşle</em><br>Yaratıldı
         </h2>
@@ -354,16 +358,18 @@
   </div>
 </section>
 
-<!-- MENU -->
+<!-- MENU PREVIEW -->
 <section id="menu-section" class="sp" id="section-menu">
   <div class="container">
-    <div class="reveal" style="margin-bottom:clamp(3rem,6vw,5rem);max-width:600px">
-      <span class="eyebrow" style="display:block;margin-bottom:1rem">Mutfak Yolculuğu</span>
-      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Menümüz</h2>
+    <div class="reveal" style="margin-bottom:clamp(2.5rem,5vw,4rem);max-width:600px">
+      <span class="eyebrow" id="t-menu-eyebrow" style="display:block;margin-bottom:1rem">Mutfak Yolculuğu</span>
+      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem" id="t-menu-title">Menümüz</h2>
       <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
     </div>
-    <div class="filters" id="menu-filters"></div>
-    <div class="menu-g" id="menu-grid"></div>
+    <div class="menu-g" id="menu-preview-grid"></div>
+    <div style="text-align:center;margin-top:clamp(2.5rem,5vw,3.5rem)" class="reveal">
+      <a href="/menu" class="btn-gold" id="t-menu-viewall" style="display:inline-flex">Tüm Menüyü Görüntüle →</a>
+    </div>
   </div>
 </section>
 
@@ -371,8 +377,8 @@
 <section id="gallery" class="sp" style="background:var(--bg)" id="section-gallery">
   <div class="container">
     <div class="reveal" style="margin-bottom:clamp(3rem,6vw,5rem);max-width:600px">
-      <span class="eyebrow" style="display:block;margin-bottom:1rem">Görsel Şölen</span>
-      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Galerimiz</h2>
+      <span class="eyebrow" id="gallery-eyebrow-t" style="display:block;margin-bottom:1rem">Görsel Şölen</span>
+      <h2 id="gallery-title-t" style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Galerimiz</h2>
       <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
     </div>
     <div class="gal-g reveal" id="gal-grid"></div>
@@ -402,12 +408,12 @@
         <div class="glass res-form">
           <form id="res-form">
             <div class="f-row">
-              <div class="f-g"><label class="f-l">Ad Soyad</label><input class="f-c" id="r-name" type="text" placeholder="Adınız" required/></div>
-              <div class="f-g"><label class="f-l">Telefon</label><input class="f-c" id="r-phone" type="tel" placeholder="+90 555 000 00 00"/></div>
+              <div class="f-g"><label class="f-l" id="res-name-lbl">Ad Soyad</label><input class="f-c" id="r-name" type="text" placeholder="Adınız" required/></div>
+              <div class="f-g"><label class="f-l" id="res-phone-lbl">Telefon</label><input class="f-c" id="r-phone" type="tel" placeholder="+90 555 000 00 00"/></div>
             </div>
             <div class="f-row">
-              <div class="f-g"><label class="f-l">E-Posta</label><input class="f-c" id="r-email" type="email" placeholder="email@ornek.com"/></div>
-              <div class="f-g"><label class="f-l">Kişi Sayısı</label>
+              <div class="f-g"><label class="f-l" id="res-email-lbl">E-Posta</label><input class="f-c" id="r-email" type="email" placeholder="email@ornek.com"/></div>
+              <div class="f-g"><label class="f-l" id="res-guests-lbl">Kişi Sayısı</label>
                 <select class="f-c" id="r-guests">
                   <option value="">Kişi seçin</option>
                   <option>1 Kişi</option><option>2 Kişi</option><option>3 Kişi</option>
@@ -417,8 +423,8 @@
               </div>
             </div>
             <div class="f-row">
-              <div class="f-g"><label class="f-l">Tarih</label><input class="f-c" id="r-date" type="date" required/></div>
-              <div class="f-g"><label class="f-l">Saat</label>
+              <div class="f-g"><label class="f-l" id="res-date-lbl">Tarih</label><input class="f-c" id="r-date" type="date" required/></div>
+              <div class="f-g"><label class="f-l" id="res-time-lbl">Saat</label>
                 <select class="f-c" id="r-time">
                   <option value="">Saat seçin</option>
                   <option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>
@@ -428,10 +434,10 @@
               </div>
             </div>
             <div class="f-row">
-              <div class="f-g full"><label class="f-l">Özel İstek</label><textarea class="f-c" id="r-notes" rows="3" placeholder="Alerji, özel gün, oturma tercihi..."></textarea></div>
+              <div class="f-g full"><label class="f-l" id="res-notes-lbl">Özel İstek</label><textarea class="f-c" id="r-notes" rows="3" placeholder="Alerji, özel gün, oturma tercihi..."></textarea></div>
             </div>
-            <button type="submit" class="f-sub">Rezervasyonu Onayla</button>
-            <p class="f-note">2 saat içinde telefon veya e-posta ile onaylayacağız.</p>
+            <button type="submit" class="f-sub" id="res-submit-btn">Rezervasyonu Onayla</button>
+            <p class="f-note" id="res-note-t">2 saat içinde telefon veya e-posta ile onaylayacağız.</p>
           </form>
         </div>
       </div>
@@ -443,8 +449,8 @@
 <section id="testimonials" class="sp" style="background:var(--bg2)" id="section-testimonials">
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto clamp(3rem,6vw,5rem)">
-      <span class="eyebrow" style="display:block;margin-bottom:1rem">Misafir Yorumları</span>
-      <h2 style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Misafirlerimiz Ne Diyor</h2>
+      <span class="eyebrow" id="testi-eyebrow-t" style="display:block;margin-bottom:1rem">Misafir Yorumları</span>
+      <h2 id="testi-title-t" style="font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1rem">Misafirlerimiz Ne Diyor</h2>
       <div class="ornament"><span class="orn-i">✦ ✦ ✦</span></div>
     </div>
     <div class="testi-wrap reveal">
@@ -463,13 +469,13 @@
   <div class="container">
     <div class="cont-g">
       <div class="rev-l">
-        <span class="eyebrow" style="display:block;margin-bottom:1rem">Bizi Bulun</span>
+        <span class="eyebrow" id="contact-eyebrow-t" style="display:block;margin-bottom:1rem">Bizi Bulun</span>
         <h2 class="cont-h">Restoranımıza<br><em style="font-style:italic;color:var(--gold)">Bekleriz</em></h2>
         <div class="ornament" style="max-width:280px"><span class="orn-i">✦ ✦ ✦</span></div>
-        <div class="cd"><div class="cd-ico">📍</div><div class="cd-txt"><strong>Adres</strong><span id="c-address"></span></div></div>
-        <div class="cd"><div class="cd-ico">📞</div><div class="cd-txt"><strong>Telefon</strong><a id="c-phone-a" style="color:var(--gold)"></a></div></div>
-        <div class="cd"><div class="cd-ico">✉️</div><div class="cd-txt"><strong>E-Posta</strong><a id="c-email-a" style="color:var(--gold)"></a></div></div>
-        <div class="cd"><div class="cd-ico">🕐</div><div class="cd-txt"><strong>Çalışma Saatleri</strong><span id="c-hours"></span></div></div>
+        <div class="cd"><div class="cd-ico">📍</div><div class="cd-txt"><strong id="contact-address-lbl">Adres</strong><span id="c-address"></span></div></div>
+        <div class="cd"><div class="cd-ico">📞</div><div class="cd-txt"><strong id="contact-phone-lbl">Telefon</strong><a id="c-phone-a" style="color:var(--gold)"></a></div></div>
+        <div class="cd"><div class="cd-ico">✉️</div><div class="cd-txt"><strong id="contact-email-lbl">E-Posta</strong><a id="c-email-a" style="color:var(--gold)"></a></div></div>
+        <div class="cd"><div class="cd-ico">🕐</div><div class="cd-txt"><strong id="contact-hours-lbl">Çalışma Saatleri</strong><span id="c-hours"></span></div></div>
       </div>
       <div class="rev-r">
         <div class="map-f" id="map-container">
@@ -481,7 +487,7 @@
             </div>
           </div>
         </div>
-        <a href="https://maps.google.com" target="_blank" class="btn-gh">Yol Tarifi Al →</a>
+        <a href="https://maps.google.com" target="_blank" class="btn-gh" id="contact-directions-btn">Yol Tarifi Al →</a>
       </div>
     </div>
   </div>
@@ -502,33 +508,33 @@
         </div>
       </div>
       <div>
-        <div class="foot-h">Navigasyon</div>
+        <div class="foot-h" id="footer-nav-t">Navigasyon</div>
         <ul class="foot-ul">
           <li><a href="#about">Hikayemiz</a></li>
-          <li><a href="#menu-section">Menü</a></li>
+          <li><a href="/menu" id="t-foot-menu">Menü</a></li>
           <li><a href="#gallery">Galeri</a></li>
           <li><a href="#reservation">Rezervasyon</a></li>
           <li><a href="#contact">İletişim</a></li>
         </ul>
       </div>
       <div>
-        <div class="foot-h">Deneyim</div>
+        <div class="foot-h" id="footer-exp-t">Deneyim</div>
         <ul class="foot-ul">
-          <li><a href="#reservation">Özel Yemek</a></li>
-          <li><a href="#reservation">Kurumsal</a></li>
-          <li><a href="#menu-section">Şarap Mahzeni</a></li>
-          <li><a href="#about">Şef Masası</a></li>
+          <li><a href="#reservation" id="footer-private-t">Özel Yemek</a></li>
+          <li><a href="#reservation" id="footer-corp-t">Kurumsal</a></li>
+          <li><a href="/menu" id="t-foot-wine">Şarap Mahzeni</a></li>
+          <li><a href="#about" id="footer-chef-t">Şef Masası</a></li>
         </ul>
       </div>
       <div>
-        <div class="foot-h">İletişim</div>
-        <div class="foot-ci"><strong>Adres</strong><span id="f-addr"></span></div>
-        <div class="foot-ci"><strong>Telefon</strong><span id="f-phone"></span></div>
-        <div class="foot-ci"><strong>E-Posta</strong><span id="f-email"></span></div>
+        <div class="foot-h" id="footer-contact-t">İletişim</div>
+        <div class="foot-ci"><strong id="f-addr-lbl">Adres</strong><span id="f-addr"></span></div>
+        <div class="foot-ci"><strong id="f-phone-lbl">Telefon</strong><span id="f-phone"></span></div>
+        <div class="foot-ci"><strong id="f-email-lbl">E-Posta</strong><span id="f-email"></span></div>
       </div>
     </div>
     <div class="foot-bot">
-      <span>© <span id="f-year"></span> <span id="f-rname"></span>. Tüm hakları saklıdır.</span>
+      <span>© <span id="f-year"></span> <span id="f-rname"></span>. <span id="footer-rights-t">Tüm hakları saklıdır.</span></span>
       <span>Fine dining deneyimi için tasarlandı.</span>
     </div>
   </div>
@@ -575,15 +581,30 @@ async function init(){
     cats=[];items=[];gallery=[];testimonials=[];
   }
   applySettings();
+  applyUILang();
   renderStats();
-  renderMenu('all');
+  renderMenuPreview();
   renderGallery();
   renderTestimonials();
   renderContact();
   observeAll();
+  renderLangSwitcher('lang-switcher-container', onLangChange);
+  renderLangSwitcher('lang-switcher-container-mob', onLangChange);
   clearTimeout(safeClose);
   const l=document.getElementById('loader'); if(l)l.classList.add('out');
   const fyear=document.getElementById('f-year'); if(fyear)fyear.textContent=new Date().getFullYear();
+}
+
+// Dil değişince tüm içeriği yeniden render et (sayfa yenilemeden)
+function onLangChange(newLang){
+  applyUILang();
+  renderStats();
+  renderMenuPreview();
+  renderGallery();
+  renderTestimonials();
+  applySettings();
+  renderLangSwitcher('lang-switcher-container', onLangChange);
+  renderLangSwitcher('lang-switcher-container-mob', onLangChange);
 }
 
 function applySettings(){
@@ -638,16 +659,16 @@ function applySettings(){
   }
 
   const heroSlogan  = document.getElementById('hero-slogan');
-  if(heroSlogan) heroSlogan.textContent = S.slogan||'';
+  if(heroSlogan) heroSlogan.textContent = tf(S.slogan)||'';
 
   const heroEyebrow = document.getElementById('hero-eyebrow');
-  if(heroEyebrow) heroEyebrow.textContent = S.heroEyebrow||'Est. 2014 – İstanbul & Ötesi';
+  if(heroEyebrow) heroEyebrow.textContent = tf(S.heroEyebrowML) || 'Est. 2014';
 
-  // Hero buton metinleri
+  // Hero buton metinleri — UI dil sistemi öncelikli, settings varsa onu kullan
   const hBtn1 = document.getElementById('hero-btn1');
   const hBtn2 = document.getElementById('hero-btn2');
-  if(hBtn1 && S.heroBtnPrimary)   hBtn1.textContent = S.heroBtnPrimary;
-  if(hBtn2 && S.heroBtnSecondary) hBtn2.textContent = S.heroBtnSecondary;
+  if(hBtn1) hBtn1.textContent = tf(S.heroBtnPrimaryML) || t('res_submit');
+  if(hBtn2) hBtn2.textContent = tf(S.heroBtnSecondaryML) || t('menu_view_all');
 
   // Hero overlay karartma
   if(heroBg && S.heroOverlayOpacity !== undefined) {
@@ -661,14 +682,14 @@ function applySettings(){
 
   const aboutT1 = document.getElementById('about-text-1');
   const aboutT2 = document.getElementById('about-text-2');
-  if(aboutT1) aboutT1.textContent = S.aboutText||'';
-  if(aboutT2) aboutT2.textContent = S.aboutText2||'';
+  if(aboutT1) aboutT1.textContent = tf(S.aboutTextML)||'';
+  if(aboutT2) aboutT2.textContent = tf(S.aboutText2ML)||'';
 
   // About rozeti
   const badgeNum = document.getElementById('about-badge-num');
   const badgeTxt = document.getElementById('about-badge-txt');
-  if(badgeNum) badgeNum.textContent = S.aboutBadgeNum||'3★';
-  if(badgeTxt) badgeTxt.textContent = S.aboutBadgeText||'Ödüllü Restoran';
+  if(badgeNum) badgeNum.textContent = S.aboutBadgeNum||'★';
+  if(badgeTxt) badgeTxt.textContent = tf(S.aboutBadgeTextML)||'';
 
   // ── Şef ───────────────────────────────────────────
   const chefSection = document.getElementById('chef-section');
@@ -677,7 +698,7 @@ function applySettings(){
   const chefTitleEl = document.getElementById('chef-title');
   if(chefImg)   chefImg.src = S.chefImage||'';
   if(chefNameEl)  chefNameEl.textContent  = S.chefName||'';
-  if(chefTitleEl) chefTitleEl.textContent = S.chefTitle||'';
+  if(chefTitleEl) chefTitleEl.textContent = tf(S.chefTitleML)||'';
   // showChef toggle
   if(chefSection) chefSection.style.display = (S.showChef===false) ? 'none' : '';
 
@@ -724,7 +745,7 @@ function applySettings(){
 
   // Footer açıklaması
   const footDesc = document.getElementById('foot-desc');
-  if(footDesc && S.footerText) footDesc.textContent = S.footerText;
+  if(footDesc) footDesc.textContent = tf(S.footerTextML)||'';
 
   const mapLbl = document.getElementById('map-lbl');
   if(mapLbl) mapLbl.textContent = name;
@@ -748,55 +769,99 @@ function applySettings(){
   if(socTW) socTW.href = S.socialTwitter||'#';
 
   // ── Çalışma saatleri ─────────────────────────────
-  const hrs = S.hours||[];
+  const hrs = S.hoursML || S.hours || [];
   const hoursList = document.getElementById('hours-list');
   const cHours    = document.getElementById('c-hours');
-  if(hoursList) hoursList.innerHTML = hrs.map(h=>`<div class="h-row"><span class="day">${h.day}</span><span class="time">${h.time}</span></div>`).join('');
-  if(cHours) cHours.innerHTML = hrs.map(h=>`${h.day}: ${h.time}`).join('<br>');
+  if(hoursList) hoursList.innerHTML = hrs.map(h=>`<div class="h-row"><span class="day">${tf(h.day)}</span><span class="time">${h.time}</span></div>`).join('');
+  if(cHours) cHours.innerHTML = hrs.map(h=>`${tf(h.day)}: ${h.time}`).join('<br>');
 
   // ── Rezervasyon min tarih ─────────────────────────
   const rDate = document.getElementById('r-date');
   if(rDate){ const d=new Date(); d.setDate(d.getDate()+1); rDate.min=d.toISOString().split('T')[0]; }
 }
 
+// ── UI Dil Metinlerini Uygula ───────────────────────────────
+// Tüm t-xxx id'li elementlerin içeriğini geçerli dile göre doldurur
+function applyUILang(){
+  document.documentElement.lang = getCurrentLang();
+  const map = {
+    't-nav-about':'nav_about', 't-nav-menu':'nav_menu', 't-nav-gallery':'nav_gallery',
+    't-nav-reviews':'nav_reviews', 't-nav-contact':'nav_contact', 't-nav-reserve':'nav_reserve',
+    't-mob-about':'nav_about', 't-mob-menu':'nav_menu', 't-mob-gallery':'nav_gallery',
+    't-mob-reviews':'nav_reviews', 't-mob-contact':'nav_contact', 't-mob-reserve':'nav_reserve',
+    't-foot-menu':'nav_menu', 't-foot-wine':'footer_wine',
+    't-menu-eyebrow':'menu_eyebrow', 't-menu-title':'menu_title', 't-menu-viewall':'menu_view_all',
+    'hero-scroll-text':'hero_scroll',
+    'about-eyebrow-t':'about_eyebrow',
+    'gallery-eyebrow-t':'gallery_eyebrow', 'gallery-title-t':'gallery_title',
+    'res-eyebrow-t':'res_eyebrow', 'res-subtitle-t':'res_subtitle',
+    'res-name-lbl':'res_name', 'res-phone-lbl':'res_phone', 'res-email-lbl':'res_email',
+    'res-guests-lbl':'res_guests', 'res-date-lbl':'res_date', 'res-time-lbl':'res_time',
+    'res-notes-lbl':'res_notes', 'res-submit-btn':'res_submit', 'res-note-t':'res_note',
+    'testi-eyebrow-t':'testi_eyebrow', 'testi-title-t':'testi_title',
+    'contact-eyebrow-t':'contact_eyebrow',
+    'contact-address-lbl':'contact_address', 'contact-phone-lbl':'contact_phone',
+    'contact-email-lbl':'contact_email', 'contact-hours-lbl':'contact_hours',
+    'contact-directions-btn':'contact_directions',
+    'footer-nav-t':'footer_nav', 'footer-exp-t':'footer_exp', 'footer-contact-t':'footer_contact',
+    'footer-private-t':'footer_private', 'footer-corp-t':'footer_corp',
+    'footer-chef-t':'footer_chef', 'footer-rights-t':'footer_rights',
+    'f-addr-lbl':'contact_address', 'f-phone-lbl':'contact_phone', 'f-email-lbl':'contact_email',
+  };
+  Object.entries(map).forEach(([id,key])=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent = t(key);
+  });
+  // Placeholder'lar
+  const notesInput = document.getElementById('r-notes');
+  if(notesInput) notesInput.placeholder = t('res_notes_ph');
+  // Select option'ları
+  const guestsSel = document.getElementById('r-guests');
+  if(guestsSel){
+    const opts = t('res_guest_opts');
+    guestsSel.innerHTML = `<option value="">${t('res_select_guests')}</option>` +
+      (Array.isArray(opts)?opts:[]).map(o=>`<option>${o}</option>`).join('');
+  }
+  const timeSel = document.getElementById('r-time');
+  if(timeSel){
+    const firstOpt = timeSel.querySelector('option');
+    if(firstOpt) firstOpt.textContent = t('res_select_time');
+  }
+  const waTip = document.querySelector('.wa .tip');
+  if(waTip) waTip.textContent = t('whatsapp_tip');
+}
+
 function renderStats(){
-  const stats = S.stats||[];
+  const stats = S.statsML || S.stats || [];
   document.getElementById('stats-grid').innerHTML = stats.map(s=>`
     <div class="stat reveal">
       <div class="stat-n">${s.num}</div>
-      <div class="stat-l">${s.label}</div>
+      <div class="stat-l">${tf(s.label)}</div>
     </div>`).join('');
 }
 
-let activeFilter='all';
-function renderMenu(filter){
-  activeFilter=filter;
+function renderMenuPreview(){
   const cur=S.currency||'₺';
-  const filtered = filter==='all' ? items.filter(i=>i.active) : items.filter(i=>i.active&&i.cat===filter);
-  const g=document.getElementById('menu-grid');
-  g.innerHTML = filtered.map(item=>`
+  const lang=getCurrentLang();
+  const featured = items.filter(i=>i.active && i.featured).slice(0,6);
+  const list = featured.length ? featured : items.filter(i=>i.active).slice(0,6);
+  const g=document.getElementById('menu-preview-grid');
+  if(!g) return;
+  g.innerHTML = list.map(item=>`
     <article class="mc reveal">
       <div class="mc-img">
-        <img src="${item.img}" alt="${item.name}" loading="lazy"/>
-        ${item.featured?'<span class="mc-badge">Şef\'in Seçimi</span>':''}
+        <img src="${item.img}" alt="${tf(item.name)}" loading="lazy"/>
+        ${item.featured?`<span class="mc-badge">${t('menu_chef_pick')}</span>`:''}
       </div>
       <div class="mc-body">
         <div class="mc-row">
-          <h3 class="mc-name">${item.name}</h3>
+          <h3 class="mc-name">${tf(item.name)}</h3>
           <span class="mc-price">${cur}${item.price}</span>
         </div>
-        <p class="mc-desc">${item.desc}</p>
+        <p class="mc-desc">${tf(item.desc)}</p>
       </div>
     </article>`).join('');
   g.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-  // Filters
-  const fc=document.getElementById('menu-filters');
-  const activeCats=[...new Set(items.filter(i=>i.active).map(i=>i.cat))];
-  fc.innerHTML=`<button class="filt ${filter==='all'?'on':''}" data-f="all">Tümü</button>`
-    + cats.filter(c=>c.active&&activeCats.includes(c.slug)).map(c=>
-      `<button class="filt ${filter===c.slug?'on':''}" data-f="${c.slug}">${c.icon||''} ${c.name}</button>`
-    ).join('');
-  fc.querySelectorAll('.filt').forEach(b=>b.addEventListener('click',()=>renderMenu(b.dataset.f)));
 }
 
 let galItems=[];
@@ -804,7 +869,7 @@ function renderGallery(){
   galItems = gallery.filter(g=>g.active).sort((a,b)=>(a.order||0)-(b.order||0));
   document.getElementById('gal-grid').innerHTML = galItems.map((g,i)=>`
     <div class="gi ${g.cls||''}" data-i="${i}">
-      <img src="${g.img}" alt="${g.alt||''}" loading="lazy"/>
+      <img src="${g.img}" alt="${tf(g.alt)}" loading="lazy"/>
       <div class="gi-ov">⊕</div>
     </div>`).join('');
   document.querySelectorAll('.gi').forEach(el=>{
@@ -864,7 +929,7 @@ document.getElementById('res-form').addEventListener('submit',async e=>{
   e.preventDefault();
   const name=document.getElementById('r-name').value.trim();
   const date=document.getElementById('r-date').value;
-  if(!name||!date){showToast('⚠ Ad ve tarih zorunludur.');return;}
+  if(!name||!date){showToast(t('toast_required'));return;}
   try{
     await post('/api/reservations',{
       name, phone:document.getElementById('r-phone').value,
@@ -873,8 +938,8 @@ document.getElementById('res-form').addEventListener('submit',async e=>{
       date, time:document.getElementById('r-time').value,
       notes:document.getElementById('r-notes').value
     });
-    showToast('✓ Rezervasyonunuz alındı! 2 saat içinde onaylayacağız.');
-  } catch{ showToast('✓ Rezervasyon isteğiniz kaydedildi.'); }
+    showToast(t('toast_success'));
+  } catch{ showToast(t('toast_success')); }
   e.target.reset();
 });
 

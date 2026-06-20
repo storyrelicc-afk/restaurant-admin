@@ -1,7 +1,78 @@
 {
   "settings": {
     "restaurantName": "Restoran Adınız",
-    "slogan": "Eşsiz lezzetler, unutulmaz anlar.",
+    "slogan": {
+      "tr": "Eşsiz lezzetler, unutulmaz anlar.",
+      "en": "Unique flavors, unforgettable moments.",
+      "ja": "唯一の味、忘れられない瞬間。",
+      "zh": "独特风味，难忘时刻。",
+      "ru": "Уникальные вкусы, незабываемые моменты.",
+      "de": "Einzigartige Aromen, unvergessliche Momente."
+    },
+    "heroEyebrowML": {
+      "tr": "Est. 2015 – İstanbul",
+      "en": "Est. 2015 – Istanbul",
+      "ja": "創業 2015年 – イスタンブール",
+      "zh": "创立于2015年 – 伊斯坦布尔",
+      "ru": "Основан в 2015 – Стамбул",
+      "de": "Gegründet 2015 – Istanbul"
+    },
+    "heroBtnPrimaryML": {
+      "tr": "Rezervasyon Yap",
+      "en": "Make a Reservation",
+      "ja": "予約する",
+      "zh": "立即预订",
+      "ru": "Забронировать",
+      "de": "Tisch reservieren"
+    },
+    "heroBtnSecondaryML": {
+      "tr": "Menüyü İncele",
+      "en": "View Menu",
+      "ja": "メニューを見る",
+      "zh": "查看菜单",
+      "ru": "Посмотреть меню",
+      "de": "Speisekarte ansehen"
+    },
+    "aboutTextML": {
+      "tr": "Restoranımız, yılların deneyimi ve tutku ile hazırlanan özel tariflerimizle misafirlerine unutulmaz bir lezzet yolculuğu sunmaktadır.",
+      "en": "Our restaurant offers an unforgettable culinary journey with special recipes prepared with years of experience and passion.",
+      "ja": "当レストランは、長年の経験と情熱で作られた特別なレシピで、忘れられない美食の旅をお届けします。",
+      "zh": "我们的餐厅以多年的经验和热情打造的特色菜谱，为您呈现难忘的美食之旅。",
+      "ru": "Наш ресторан предлагает незабываемое гастрономическое путешествие с особыми рецептами, созданными с многолетним опытом и страстью.",
+      "de": "Unser Restaurant bietet eine unvergessliche kulinarische Reise mit besonderen Rezepten, die mit jahrelanger Erfahrung und Leidenschaft zubereitet werden."
+    },
+    "aboutText2ML": {
+      "tr": "Her tabak, özenle seçilmiş malzemeler ve ustanın elinden çıkan bir sanat eseridir. Sizleri aramızda görmekten mutluluk duyarız.",
+      "en": "Every dish is a work of art, crafted from carefully selected ingredients by our master chef. We would be delighted to welcome you.",
+      "ja": "すべての料理は、丁寧に選ばれた食材とシェフの手による芸術作品です。皆様のご来店を心よりお待ちしております。",
+      "zh": "每一道菜都是精选食材与大厨匠心制作的艺术品。我们期待您的光临。",
+      "ru": "Каждое блюдо — это произведение искусства, созданное из тщательно отобранных ингредиентов руками мастера. Будем рады видеть вас у нас.",
+      "de": "Jedes Gericht ist ein Kunstwerk aus sorgfältig ausgewählten Zutaten, das von unserem Küchenchef zubereitet wird. Wir freuen uns, Sie bei uns willkommen zu heißen."
+    },
+    "chefTitleML": {
+      "tr": "Executive Chef & Kurucu",
+      "en": "Executive Chef & Founder",
+      "ja": "エグゼクティブシェフ＆創業者",
+      "zh": "行政总厨兼创始人",
+      "ru": "Шеф-повар и основатель",
+      "de": "Küchenchef & Gründer"
+    },
+    "aboutBadgeTextML": {
+      "tr": "Ödüllü Restoran",
+      "en": "Award-Winning Restaurant",
+      "ja": "受賞レストラン",
+      "zh": "获奖餐厅",
+      "ru": "Ресторан, удостоенный наград",
+      "de": "Preisgekröntes Restaurant"
+    },
+    "footerTextML": {
+      "tr": "Eşsiz lezzet deneyimi için tasarlandı.",
+      "en": "Designed for a unique culinary experience.",
+      "ja": "唯一の美食体験のためにデザインされました。",
+      "zh": "为独特美食体验而设计。",
+      "ru": "Создан для уникального гастрономического опыта.",
+      "de": "Entwickelt für ein einzigartiges kulinarisches Erlebnis."
+    },
     "phone": "+90 555 000 00 00",
     "whatsapp": "+905550000000",
     "email": "info@restoranim.com",
@@ -12,43 +83,97 @@
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80",
     "heroOverlayOpacity": 0.5,
     "aboutImage": "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800&q=80",
-    "aboutText": "Restoranımız, yılların deneyimi ve tutku ile hazırlanan özel tariflerimizle misafirlerine unutulmaz bir lezzet yolculuğu sunmaktadır.",
-    "aboutText2": "Her tabak, özenle seçilmiş malzemeler ve ustanın elinden çıkan bir sanat eseridir. Sizleri aramızda görmekten mutluluk duyarız.",
     "chefName": "Şef Adı Soyadı",
-    "chefTitle": "Executive Chef & Kurucu",
     "chefImage": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=200&q=80",
     "aboutBadgeNum": "3★",
-    "aboutBadgeText": "Ödüllü Restoran",
-    "hours": [
+    "enabledLanguages": [
+      "tr",
+      "en",
+      "ja",
+      "zh",
+      "ru",
+      "de"
+    ],
+    "defaultLanguage": "tr",
+    "hoursML": [
       {
-        "day": "Pazartesi – Perşembe",
+        "day": {
+          "tr": "Pazartesi – Perşembe",
+          "en": "Monday – Thursday",
+          "ja": "月曜日–木曜日",
+          "zh": "周一至周四",
+          "ru": "Понедельник – Четверг",
+          "de": "Montag – Donnerstag"
+        },
         "time": "12:00 – 23:00"
       },
       {
-        "day": "Cuma – Cumartesi",
+        "day": {
+          "tr": "Cuma – Cumartesi",
+          "en": "Friday – Saturday",
+          "ja": "金曜日–土曜日",
+          "zh": "周五至周六",
+          "ru": "Пятница – Субота",
+          "de": "Freitag – Samstag"
+        },
         "time": "12:00 – 00:30"
       },
       {
-        "day": "Pazar",
+        "day": {
+          "tr": "Pazar",
+          "en": "Sunday",
+          "ja": "日曜日",
+          "zh": "周日",
+          "ru": "Воскресенье",
+          "de": "Sonntag"
+        },
         "time": "12:00 – 22:00"
       }
     ],
-    "stats": [
+    "statsML": [
       {
         "num": "10+",
-        "label": "Yıllık Deneyim"
+        "label": {
+          "tr": "Yıllık Deneyim",
+          "en": "Years of Experience",
+          "ja": "年の経験",
+          "zh": "年经验",
+          "ru": "Лет опыта",
+          "de": "Jahre Erfahrung"
+        }
       },
       {
         "num": "50k",
-        "label": "Mutlu Misafir"
+        "label": {
+          "tr": "Mutlu Misafir",
+          "en": "Happy Guests",
+          "ja": "満足したお客様",
+          "zh": "满意客户",
+          "ru": "Довольных гостей",
+          "de": "Zufriedene Gäste"
+        }
       },
       {
         "num": "4.9",
-        "label": "Ortalama Puan"
+        "label": {
+          "tr": "Ortalama Puan",
+          "en": "Average Rating",
+          "ja": "平均評価",
+          "zh": "平均评分",
+          "ru": "Средний рейтинг",
+          "de": "Durchschnittsbewertung"
+        }
       },
       {
         "num": "3",
-        "label": "Ödül"
+        "label": {
+          "tr": "Ödül",
+          "en": "Awards",
+          "ja": "受賞",
+          "zh": "奖项",
+          "ru": "Награды",
+          "de": "Auszeichnungen"
+        }
       }
     ],
     "socialInstagram": "#",
@@ -61,7 +186,6 @@
     "fontDisplay": "Cormorant Garamond",
     "fontBody": "Inter",
     "currency": "₺",
-    "footerText": "Eşsiz lezzet deneyimi için tasarlandı.",
     "showHero": true,
     "showStats": true,
     "showAbout": true,
@@ -72,56 +196,105 @@
     "showTestimonials": true,
     "showContact": true,
     "showWhatsapp": true,
-    "heroEyebrow": "Est. 2015 – İstanbul",
-    "heroBtnPrimary": "Rezervasyon Yap",
-    "heroBtnSecondary": "Menüyü İncele",
     "reservationBgImage": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80",
-    "setupDone": false,
-    "adminUser": "",
-    "adminPass": ""
+    "setupDone": false
   },
   "menuCategories": [
     {
       "id": 1,
-      "name": "Başlangıçlar",
+      "name": {
+        "tr": "Başlangıçlar",
+        "en": "Starters",
+        "ja": "前菜",
+        "zh": "开胃菜",
+        "ru": "Закуски",
+        "de": "Vorspeisen"
+      },
       "slug": "starters",
       "icon": "🥗",
-      "active": true
+      "active": true,
+      "order": 1
     },
     {
       "id": 2,
-      "name": "Ana Yemekler",
+      "name": {
+        "tr": "Ana Yemekler",
+        "en": "Main Courses",
+        "ja": "メイン料理",
+        "zh": "主菜",
+        "ru": "Основные блюда",
+        "de": "Hauptgerichte"
+      },
       "slug": "mains",
       "icon": "🍽️",
-      "active": true
+      "active": true,
+      "order": 2
     },
     {
       "id": 3,
-      "name": "Izgaralar",
+      "name": {
+        "tr": "Izgaralar",
+        "en": "Grills",
+        "ja": "グリル",
+        "zh": "烤类",
+        "ru": "Гриль",
+        "de": "Grillgerichte"
+      },
       "slug": "grills",
       "icon": "🔥",
-      "active": true
+      "active": true,
+      "order": 3
     },
     {
       "id": 4,
-      "name": "Tatlılar",
+      "name": {
+        "tr": "Tatlılar",
+        "en": "Desserts",
+        "ja": "デザート",
+        "zh": "甜点",
+        "ru": "Десерты",
+        "de": "Desserts"
+      },
       "slug": "desserts",
       "icon": "🍮",
-      "active": true
+      "active": true,
+      "order": 4
     },
     {
       "id": 5,
-      "name": "İçecekler",
+      "name": {
+        "tr": "İçecekler",
+        "en": "Drinks",
+        "ja": "飲み物",
+        "zh": "饮品",
+        "ru": "Напитки",
+        "de": "Getränke"
+      },
       "slug": "drinks",
       "icon": "🍷",
-      "active": true
+      "active": true,
+      "order": 5
     }
   ],
   "menuItems": [
     {
       "id": 1,
-      "name": "Mevsim Salatası",
-      "desc": "Taze mevsim yeşillikleri, kiraz domates, zeytin, balsamik sos",
+      "name": {
+        "tr": "Mevsim Salatası",
+        "en": "Seasonal Salad",
+        "ja": "季節のサラダ",
+        "zh": "季节沙拉",
+        "ru": "Сезонный салат",
+        "de": "Saisonsalat"
+      },
+      "desc": {
+        "tr": "Taze mevsim yeşillikleri, kiraz domates, zeytin, balsamik sos",
+        "en": "Fresh seasonal greens, cherry tomatoes, olives, balsamic dressing",
+        "ja": "新鮮な季節の野菜、チェリートマト、オリーブ、バルサミコソース",
+        "zh": "新鲜时蔬，樱桃番茄，橄榄，意大利香醋",
+        "ru": "Свежая сезонная зелень, помидоры черри, оливки, бальзамическая заправка",
+        "de": "Frisches Saisongemüse, Kirschtomaten, Oliven, Balsamico-Dressing"
+      },
       "price": 180,
       "cat": "starters",
       "featured": false,
@@ -131,8 +304,22 @@
     },
     {
       "id": 2,
-      "name": "Mantar Çorbası",
-      "desc": "Kremalı orman mantarı çorbası, trüf yağı, kruton",
+      "name": {
+        "tr": "Mantar Çorbası",
+        "en": "Mushroom Soup",
+        "ja": "マッシュルームスープ",
+        "zh": "蘑菇汤",
+        "ru": "Грибной суп",
+        "de": "Pilzsuppe"
+      },
+      "desc": {
+        "tr": "Kremalı orman mantarı çorbası, trüf yağı, kruton",
+        "en": "Creamy forest mushroom soup, truffle oil, croutons",
+        "ja": "クリーミーな森のキノコスープ、トリュフオイル、クルトン添え",
+        "zh": "奶油森林蘑菇汤，松露油，面包丁",
+        "ru": "Сливочный суп из лесных грибов, трюфельное масло, крутоны",
+        "de": "Cremige Waldpilzsuppe, Trüffelöl, Croutons"
+      },
       "price": 145,
       "cat": "starters",
       "featured": false,
@@ -142,8 +329,22 @@
     },
     {
       "id": 3,
-      "name": "Karides Kokteyl",
-      "desc": "İskandinav usulü karides, avokado, limon mayonezi",
+      "name": {
+        "tr": "Karides Kokteyl",
+        "en": "Shrimp Cocktail",
+        "ja": "シュリンプカクテル",
+        "zh": "虾仁鸡尾酒",
+        "ru": "Креветочный коктейль",
+        "de": "Shrimps-Cocktail"
+      },
+      "desc": {
+        "tr": "İskandinav usulü karides, avokado, limon mayonezi",
+        "en": "Scandinavian-style shrimp, avocado, lemon mayonnaise",
+        "ja": "北欧風シュリンプ、アボカド、レモンマヨネーズ",
+        "zh": "北欧风味虾仁，牛油果，柠檬蛋黄酱",
+        "ru": "Креветки по-скандинавски, авокадо, лимонный майонез",
+        "de": "Garnelen nach skandinavischer Art, Avocado, Zitronenmayonnaise"
+      },
       "price": 245,
       "cat": "starters",
       "featured": true,
@@ -153,8 +354,22 @@
     },
     {
       "id": 4,
-      "name": "Levrek Fileto",
-      "desc": "Fırında levrek, limon tereyağı sosu, sebze garnitürü",
+      "name": {
+        "tr": "Levrek Fileto",
+        "en": "Sea Bass Fillet",
+        "ja": "スズキのフィレ",
+        "zh": "鲈鱼柳",
+        "ru": "Филе сибаса",
+        "de": "Wolfsbarschfilet"
+      },
+      "desc": {
+        "tr": "Fırında levrek, limon tereyağı sosu, sebze garnitürü",
+        "en": "Oven-baked sea bass, lemon butter sauce, vegetable garnish",
+        "ja": "窯焼きスズキ、レモンバターソース、野菜の付け合わせ",
+        "zh": "烤箱鲈鱼，柠檬黄油汁，蔬菜配菜",
+        "ru": "Сибас в духовке, лимонно-сливочный соус, овощной гарнир",
+        "de": "Im Ofen gebackener Wolfsbarsch, Zitronenbuttersauce, Gemüsegarnitur"
+      },
       "price": 520,
       "cat": "mains",
       "featured": true,
@@ -164,8 +379,22 @@
     },
     {
       "id": 5,
-      "name": "Mantarlı Risotto",
-      "desc": "Arborio pirinci, porcini mantar, parmesan, taze kekik",
+      "name": {
+        "tr": "Mantarlı Risotto",
+        "en": "Mushroom Risotto",
+        "ja": "マッシュルームリゾット",
+        "zh": "蘑菇烩饭",
+        "ru": "Ризотто с грибами",
+        "de": "Pilzrisotto"
+      },
+      "desc": {
+        "tr": "Arborio pirinci, porcini mantar, parmesan, taze kekik",
+        "en": "Arborio rice, porcini mushrooms, parmesan, fresh thyme",
+        "ja": "アルボリオ米、ポルチーニ茸、パルメザンチーズ、新鮮なタイム",
+        "zh": "阿博里奥米，牛肝菌，帕玛森芝士，新鲜百里香",
+        "ru": "Рис арборио, грибы порчини, пармезан, свежий тимьян",
+        "de": "Arborio-Reis, Steinpilze, Parmesan, frischer Thymian"
+      },
       "price": 380,
       "cat": "mains",
       "featured": false,
@@ -175,8 +404,22 @@
     },
     {
       "id": 6,
-      "name": "Izgara Bonfile",
-      "desc": "250g dana bonfile, mantar sos, patates garnitürü",
+      "name": {
+        "tr": "Izgara Bonfile",
+        "en": "Grilled Filet Mignon",
+        "ja": "グリルフィレミニョン",
+        "zh": "烤菲力牛排",
+        "ru": "Стейк филе-миньон на гриле",
+        "de": "Gegrilltes Filet Mignon"
+      },
+      "desc": {
+        "tr": "250g dana bonfile, mantar sos, patates garnitürü",
+        "en": "250g beef filet, mushroom sauce, potato garnish",
+        "ja": "250gビーフフィレ、マッシュルームソース、ポテトの付け合わせ",
+        "zh": "250克牛菲力，蘑菇汁，土豆配菜",
+        "ru": "250г говяжьего филе, грибной соус, картофельный гарнир",
+        "de": "250g Rinderfilet, Pilzsauce, Kartoffelgarnitur"
+      },
       "price": 680,
       "cat": "grills",
       "featured": true,
@@ -186,8 +429,22 @@
     },
     {
       "id": 7,
-      "name": "Kuzu Pirzola",
-      "desc": "Frenk üzümü sosu, ızgara sebze, nane jölesi",
+      "name": {
+        "tr": "Kuzu Pirzola",
+        "en": "Lamb Chops",
+        "ja": "ラムチョップ",
+        "zh": "羊排",
+        "ru": "Бараньи отбивные",
+        "de": "Lammkoteletts"
+      },
+      "desc": {
+        "tr": "Frenk üzümü sosu, ızgara sebze, nane jölesi",
+        "en": "Redcurrant sauce, grilled vegetables, mint jelly",
+        "ja": "レッドカラントソース、グリル野菜、ミントジェリー",
+        "zh": "红醋栗汁，烤蔬菜，薄荷果冻",
+        "ru": "Соус из красной смородины, овощи на гриле, мятное желе",
+        "de": "Johannisbeersauce, gegrilltes Gemüse, Minzgelee"
+      },
       "price": 590,
       "cat": "grills",
       "featured": false,
@@ -197,8 +454,22 @@
     },
     {
       "id": 8,
-      "name": "Tavuk Şiş",
-      "desc": "Marine edilmiş tavuk, közlenmiş biber, pilav, cacık",
+      "name": {
+        "tr": "Tavuk Şiş",
+        "en": "Chicken Skewers",
+        "ja": "チキンスキュワー",
+        "zh": "鸡肉串",
+        "ru": "Куриные шашлычки",
+        "de": "Hähnchenspieße"
+      },
+      "desc": {
+        "tr": "Marine edilmiş tavuk, közlenmiş biber, pilav, cacık",
+        "en": "Marinated chicken, charred peppers, rice, yogurt sauce",
+        "ja": "マリネしたチキン、焼きピーマン、ライス、ヨーグルトソース",
+        "zh": "腌制鸡肉，烤辣椒，米饭，酸奶酱",
+        "ru": "Маринованная курица, печёный перец, рис, соус из йогурта",
+        "de": "Mariniertes Hähnchen, gegrillte Paprika, Reis, Joghurtsauce"
+      },
       "price": 320,
       "cat": "grills",
       "featured": false,
@@ -208,8 +479,22 @@
     },
     {
       "id": 9,
-      "name": "Çikolatalı Sufle",
-      "desc": "Sıcak çikolata sufle, vanilyalı dondurma, çilek",
+      "name": {
+        "tr": "Çikolatalı Sufle",
+        "en": "Chocolate Soufflé",
+        "ja": "チョコレートスフレ",
+        "zh": "巧克力舒芙蕾",
+        "ru": "Шоколадное суфле",
+        "de": "Schokoladensoufflé"
+      },
+      "desc": {
+        "tr": "Sıcak çikolata sufle, vanilyalı dondurma, çilek",
+        "en": "Warm chocolate soufflé, vanilla ice cream, strawberries",
+        "ja": "温かいチョコレートスフレ、バニラアイスクリーム、ストロベリー",
+        "zh": "热巧克力舒芙蕾，香草冰淇淋，草莓",
+        "ru": "Тёплое шоколадное суфле, ванильное мороженое, клубника",
+        "de": "Warmes Schokoladensoufflé, Vanilleeis, Erdbeeren"
+      },
       "price": 165,
       "cat": "desserts",
       "featured": true,
@@ -219,8 +504,22 @@
     },
     {
       "id": 10,
-      "name": "Crème Brûlée",
-      "desc": "Geleneksel Fransız tatlısı, karamelize şeker, mevsim meyvesi",
+      "name": {
+        "tr": "Crème Brûlée",
+        "en": "Crème Brûlée",
+        "ja": "クレームブリュレ",
+        "zh": "焦糖布丁",
+        "ru": "Крем-брюле",
+        "de": "Crème brûlée"
+      },
+      "desc": {
+        "tr": "Geleneksel Fransız tatlısı, karamelize şeker, mevsim meyvesi",
+        "en": "Traditional French dessert, caramelized sugar, seasonal fruit",
+        "ja": "伝統的なフランスのデザート、カラメリゼした砂糖、季節のフルーツ",
+        "zh": "传统法式甜点，焦糖，季节水果",
+        "ru": "Традиционный французский десерт, карамелизированный сахар, сезонные фрукты",
+        "de": "Traditionelles französisches Dessert, karamellisierter Zucker, Saisonfrüchte"
+      },
       "price": 145,
       "cat": "desserts",
       "featured": false,
@@ -230,8 +529,22 @@
     },
     {
       "id": 11,
-      "name": "Limonata",
-      "desc": "Taze sıkılmış limon, nane, şurup — soğuk veya soda ile",
+      "name": {
+        "tr": "Limonata",
+        "en": "Lemonade",
+        "ja": "レモネード",
+        "zh": "柠檬水",
+        "ru": "Лимонад",
+        "de": "Limonade"
+      },
+      "desc": {
+        "tr": "Taze sıkılmış limon, nane, şurup — soğuk veya soda ile",
+        "en": "Freshly squeezed lemon, mint, syrup — chilled or with soda",
+        "ja": "フレッシュレモン、ミント、シロップ — 冷やしてまたはソーダ入り",
+        "zh": "新鲜柠檬汁，薄荷，糖浆 — 冰镇或苏打水",
+        "ru": "Свежевыжатый лимон, мята, сироп — холодный или с содовой",
+        "de": "Frisch gepresste Zitrone, Minze, Sirup — gekühlt oder mit Soda"
+      },
       "price": 75,
       "cat": "drinks",
       "featured": false,
@@ -241,8 +554,22 @@
     },
     {
       "id": 12,
-      "name": "Türk Kahvesi",
-      "desc": "Geleneksel pişirme, lokum ikramı ile",
+      "name": {
+        "tr": "Türk Kahvesi",
+        "en": "Turkish Coffee",
+        "ja": "トルココーヒー",
+        "zh": "土耳其咖啡",
+        "ru": "Турецкий кофе",
+        "de": "Türkischer Kaffee"
+      },
+      "desc": {
+        "tr": "Geleneksel pişirme, lokum ikramı ile",
+        "en": "Traditionally brewed, served with Turkish delight",
+        "ja": "伝統的な製法、ロクム(トルコの菓子)付き",
+        "zh": "传统煮法，配土耳其软糖",
+        "ru": "Традиционное приготовление, подаётся с рахат-лукумом",
+        "de": "Traditionell gebrüht, serviert mit türkischem Honig"
+      },
       "price": 65,
       "cat": "drinks",
       "featured": false,
@@ -255,7 +582,14 @@
     {
       "id": 1,
       "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
-      "alt": "Restoran iç mekan",
+      "alt": {
+        "tr": "Restoran iç mekan",
+        "en": "Restaurant interior",
+        "ja": "レストラン内装",
+        "zh": "餐厅内部",
+        "ru": "Интерьер ресторана",
+        "de": "Restaurant-Interieur"
+      },
       "cls": "tall",
       "active": true,
       "order": 1
@@ -263,7 +597,14 @@
     {
       "id": 2,
       "img": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80",
-      "alt": "Özel tabak sunumu",
+      "alt": {
+        "tr": "Özel tabak sunumu",
+        "en": "Special dish presentation",
+        "ja": "特別な料理の盛り付け",
+        "zh": "特色菜品摆盘",
+        "ru": "Подача особого блюда",
+        "de": "Besondere Tellerpräsentation"
+      },
       "cls": "",
       "active": true,
       "order": 2
@@ -271,7 +612,14 @@
     {
       "id": 3,
       "img": "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=600&q=80",
-      "alt": "Şef mutfakta",
+      "alt": {
+        "tr": "Şef mutfakta",
+        "en": "Chef in kitchen",
+        "ja": "厨房のシェフ",
+        "zh": "厨师在厨房",
+        "ru": "Шеф-повар на кухне",
+        "de": "Küchenchef in der Küche"
+      },
       "cls": "",
       "active": true,
       "order": 3
@@ -279,7 +627,14 @@
     {
       "id": 4,
       "img": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=80",
-      "alt": "Akşam yemeği ortamı",
+      "alt": {
+        "tr": "Akşam yemeği ortamı",
+        "en": "Dinner ambiance",
+        "ja": "夕食の雰囲気",
+        "zh": "晚餐氛围",
+        "ru": "Атмосфера ужина",
+        "de": "Abendessen-Ambiente"
+      },
       "cls": "wide",
       "active": true,
       "order": 4
@@ -287,7 +642,14 @@
     {
       "id": 5,
       "img": "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",
-      "alt": "Izgara biftek",
+      "alt": {
+        "tr": "Izgara biftek sunumu",
+        "en": "Grilled steak presentation",
+        "ja": "グリルステーキの盛り付け",
+        "zh": "烤牛排展示",
+        "ru": "Подача стейка на гриле",
+        "de": "Präsentation von gegrilltem Steak"
+      },
       "cls": "",
       "active": true,
       "order": 5
@@ -295,7 +657,14 @@
     {
       "id": 6,
       "img": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80",
-      "alt": "Şarap servisi",
+      "alt": {
+        "tr": "Şarap servisi",
+        "en": "Wine service",
+        "ja": "ワインサービス",
+        "zh": "葡萄酒服务",
+        "ru": "Винное обслуживание",
+        "de": "Weinservice"
+      },
       "cls": "",
       "active": true,
       "order": 6
@@ -303,7 +672,14 @@
     {
       "id": 7,
       "img": "https://images.unsplash.com/photo-1486297678162-eb2a19b0a318?w=600&q=80",
-      "alt": "Tatlı sunumu",
+      "alt": {
+        "tr": "Tatlı sunumu",
+        "en": "Dessert presentation",
+        "ja": "デザートの盛り付け",
+        "zh": "甜点展示",
+        "ru": "Подача десерта",
+        "de": "Dessertpräsentation"
+      },
       "cls": "tall",
       "active": true,
       "order": 7
@@ -311,7 +687,14 @@
     {
       "id": 8,
       "img": "https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=600&q=80",
-      "alt": "Özel yemek odası",
+      "alt": {
+        "tr": "Özel yemek odası",
+        "en": "Private dining room",
+        "ja": "プライベートダイニングルーム",
+        "zh": "私人用餐室",
+        "ru": "Отдельный зал для ужина",
+        "de": "Privates Speisezimmer"
+      },
       "cls": "",
       "active": true,
       "order": 8
@@ -319,7 +702,14 @@
     {
       "id": 9,
       "img": "https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=600&q=80",
-      "alt": "Restoran girişi",
+      "alt": {
+        "tr": "Restoran girişi",
+        "en": "Restaurant entrance",
+        "ja": "レストランの入り口",
+        "zh": "餐厅入口",
+        "ru": "Вход в ресторан",
+        "de": "Restauranteingang"
+      },
       "cls": "",
       "active": true,
       "order": 9

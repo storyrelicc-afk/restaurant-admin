@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title id="page-title">Menü</title>
+<meta name="description" content="Lezzetli menümüzü keşfedin."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/lang-switcher.css"/>
+<script src="/i18n.js"></script>
+<style>
+:root{
+  --gold:#c9a84c;--gold-l:#e4c97e;--gold-d:#9a7a2e;
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;--bg5:#2a2a2a;
+  --gray:#888;--gray-l:#b0b0b0;--white:#f5f0e8;
+  --fd:'Cormorant Garamond',Georgia,serif;
+  --fb:'Inter',-apple-system,sans-serif;
+  --nav:80px;--r:0.35s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--fb);overflow-x:hidden;min-height:100vh}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+::selection{background:var(--gold);color:var(--bg)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px}
+
+/* Loader */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;transition:opacity .5s,visibility .5s}
+#loader.out{opacity:0;visibility:hidden;pointer-events:none}
+.ld-logo{font-family:var(--fd);font-size:2rem;font-weight:300;color:var(--gold);letter-spacing:.1em;animation:glow 1.4s ease infinite alternate}
+.ld-bar{width:160px;height:1px;background:var(--bg5);overflow:hidden}
+.ld-prog{height:100%;background:var(--gold);animation:prog 1.4s ease forwards}
+@keyframes glow{0%{color:var(--gold)}100%{color:var(--gold-l)}}
+@keyframes prog{0%{width:0}100%{width:100%}}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:1000;display:flex;align-items:center;padding:0 clamp(1.25rem,4vw,3rem);background:rgba(10,10,10,.92);backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(201,168,76,.12)}
+.nav-i{width:100%;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.logo{font-family:var(--fd);font-size:1.6rem;font-weight:400;letter-spacing:.04em;transition:.2s;white-space:nowrap}
+.logo:hover{color:var(--gold)}
+.back-link{display:flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:600;letter-spacing:.05em;color:var(--gray-l);transition:.2s}
+.back-link:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.btn-gold{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.6rem;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--gold);color:var(--bg);border-radius:3px;transition:var(--r);border:1px solid var(--gold);white-space:nowrap}
+.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,.3)}
+@media(max-width:640px){.btn-gold{display:none}}
+
+/* Header / hero */
+.menu-hero{padding:calc(var(--nav) + 3rem) 1.5rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.menu-hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse at center, rgba(201,168,76,.12) 0%, transparent 70%);pointer-events:none}
+.menu-hero-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem;position:relative;z-index:1}
+.menu-hero-title{font-family:var(--fd);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:300;line-height:1;margin-bottom:.75rem;position:relative;z-index:1}
+.menu-hero-sub{color:var(--gray-l);font-size:.95rem;max-width:520px;margin:0 auto;position:relative;z-index:1}
+
+/* Container */
+.container{max-width:1280px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+
+/* Category nav - sticky pills */
+.cat-nav-wrap{position:sticky;top:var(--nav);z-index:90;background:rgba(10,10,10,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06);padding:1rem 0}
+.cat-nav{display:flex;gap:.6rem;overflow-x:auto;padding:0 clamp(1.25rem,4vw,3rem);scrollbar-width:none}
+.cat-nav::-webkit-scrollbar{display:none}
+.cat-pill{display:flex;align-items:center;gap:.5rem;padding:.65rem 1.3rem;font-size:.78rem;font-weight:600;letter-spacing:.04em;color:var(--gray-l);border:1px solid rgba(255,255,255,.1);border-radius:999px;white-space:nowrap;transition:var(--r);flex-shrink:0;background:var(--bg3)}
+.cat-pill:hover{border-color:var(--gold);color:var(--gold)}
+.cat-pill.active{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.cat-pill .ico{font-size:1rem}
+
+/* Search */
+.search-wrap{position:relative;max-width:380px;margin:2rem auto 0}
+.search-input{width:100%;padding:.85rem 1.2rem .85rem 2.8rem;background:var(--bg3);border:1px solid rgba(255,255,255,.1);border-radius:999px;color:var(--white);font-size:.88rem;outline:none;transition:.2s}
+.search-input:focus{border-color:var(--gold);background:rgba(201,168,76,.04)}
+.search-input::placeholder{color:var(--gray)}
+.search-ico{position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);color:var(--gray);font-size:.95rem;pointer-events:none}
+
+/* Menu sections by category */
+.menu-content{padding:2.5rem 0 6rem}
+.cat-section{margin-bottom:4rem;scroll-margin-top:calc(var(--nav) + 70px)}
+.cat-section-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.cat-section-ico{font-size:1.8rem}
+.cat-section-title{font-family:var(--fd);font-size:clamp(1.7rem,3vw,2.4rem);font-weight:400}
+.cat-section-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(201,168,76,.4),transparent)}
+.cat-section-count{font-size:.75rem;color:var(--gray);letter-spacing:.05em}
+
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:1.5rem}
+.mc{background:var(--bg3);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.05);transition:var(--r);cursor:pointer;opacity:0;transform:translateY(20px)}
+.mc.show{opacity:1;transform:translateY(0)}
+.mc:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.mc-img{aspect-ratio:16/10;overflow:hidden;position:relative;background:var(--bg4)}
+.mc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.mc:hover .mc-img img{transform:scale(1.06)}
+.mc-badge{position:absolute;top:.9rem;left:.9rem;background:var(--gold);color:var(--bg);font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px}
+.mc-body{padding:1.4rem}
+.mc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.5rem}
+.mc-name{font-family:var(--fd);font-size:1.25rem;font-weight:400;color:var(--white);line-height:1.2}
+.mc-price{font-family:var(--fd);font-size:1.3rem;font-weight:500;color:var(--gold);white-space:nowrap}
+.mc-desc{font-size:.85rem;color:var(--gray);line-height:1.6}
+
+/* Empty state */
+.empty-state{text-align:center;padding:4rem 1rem;color:var(--gray)}
+.empty-state-ico{font-size:3rem;opacity:.3;margin-bottom:1rem}
+
+/* WhatsApp floating */
+.wa{position:fixed;bottom:2rem;right:2rem;width:54px;height:54px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;z-index:500;box-shadow:0 8px 28px rgba(37,211,102,.35);transition:var(--r);cursor:pointer}
+.wa:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 12px 40px rgba(37,211,102,.45)}
+
+/* Reveal animation helper */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){
+  .menu-hero{padding:calc(var(--nav) + 2rem) 1.25rem 2rem}
+  .cat-section-title{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="ld-logo" id="ld-logo">Yükleniyor...</div>
+  <div class="ld-bar"><div class="ld-prog"></div></div>
+</div>
+
+<nav>
+  <div class="nav-i">
+    <a href="/" class="back-link" id="menu-back-link">
+      <span>←</span> <span id="menu-back-text">Ana Sayfa</span>
+    </a>
+    <a href="/" class="logo" id="nav-logo"></a>
+    <div class="nav-right">
+      <div id="lang-switcher-container"></div>
+      <a href="/#reservation" class="btn-gold" id="nav-reserve-btn">Rezervasyon</a>
+    </div>
+  </div>
+</nav>
+
+<header class="menu-hero">
+  <span class="menu-hero-eyebrow" id="menu-hero-eyebrow">Mutfak Yolculuğu</span>
+  <h1 class="menu-hero-title" id="menu-hero-title">Menümüz</h1>
+  <p class="menu-hero-sub" id="menu-hero-sub"></p>
+  <div class="search-wrap">
+    <span class="search-ico">🔍</span>
+    <input type="text" class="search-input" id="menu-search" placeholder="Ürün ara...">
+  </div>
+</header>
+
+<div class="cat-nav-wrap">
+  <div class="cat-nav" id="cat-nav"></div>
+</div>
+
+<main class="menu-content container">
+  <div id="menu-sections"></div>
+  <div class="empty-state" id="empty-state" style="display:none">
+    <div class="empty-state-ico">🍽️</div>
+    <p id="empty-state-text">Sonuç bulunamadı</p>
+  </div>
+</main>
+
+<a class="wa" id="wa-btn" href="#" target="_blank" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+const API = '';
+async function get(path){ const r=await fetch(API+path); return r.json(); }
+
+let S={}, cats=[], items=[];
+let activeCat = 'all';
+let searchQuery = '';
+
+async function init(){
+  const safeClose = setTimeout(()=>{ const l=document.getElementById('loader'); if(l)l.classList.add('out'); }, 4000);
+  try {
+    [S, cats, items] = await Promise.all([
+      get('/api/settings'), get('/api/menuCategories'), get('/api/menuItems')
+    ]);
+  } catch(e) {
+    console.warn('API hatası:', e.message);
+    S = {restaurantName:'', primaryColor:'#c9a84c', currency:'₺', whatsapp:''};
+    cats = []; items = [];
+  }
+  applyBranding();
+  applyUIText();
+  renderCatNav();
+  renderMenuSections();
+  setupSearch();
+  renderLangSwitcher('lang-switcher-container', onLangChange);
+  clearTimeout(safeClose);
+  const l=document.getElementById('loader'); if(l)l.classList.add('out');
+}
+
+function onLangChange(){
+  applyUIText();
+  renderCatNav();
+  renderMenuSections();
+  renderLangSwitcher('lang-switcher-container', onLangChange);
+}
+
+function applyBranding(){
+  document.documentElement.style.setProperty('--gold', S.primaryColor||'#c9a84c');
+  const name = S.restaurantName || '';
+  document.title = (t('nav_menu')) + ' – ' + name;
+  const pt = document.getElementById('page-title'); if(pt) pt.textContent = document.title;
+  const ld = document.getElementById('ld-logo'); if(ld) ld.textContent = S.loadingText || name;
+  const navLogo = document.getElementById('nav-logo');
+  if(navLogo){
+    if(S.logoUrl) navLogo.innerHTML = `<img src="${S.logoUrl}" alt="${name}" style="height:36px;object-fit:contain;max-width:160px"/>`;
+    else navLogo.innerHTML = name.replace(/&/g,'<span style="color:var(--gold)">&amp;</span>');
+  }
+  const waBtn = document.getElementById('wa-btn');
+  if(waBtn) waBtn.href = `https://wa.me/${(S.whatsapp||'').replace(/\D/g,'')}`;
+}
+
+function applyUIText(){
+  document.documentElement.lang = getCurrentLang();
+  const eb = document.getElementById('menu-hero-eyebrow'); if(eb) eb.textContent = t('menu_eyebrow');
+  const tt = document.getElementById('menu-hero-title'); if(tt) tt.textContent = t('menu_title');
+  const bt = document.getElementById('menu-back-text'); if(bt) bt.textContent = t('nav_about')==='Our Story' ? 'Home' : 'Ana Sayfa';
+  const rb = document.getElementById('nav-reserve-btn'); if(rb) rb.textContent = t('nav_reserve');
+  const sub = document.getElementById('menu-hero-sub');
+  if(sub) sub.textContent = tf(S.aboutTextML) ? '' : '';
+  const search = document.getElementById('menu-search');
+  if(search) search.placeholder = (getCurrentLang()==='tr') ? 'Ürün ara...' : (getCurrentLang()==='en' ? 'Search dishes...' : (getCurrentLang()==='ja' ? '料理を検索...' : (getCurrentLang()==='zh' ? '搜索菜品...' : (getCurrentLang()==='ru' ? 'Поиск блюд...' : 'Gerichte suchen...'))));
+  const ept = document.getElementById('empty-state-text');
+  if(ept) ept.textContent = (getCurrentLang()==='tr') ? 'Sonuç bulunamadı' : (getCurrentLang()==='en' ? 'No results found' : (getCurrentLang()==='ja' ? '結果が見つかりません' : (getCurrentLang()==='zh' ? '未找到结果' : (getCurrentLang()==='ru' ? 'Результатов не найдено' : 'Keine Ergebnisse gefunden'))));
+  // Back link text properly
+  const backTxt = {tr:'Ana Sayfa',en:'Home',ja:'ホーム',zh:'首页',ru:'Главная',de:'Startseite'};
+  const blk = document.getElementById('menu-back-text');
+  if(blk) blk.textContent = backTxt[getCurrentLang()] || 'Ana Sayfa';
+}
+
+function renderCatNav(){
+  const activeCats = [...new Set(items.filter(i=>i.active).map(i=>i.cat))];
+  const validCats = cats.filter(c=>c.active && activeCats.includes(c.slug)).sort((a,b)=>(a.order||0)-(b.order||0));
+  const nav = document.getElementById('cat-nav');
+  if(!nav) return;
+  nav.innerHTML = `<button class="cat-pill ${activeCat==='all'?'active':''}" data-c="all">${t('menu_all_cat')}</button>`
+    + validCats.map(c=>`<button class="cat-pill ${activeCat===c.slug?'active':''}" data-c="${c.slug}"><span class="ico">${c.icon||''}</span>${tf(c.name)}</button>`).join('');
+  nav.querySelectorAll('.cat-pill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      activeCat = btn.dataset.c;
+      renderCatNav();
+      renderMenuSections();
+      if(activeCat!=='all'){
+        const sec = document.getElementById('cat-sec-'+activeCat);
+        if(sec) sec.scrollIntoView({behavior:'smooth', block:'start'});
+      } else {
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+    });
+  });
+}
+
+function setupSearch(){
+  const input = document.getElementById('menu-search');
+  if(!input) return;
+  input.addEventListener('input', ()=>{
+    searchQuery = input.value.trim().toLowerCase();
+    renderMenuSections();
+  });
+}
+
+function renderMenuSections(){
+  const cur = S.currency || '₺';
+  const activeCatsAll = [...new Set(items.filter(i=>i.active).map(i=>i.cat))];
+  let validCats = cats.filter(c=>c.active && activeCatsAll.includes(c.slug)).sort((a,b)=>(a.order||0)-(b.order||0));
+  if(activeCat !== 'all') validCats = validCats.filter(c=>c.slug===activeCat);
+
+  const container = document.getElementById('menu-sections');
+  const emptyState = document.getElementById('empty-state');
+  if(!container) return;
+
+  let anyResults = false;
+  const html = validCats.map(cat=>{
+    let catItems = items.filter(i=>i.active && i.cat===cat.slug).sort((a,b)=>(a.order||0)-(b.order||0));
+    if(searchQuery){
+      catItems = catItems.filter(i=>{
+        const name = tf(i.name).toLowerCase();
+        const desc = tf(i.desc).toLowerCase();
+        return name.includes(searchQuery) || desc.includes(searchQuery);
+      });
+    }
+    if(!catItems.length) return '';
+    anyResults = true;
+    return `
+    <section class="cat-section" id="cat-sec-${cat.slug}">
+      <div class="cat-section-header">
+        <span class="cat-section-ico">${cat.icon||''}</span>
+        <h2 class="cat-section-title">${tf(cat.name)}</h2>
+        <div class="cat-section-line"></div>
+        <span class="cat-section-count">${catItems.length}</span>
+      </div>
+      <div class="menu-grid">
+        ${catItems.map(item=>`
+          <article class="mc">
+            <div class="mc-img">
+              <img src="${item.img||''}" alt="${tf(item.name)}" loading="lazy"/>
+              ${item.featured?`<span class="mc-badge">${t('menu_chef_pick')}</span>`:''}
+            </div>
+            <div class="mc-body">
+              <div class="mc-row">
+                <h3 class="mc-name">${tf(item.name)}</h3>
+                <span class="mc-price">${cur}${item.price}</span>
+              </div>
+              <p class="mc-desc">${tf(item.desc)}</p>
+            </div>
+          </article>`).join('')}
+      </div>
+    </section>`;
+  }).join('');
+
+  container.innerHTML = html;
+  emptyState.style.display = anyResults ? 'none' : 'block';
+
+  // Stagger animation
+  const cards = container.querySelectorAll('.mc');
+  cards.forEach((card, i)=>{
+    setTimeout(()=> card.classList.add('show'), Math.min(i,12)*40);
+  });
+}
+
+init();
+</script>
+</body>
+</html>
