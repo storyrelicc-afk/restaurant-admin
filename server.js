@@ -5,6 +5,7 @@
  */
 
 const http = require('http');
+const https = require('https');
 const fs   = require('fs');
 const path = require('path');
 const url  = require('url');
@@ -43,6 +44,79 @@ function readDB() {
   catch { return getDefaultDB(); }
 }
 function writeDB(data) { fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2)); }
+
+// ─── E-POSTA (RESEND) ─────────────────────────────────────────
+// Railway Variables'a ekle: RESEND_API_KEY = re_xxxxx
+const RESEND_API_KEY = process.env.RESEND_API_KEY || null;
+const RESEND_FROM    = process.env.RESEND_FROM || 'onboarding@resend.dev';
+
+function sendEmail({to, subject, html}) {
+  if (!RESEND_API_KEY) {
+    console.log('⚠️  RESEND_API_KEY tanımlı değil, mail gönderilemedi:', subject);
+    return Promise.resolve({skipped: true});
+  }
+  if (!to) {
+    console.log('⚠️  Alıcı e-posta adresi yok, mail gönderilemedi.');
+    return Promise.resolve({skipped: true});
+  }
+  const payload = JSON.stringify({ from: RESEND_FROM, to: [to], subject, html });
+  return new Promise((resolve) => {
+    const req = https.request({
+      hostname: 'api.resend.com',
+      path: '/emails',
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(payload)
+      }
+    }, (res) => {
+      let body = '';
+      res.on('data', c => body += c);
+      res.on('end', () => {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          console.log('✓ Mail gönderildi:', to, '|', subject);
+        } else {
+          console.error('✗ Mail gönderilemedi:', res.statusCode, body);
+        }
+        resolve({statusCode: res.statusCode, body});
+      });
+    });
+    req.on('error', (e) => {
+      console.error('✗ Mail gönderim hatası:', e.message);
+      resolve({error: e.message});
+    });
+    req.write(payload);
+    req.end();
+  });
+}
+
+function buildReservationEmail(r, db, status) {
+  const name   = db.settings.restaurantName || 'Restoranımız';
+  const color  = db.settings.primaryColor || '#c9a84c';
+  const phone  = db.settings.phone || '';
+  const isConfirmed = status === 'confirmed';
+  const title  = isConfirmed ? 'Rezervasyonunuz Onaylandı ✓' : 'Rezervasyonunuz İptal Edildi';
+  const msg    = isConfirmed
+    ? `Merhaba ${r.name},<br><br><strong>${name}</strong>'daki rezervasyonunuz onaylanmıştır. Sizi ağırlamaktan mutluluk duyacağız.`
+    : `Merhaba ${r.name},<br><br><strong>${name}</strong>'daki rezervasyon talebiniz iptal edilmiştir. Sorularınız için bizimle iletişime geçebilirsiniz.`;
+
+  const html = `
+  <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;padding:24px;border:1px solid #eee;border-radius:12px">
+    <h2 style="color:${color};margin-bottom:4px">${title}</h2>
+    <p style="color:#333;line-height:1.6">${msg}</p>
+    <table style="width:100%;margin:20px 0;border-collapse:collapse;font-size:14px">
+      <tr><td style="padding:6px 0;color:#888">Tarih</td><td style="padding:6px 0;font-weight:600">${r.date}</td></tr>
+      <tr><td style="padding:6px 0;color:#888">Saat</td><td style="padding:6px 0;font-weight:600">${r.time||'-'}</td></tr>
+      <tr><td style="padding:6px 0;color:#888">Kişi Sayısı</td><td style="padding:6px 0;font-weight:600">${r.guests||'-'}</td></tr>
+      ${r.notes?`<tr><td style="padding:6px 0;color:#888">Not</td><td style="padding:6px 0">${r.notes}</td></tr>`:''}
+    </table>
+    ${phone?`<p style="color:#888;font-size:13px">Sorularınız için: ${phone}</p>`:''}
+    <p style="color:#aaa;font-size:12px;margin-top:24px">${name}</p>
+  </div>`;
+
+  return { subject: `${name} – ${title}`, html };
+}
 function nextId(arr) { return arr.length ? Math.max(...arr.map(x => x.id||0))+1 : 1; }
 
 function getDefaultDB() {
@@ -387,14 +461,46 @@ async function handleAPI(req, res, pathname) {
       const item = {...body, id:nextId(db[resource]), ...extra};
       db[resource].push(item);
       writeDB(db);
+      // Yeni rezervasyon geldiğinde restoran sahibine bildirim
+      if (resource === 'reservations' && db.settings.email) {
+        const name = db.settings.restaurantName || 'Restoranınız';
+        sendEmail({
+          to: db.settings.email,
+          subject: `🔔 Yeni Rezervasyon Talebi – ${item.name}`,
+          html: `
+          <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;padding:24px">
+            <h2 style="color:${db.settings.primaryColor||'#c9a84c'}">Yeni Rezervasyon Talebi</h2>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <tr><td style="padding:6px 0;color:#888">Ad Soyad</td><td style="font-weight:600">${item.name}</td></tr>
+              <tr><td style="padding:6px 0;color:#888">Telefon</td><td style="font-weight:600">${item.phone||'-'}</td></tr>
+              <tr><td style="padding:6px 0;color:#888">E-posta</td><td style="font-weight:600">${item.email||'-'}</td></tr>
+              <tr><td style="padding:6px 0;color:#888">Tarih</td><td style="font-weight:600">${item.date}</td></tr>
+              <tr><td style="padding:6px 0;color:#888">Saat</td><td style="font-weight:600">${item.time||'-'}</td></tr>
+              <tr><td style="padding:6px 0;color:#888">Kişi Sayısı</td><td style="font-weight:600">${item.guests||'-'}</td></tr>
+              ${item.notes?`<tr><td style="padding:6px 0;color:#888">Not</td><td>${item.notes}</td></tr>`:''}
+            </table>
+            <p style="color:#aaa;font-size:12px;margin-top:20px">Admin panelinden onaylayabilirsiniz: /admin</p>
+          </div>`
+        });
+      }
       return sendJSON(res, item, 201);
     }
     if (method==='PUT' && id) {
       const body = await parseBody(req);
       const i = db[resource].findIndex(x=>x.id===id);
       if (i===-1) return sendJSON(res,{error:'Not found'},404);
-      db[resource][i] = {...db[resource][i], ...body};
+      const before = db[resource][i];
+      db[resource][i] = {...before, ...body};
       writeDB(db);
+      // Rezervasyon durumu değiştiyse müşteriye mail gönder
+      if (resource === 'reservations' && body.status && body.status !== before.status
+          && (body.status === 'confirmed' || body.status === 'cancelled')) {
+        const updated = db[resource][i];
+        if (updated.email) {
+          const {subject, html} = buildReservationEmail(updated, db, body.status);
+          sendEmail({to: updated.email, subject, html});
+        }
+      }
       return sendJSON(res, db[resource][i]);
     }
     if (method==='DELETE' && id) {
