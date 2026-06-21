@@ -191,7 +191,8 @@
           "ja": "月曜日–木曜日",
           "zh": "周一至周四",
           "ru": "Понедельник – Четверг",
-          "de": "Montag – Donnerstag"
+          "de": "Montag – Donnerstag",
+          "ko": "월요일–목요일"
         },
         "time": "12:00 – 23:00"
       },
@@ -202,7 +203,8 @@
           "ja": "金曜日–土曜日",
           "zh": "周五至周六",
           "ru": "Пятница – Субота",
-          "de": "Freitag – Samstag"
+          "de": "Freitag – Samstag",
+          "ko": "금요일–토요일"
         },
         "time": "12:00 – 00:30"
       },
@@ -213,7 +215,8 @@
           "ja": "日曜日",
           "zh": "周日",
           "ru": "Воскресенье",
-          "de": "Sonntag"
+          "de": "Sonntag",
+          "ko": "일요일"
         },
         "time": "12:00 – 22:00"
       }
@@ -227,7 +230,8 @@
           "ja": "年の経験",
           "zh": "年经验",
           "ru": "Лет опыта",
-          "de": "Jahre Erfahrung"
+          "de": "Jahre Erfahrung",
+          "ko": "년의 경험"
         }
       },
       {
@@ -238,7 +242,8 @@
           "ja": "満足したお客様",
           "zh": "满意客户",
           "ru": "Довольных гостей",
-          "de": "Zufriedene Gäste"
+          "de": "Zufriedene Gäste",
+          "ko": "만족한 고객"
         }
       },
       {
@@ -249,7 +254,8 @@
           "ja": "平均評価",
           "zh": "平均评分",
           "ru": "Средний рейтинг",
-          "de": "Durchschnittsbewertung"
+          "de": "Durchschnittsbewertung",
+          "ko": "평균 평점"
         }
       },
       {
@@ -260,7 +266,8 @@
           "ja": "受賞",
           "zh": "奖项",
           "ru": "Награды",
-          "de": "Auszeichnungen"
+          "de": "Auszeichnungen",
+          "ko": "수상"
         }
       }
     ],
@@ -296,7 +303,8 @@
         "ja": "前菜",
         "zh": "开胃菜",
         "ru": "Закуски",
-        "de": "Vorspeisen"
+        "de": "Vorspeisen",
+        "ko": "애피타이저"
       },
       "slug": "starters",
       "icon": "🥗",
@@ -311,7 +319,8 @@
         "ja": "メイン料理",
         "zh": "主菜",
         "ru": "Основные блюда",
-        "de": "Hauptgerichte"
+        "de": "Hauptgerichte",
+        "ko": "메인 요리"
       },
       "slug": "mains",
       "icon": "🍽️",
@@ -326,7 +335,8 @@
         "ja": "グリル",
         "zh": "烤类",
         "ru": "Гриль",
-        "de": "Grillgerichte"
+        "de": "Grillgerichte",
+        "ko": "그릴 요리"
       },
       "slug": "grills",
       "icon": "🔥",
@@ -341,7 +351,8 @@
         "ja": "デザート",
         "zh": "甜点",
         "ru": "Десерты",
-        "de": "Desserts"
+        "de": "Desserts",
+        "ko": "디저트"
       },
       "slug": "desserts",
       "icon": "🍮",
@@ -356,7 +367,8 @@
         "ja": "飲み物",
         "zh": "饮品",
         "ru": "Напитки",
-        "de": "Getränke"
+        "de": "Getränke",
+        "ko": "음료"
       },
       "slug": "drinks",
       "icon": "🍷",
@@ -373,7 +385,8 @@
         "ja": "季節のサラダ",
         "zh": "季节沙拉",
         "ru": "Сезонный салат",
-        "de": "Saisonsalat"
+        "de": "Saisonsalat",
+        "ko": "계절 샐러드"
       },
       "desc": {
         "tr": "Taze mevsim yeşillikleri, kiraz domates, zeytin, balsamik sos",
@@ -381,7 +394,8 @@
         "ja": "新鮮な季節の野菜、チェリートマト、オリーブ、バルサミコソース",
         "zh": "新鲜时蔬，樱桃番茄，橄榄，意大利香醋",
         "ru": "Свежая сезонная зелень, помидоры черри, оливки, бальзамическая заправка",
-        "de": "Frisches Saisongemüse, Kirschtomaten, Oliven, Balsamico-Dressing"
+        "de": "Frisches Saisongemüse, Kirschtomaten, Oliven, Balsamico-Dressing",
+        "ko": "신선한 계절 채소, 방울토마토, 올리브, 발사믹 드레싱"
       },
       "price": 180,
       "cat": "starters",
@@ -401,7 +415,8 @@
         "ja": "マッシュルームスープ",
         "zh": "蘑菇汤",
         "ru": "Грибной суп",
-        "de": "Pilzsuppe"
+        "de": "Pilzsuppe",
+        "ko": "버섯 수프"
       },
       "desc": {
         "tr": "Kremalı orman mantarı çorbası, trüf yağı, kruton",
@@ -409,7 +424,8 @@
         "ja": "クリーミーな森のキノコスープ、トリュフオイル、クルトン添え",
         "zh": "奶油森林蘑菇汤，松露油，面包丁",
         "ru": "Сливочный суп из лесных грибов, трюфельное масло, крутоны",
-        "de": "Cremige Waldpilzsuppe, Trüffelöl, Croutons"
+        "de": "Cremige Waldpilzsuppe, Trüffelöl, Croutons",
+        "ko": "크리미한 숲 버섯 수프, 트러플 오일, 크루통"
       },
       "price": 145,
       "cat": "starters",
@@ -429,7 +445,8 @@
         "ja": "シュリンプカクテル",
         "zh": "虾仁鸡尾酒",
         "ru": "Креветочный коктейль",
-        "de": "Shrimps-Cocktail"
+        "de": "Shrimps-Cocktail",
+        "ko": "쉬림프 칵테일"
       },
       "desc": {
         "tr": "İskandinav usulü karides, avokado, limon mayonezi",
@@ -437,7 +454,8 @@
         "ja": "北欧風シュリンプ、アボカド、レモンマヨネーズ",
         "zh": "北欧风味虾仁，牛油果，柠檬蛋黄酱",
         "ru": "Креветки по-скандинавски, авокадо, лимонный майонез",
-        "de": "Garnelen nach skandinavischer Art, Avocado, Zitronenmayonnaise"
+        "de": "Garnelen nach skandinavischer Art, Avocado, Zitronenmayonnaise",
+        "ko": "스칸디나비아식 새우, 아보카도, 레몬 마요네즈"
       },
       "price": 245,
       "cat": "starters",
@@ -457,7 +475,8 @@
         "ja": "スズキのフィレ",
         "zh": "鲈鱼柳",
         "ru": "Филе сибаса",
-        "de": "Wolfsbarschfilet"
+        "de": "Wolfsbarschfilet",
+        "ko": "농어 필레"
       },
       "desc": {
         "tr": "Fırında levrek, limon tereyağı sosu, sebze garnitürü",
@@ -465,7 +484,8 @@
         "ja": "窯焼きスズキ、レモンバターソース、野菜の付け合わせ",
         "zh": "烤箱鲈鱼，柠檬黄油汁，蔬菜配菜",
         "ru": "Сибас в духовке, лимонно-сливочный соус, овощной гарнир",
-        "de": "Im Ofen gebackener Wolfsbarsch, Zitronenbuttersauce, Gemüsegarnitur"
+        "de": "Im Ofen gebackener Wolfsbarsch, Zitronenbuttersauce, Gemüsegarnitur",
+        "ko": "오븐에 구운 농어, 레몬 버터 소스, 채소 가니쉬"
       },
       "price": 520,
       "cat": "mains",
@@ -485,7 +505,8 @@
         "ja": "マッシュルームリゾット",
         "zh": "蘑菇烩饭",
         "ru": "Ризотто с грибами",
-        "de": "Pilzrisotto"
+        "de": "Pilzrisotto",
+        "ko": "버섯 리조또"
       },
       "desc": {
         "tr": "Arborio pirinci, porcini mantar, parmesan, taze kekik",
@@ -493,7 +514,8 @@
         "ja": "アルボリオ米、ポルチーニ茸、パルメザンチーズ、新鮮なタイム",
         "zh": "阿博里奥米，牛肝菌，帕玛森芝士，新鲜百里香",
         "ru": "Рис арборио, грибы порчини, пармезан, свежий тимьян",
-        "de": "Arborio-Reis, Steinpilze, Parmesan, frischer Thymian"
+        "de": "Arborio-Reis, Steinpilze, Parmesan, frischer Thymian",
+        "ko": "아르보리오 쌀, 포르치니 버섯, 파르메산, 신선한 타임"
       },
       "price": 380,
       "cat": "mains",
@@ -513,7 +535,8 @@
         "ja": "グリルフィレミニョン",
         "zh": "烤菲力牛排",
         "ru": "Стейк филе-миньон на гриле",
-        "de": "Gegrilltes Filet Mignon"
+        "de": "Gegrilltes Filet Mignon",
+        "ko": "그릴드 필레미뇽"
       },
       "desc": {
         "tr": "250g dana bonfile, mantar sos, patates garnitürü",
@@ -521,7 +544,8 @@
         "ja": "250gビーフフィレ、マッシュルームソース、ポテトの付け合わせ",
         "zh": "250克牛菲力，蘑菇汁，土豆配菜",
         "ru": "250г говяжьего филе, грибной соус, картофельный гарнир",
-        "de": "250g Rinderfilet, Pilzsauce, Kartoffelgarnitur"
+        "de": "250g Rinderfilet, Pilzsauce, Kartoffelgarnitur",
+        "ko": "소고기 안심 250g, 버섯 소스, 감자 가니쉬"
       },
       "price": 680,
       "cat": "grills",
@@ -541,7 +565,8 @@
         "ja": "ラムチョップ",
         "zh": "羊排",
         "ru": "Бараньи отбивные",
-        "de": "Lammkoteletts"
+        "de": "Lammkoteletts",
+        "ko": "양 갈비"
       },
       "desc": {
         "tr": "Frenk üzümü sosu, ızgara sebze, nane jölesi",
@@ -549,7 +574,8 @@
         "ja": "レッドカラントソース、グリル野菜、ミントジェリー",
         "zh": "红醋栗汁，烤蔬菜，薄荷果冻",
         "ru": "Соус из красной смородины, овощи на гриле, мятное желе",
-        "de": "Johannisbeersauce, gegrilltes Gemüse, Minzgelee"
+        "de": "Johannisbeersauce, gegrilltes Gemüse, Minzgelee",
+        "ko": "레드커런트 소스, 구운 채소, 민트 젤리"
       },
       "price": 590,
       "cat": "grills",
@@ -569,7 +595,8 @@
         "ja": "チキンスキュワー",
         "zh": "鸡肉串",
         "ru": "Куриные шашлычки",
-        "de": "Hähnchenspieße"
+        "de": "Hähnchenspieße",
+        "ko": "치킨 스큐어"
       },
       "desc": {
         "tr": "Marine edilmiş tavuk, közlenmiş biber, pilav, cacık",
@@ -577,7 +604,8 @@
         "ja": "マリネしたチキン、焼きピーマン、ライス、ヨーグルトソース",
         "zh": "腌制鸡肉，烤辣椒，米饭，酸奶酱",
         "ru": "Маринованная курица, печёный перец, рис, соус из йогурта",
-        "de": "Mariniertes Hähnchen, gegrillte Paprika, Reis, Joghurtsauce"
+        "de": "Mariniertes Hähnchen, gegrillte Paprika, Reis, Joghurtsauce",
+        "ko": "양념한 닭고기, 구운 피망, 밥, 요거트 소스"
       },
       "price": 320,
       "cat": "grills",
@@ -597,7 +625,8 @@
         "ja": "チョコレートスフレ",
         "zh": "巧克力舒芙蕾",
         "ru": "Шоколадное суфле",
-        "de": "Schokoladensoufflé"
+        "de": "Schokoladensoufflé",
+        "ko": "초콜릿 수플레"
       },
       "desc": {
         "tr": "Sıcak çikolata sufle, vanilyalı dondurma, çilek",
@@ -605,7 +634,8 @@
         "ja": "温かいチョコレートスフレ、バニラアイスクリーム、ストロベリー",
         "zh": "热巧克力舒芙蕾，香草冰淇淋，草莓",
         "ru": "Тёплое шоколадное суфле, ванильное мороженое, клубника",
-        "de": "Warmes Schokoladensoufflé, Vanilleeis, Erdbeeren"
+        "de": "Warmes Schokoladensoufflé, Vanilleeis, Erdbeeren",
+        "ko": "따뜻한 초콜릿 수플레, 바닐라 아이스크림, 딸기"
       },
       "price": 165,
       "cat": "desserts",
@@ -625,7 +655,8 @@
         "ja": "クレームブリュレ",
         "zh": "焦糖布丁",
         "ru": "Крем-брюле",
-        "de": "Crème brûlée"
+        "de": "Crème brûlée",
+        "ko": "크렘 브륄레"
       },
       "desc": {
         "tr": "Geleneksel Fransız tatlısı, karamelize şeker, mevsim meyvesi",
@@ -633,7 +664,8 @@
         "ja": "伝統的なフランスのデザート、カラメリゼした砂糖、季節のフルーツ",
         "zh": "传统法式甜点，焦糖，季节水果",
         "ru": "Традиционный французский десерт, карамелизированный сахар, сезонные фрукты",
-        "de": "Traditionelles französisches Dessert, karamellisierter Zucker, Saisonfrüchte"
+        "de": "Traditionelles französisches Dessert, karamellisierter Zucker, Saisonfrüchte",
+        "ko": "전통 프랑스 디저트, 카라멜라이즈드 슈가, 계절 과일"
       },
       "price": 145,
       "cat": "desserts",
@@ -653,7 +685,8 @@
         "ja": "レモネード",
         "zh": "柠檬水",
         "ru": "Лимонад",
-        "de": "Limonade"
+        "de": "Limonade",
+        "ko": "레모네이드"
       },
       "desc": {
         "tr": "Taze sıkılmış limon, nane, şurup — soğuk veya soda ile",
@@ -661,7 +694,8 @@
         "ja": "フレッシュレモン、ミント、シロップ — 冷やしてまたはソーダ入り",
         "zh": "新鲜柠檬汁，薄荷，糖浆 — 冰镇或苏打水",
         "ru": "Свежевыжатый лимон, мята, сироп — холодный или с содовой",
-        "de": "Frisch gepresste Zitrone, Minze, Sirup — gekühlt oder mit Soda"
+        "de": "Frisch gepresste Zitrone, Minze, Sirup — gekühlt oder mit Soda",
+        "ko": "신선한 레몬즙, 민트, 시럽 — 차갑게 또는 소다와 함께"
       },
       "price": 75,
       "cat": "drinks",
@@ -681,7 +715,8 @@
         "ja": "トルココーヒー",
         "zh": "土耳其咖啡",
         "ru": "Турецкий кофе",
-        "de": "Türkischer Kaffee"
+        "de": "Türkischer Kaffee",
+        "ko": "터키식 커피"
       },
       "desc": {
         "tr": "Geleneksel pişirme, lokum ikramı ile",
@@ -689,7 +724,8 @@
         "ja": "伝統的な製法、ロクム(トルコの菓子)付き",
         "zh": "传统煮法，配土耳其软糖",
         "ru": "Традиционное приготовление, подаётся с рахат-лукумом",
-        "de": "Traditionell gebrüht, serviert mit türkischem Honig"
+        "de": "Traditionell gebrüht, serviert mit türkischem Honig",
+        "ko": "전통적인 방식으로 끓인, 터키시 딜라이트와 함께 제공"
       },
       "price": 65,
       "cat": "drinks",
@@ -712,7 +748,8 @@
         "ja": "レストラン内装",
         "zh": "餐厅内部",
         "ru": "Интерьер ресторана",
-        "de": "Restaurant-Interieur"
+        "de": "Restaurant-Interieur",
+        "ko": "레스토랑 내부"
       },
       "cls": "tall",
       "active": true,
@@ -727,7 +764,8 @@
         "ja": "特別な料理の盛り付け",
         "zh": "特色菜品摆盘",
         "ru": "Подача особого блюда",
-        "de": "Besondere Tellerpräsentation"
+        "de": "Besondere Tellerpräsentation",
+        "ko": "특별 요리 플레이팅"
       },
       "cls": "",
       "active": true,
@@ -742,7 +780,8 @@
         "ja": "厨房のシェフ",
         "zh": "厨师在厨房",
         "ru": "Шеф-повар на кухне",
-        "de": "Küchenchef in der Küche"
+        "de": "Küchenchef in der Küche",
+        "ko": "주방의 셰프"
       },
       "cls": "",
       "active": true,
@@ -757,7 +796,8 @@
         "ja": "夕食の雰囲気",
         "zh": "晚餐氛围",
         "ru": "Атмосфера ужина",
-        "de": "Abendessen-Ambiente"
+        "de": "Abendessen-Ambiente",
+        "ko": "저녁 식사 분위기"
       },
       "cls": "wide",
       "active": true,
@@ -772,7 +812,8 @@
         "ja": "グリルステーキの盛り付け",
         "zh": "烤牛排展示",
         "ru": "Подача стейка на гриле",
-        "de": "Präsentation von gegrilltem Steak"
+        "de": "Präsentation von gegrilltem Steak",
+        "ko": "그릴 스테이크 플레이팅"
       },
       "cls": "",
       "active": true,
@@ -787,7 +828,8 @@
         "ja": "ワインサービス",
         "zh": "葡萄酒服务",
         "ru": "Винное обслуживание",
-        "de": "Weinservice"
+        "de": "Weinservice",
+        "ko": "와인 서비스"
       },
       "cls": "",
       "active": true,
@@ -802,7 +844,8 @@
         "ja": "デザートの盛り付け",
         "zh": "甜点展示",
         "ru": "Подача десерта",
-        "de": "Dessertpräsentation"
+        "de": "Dessertpräsentation",
+        "ko": "디저트 플레이팅"
       },
       "cls": "tall",
       "active": true,
@@ -817,7 +860,8 @@
         "ja": "プライベートダイニングルーム",
         "zh": "私人用餐室",
         "ru": "Отдельный зал для ужина",
-        "de": "Privates Speisezimmer"
+        "de": "Privates Speisezimmer",
+        "ko": "프라이빗 다이닝룸"
       },
       "cls": "",
       "active": true,
@@ -832,7 +876,8 @@
         "ja": "レストランの入り口",
         "zh": "餐厅入口",
         "ru": "Вход в ресторан",
-        "de": "Restauranteingang"
+        "de": "Restauranteingang",
+        "ko": "레스토랑 입구"
       },
       "cls": "",
       "active": true,

@@ -146,7 +146,7 @@
     .mc-body{padding:1.4rem}
     .mc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;margin-bottom:.5rem}
     .mc-name{font-family:var(--fd);font-size:1.25rem;font-weight:400;color:var(--white);line-height:1.2}
-    .mc-price{font-family:var(--fd);font-size:1.3rem;font-weight:500;color:var(--gold);white-space:nowrap}
+    .mc-price{font-family:var(--fd),'Segoe UI',Arial,sans-serif;font-size:1.3rem;font-weight:500;color:var(--gold);white-space:nowrap}
     .mc-desc{font-size:.85rem;color:var(--gray);line-height:1.6}
 
     /* GALLERY */
@@ -511,11 +511,11 @@
       <div>
         <div class="foot-h" id="footer-nav-t">Navigasyon</div>
         <ul class="foot-ul">
-          <li><a href="#about">Hikayemiz</a></li>
+          <li><a href="#about" id="t-foot-about">Hikayemiz</a></li>
           <li><a href="/menu" id="t-foot-menu">Menü</a></li>
-          <li><a href="#gallery">Galeri</a></li>
-          <li><a href="#reservation">Rezervasyon</a></li>
-          <li><a href="#contact">İletişim</a></li>
+          <li><a href="#gallery" id="t-foot-gallery">Galeri</a></li>
+          <li><a href="#reservation" id="t-foot-reserve">Rezervasyon</a></li>
+          <li><a href="#contact" id="t-foot-contact">İletişim</a></li>
         </ul>
       </div>
       <div>
@@ -817,7 +817,8 @@ function applyUILang(){
     't-nav-reviews':'nav_reviews', 't-nav-contact':'nav_contact', 't-nav-reserve':'nav_reserve',
     't-mob-about':'nav_about', 't-mob-menu':'nav_menu', 't-mob-gallery':'nav_gallery',
     't-mob-reviews':'nav_reviews', 't-mob-contact':'nav_contact', 't-mob-reserve':'nav_reserve',
-    't-foot-menu':'nav_menu', 't-foot-wine':'footer_wine',
+    't-foot-about':'nav_about', 't-foot-menu':'nav_menu', 't-foot-gallery':'nav_gallery',
+    't-foot-reserve':'nav_reserve', 't-foot-contact':'nav_contact', 't-foot-wine':'footer_wine',
     't-menu-eyebrow':'menu_eyebrow', 't-menu-title':'menu_title', 't-menu-viewall':'menu_view_all',
     'hero-scroll-text':'hero_scroll',
     'about-eyebrow-t':'about_eyebrow',
