@@ -260,6 +260,7 @@ textarea.f-ctrl{resize:vertical;min-height:72px}
 }
 @media(max-width:520px){.stat-grid{grid-template-columns:1fr}.vis-grid{grid-template-columns:1fr}.main{padding:1rem}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 <body>
 
@@ -796,6 +797,7 @@ document.addEventListener('DOMContentLoaded', checkSetup);
   <nav class="sb-nav">
     <div class="sb-sec">Genel</div>
     <div class="sb-item active" data-p="dashboard"><span class="ico">📊</span>Dashboard</div>
+    <div class="sb-item" data-p="qrcode"><span class="ico">📱</span>QR Kod (Menü)</div>
     <div class="sb-sec">İçerik</div>
     <div class="sb-item" data-p="menu"><span class="ico">🍽️</span>Menü Yönetimi</div>
     <div class="sb-item" data-p="gallery"><span class="ico">🖼️</span>Galeri</div>
@@ -851,6 +853,56 @@ document.addEventListener('DOMContentLoaded', checkSetup);
     <div class="card">
       <div class="card-h"><div><div class="card-title">✉️ Okunmamış Mesajlar</div></div><button class="btn ghost sm" onclick="nav('messages')">Tümü →</button></div>
       <div id="dash-msg" class="card-body p0"></div>
+    </div>
+  </div>
+</div>
+
+<!-- QR CODE -->
+<div class="panel" id="panel-qrcode">
+  <div class="card">
+    <div class="card-h"><div><div class="card-title">📱 Masa QR Kodu</div><div class="card-sub">Müşterileriniz QR'ı okutunca menü sayfanız açılır</div></div></div>
+    <div class="card-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start">
+        <div>
+          <div class="fg" style="margin-bottom:1rem">
+            <label>Hedef Sayfa</label>
+            <select class="f-ctrl" id="qr-target" onchange="renderQR()">
+              <option value="/menu">Menü Sayfası (/menu)</option>
+              <option value="/">Ana Sayfa (/)</option>
+              <option value="/#reservation">Rezervasyon Bölümü</option>
+            </select>
+          </div>
+          <div class="fg" style="margin-bottom:1rem">
+            <label>QR Rengi</label>
+            <div class="color-row">
+              <div class="color-swatch" id="sw-qr"><div class="color-swatch-vis" id="sw-qr-vis" style="background:#000"></div><input type="color" id="cp-qr" value="#000000" oninput="syncColor('qr',this.value);renderQR()"/></div>
+              <input class="f-ctrl" id="ci-qr" value="#000000" oninput="syncColorHex('qr',this.value);renderQR()" style="font-family:monospace;max-width:110px"/>
+              <span style="font-size:.73rem;color:var(--gray-l)">Genelde siyah en iyi okunur</span>
+            </div>
+          </div>
+          <div class="fg" style="margin-bottom:1rem">
+            <label>Boyut</label>
+            <select class="f-ctrl" id="qr-size" onchange="renderQR()">
+              <option value="300">Küçük (300px) — kartvizit, menü içi</option>
+              <option value="500" selected>Orta (500px) — masa standı</option>
+              <option value="800">Büyük (800px) — poster, vitrin</option>
+            </select>
+          </div>
+          <div style="background:var(--bg3);border-radius:8px;padding:1rem;margin-top:1.25rem">
+            <div style="font-size:.78rem;color:var(--gray-l);margin-bottom:.5rem">📋 Hedef URL</div>
+            <div style="font-family:monospace;font-size:.82rem;color:var(--gold);word-break:break-all" id="qr-url-preview">—</div>
+          </div>
+          <div style="font-size:.72rem;color:var(--gray-l);margin-top:1rem">
+            💡 İndirdiğiniz PNG'yi masa standına, menü kapağına veya vitrine yapıştırabilirsiniz. Restoran adınızı değiştirirseniz QR kodu yeniden indirmeniz gerekmez — link aynı kalır.
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:1rem">
+          <div style="background:#fff;border-radius:12px;padding:1.5rem;display:flex;align-items:center;justify-content:center;min-height:280px;min-width:280px">
+            <div id="qr-canvas-wrap"></div>
+          </div>
+          <button class="btn primary" onclick="downloadQR()" style="width:100%">⬇ PNG Olarak İndir</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2615,7 +2667,7 @@ function toast(msg,type='info'){const el=document.getElementById('toast');el.tex
 // ═══════════════════════════════════════════════════
 //  NAV
 // ═══════════════════════════════════════════════════
-const TITLES={dashboard:'Dashboard',menu:'Menü Yönetimi',gallery:'Galeri',testimonials:'Yorumlar',media:'Medya Kütüphanesi',reservations:'Rezervasyonlar',messages:'Mesajlar','design-sections':'Bölüm Görünürlüğü','design-brand':'Marka & Renkler','design-logo':'Logo & Favicon','design-loader':'Yükleme Ekranı','design-hero':'Hero Bölümü','design-about':'Hakkımızda','design-chef':'Şef Bölümü','design-reservation':'Rezervasyon Bölümü','design-contact':'İletişim Başlığı','settings-general':'Genel Bilgiler','settings-hours':'Çalışma Saatleri','settings-stats':'İstatistik Kartları','settings-social':'Sosyal Medya'};
+const TITLES={dashboard:'Dashboard',qrcode:'QR Kod (Menü)',menu:'Menü Yönetimi',gallery:'Galeri',testimonials:'Yorumlar',media:'Medya Kütüphanesi',reservations:'Rezervasyonlar',messages:'Mesajlar','design-sections':'Bölüm Görünürlüğü','design-brand':'Marka & Renkler','design-logo':'Logo & Favicon','design-loader':'Yükleme Ekranı','design-hero':'Hero Bölümü','design-about':'Hakkımızda','design-chef':'Şef Bölümü','design-reservation':'Rezervasyon Bölümü','design-contact':'İletişim Başlığı','settings-general':'Genel Bilgiler','settings-hours':'Çalışma Saatleri','settings-stats':'İstatistik Kartları','settings-social':'Sosyal Medya'};
 function nav(name){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
@@ -2623,6 +2675,7 @@ function nav(name){
   document.querySelector(`.sb-item[data-p="${name}"]`)?.classList.add('active');
   document.getElementById('tb-title').textContent=TITLES[name]||name;
   document.getElementById('sidebar').classList.remove('open');
+  if(name==='qrcode') renderQR();
 }
 document.querySelectorAll('.sb-item').forEach(item=>item.addEventListener('click',()=>nav(item.dataset.p)));
 
@@ -2642,6 +2695,64 @@ document.getElementById('s-loader-text')?.addEventListener('input',updateLoaderP
 document.getElementById('s-rname')?.addEventListener('input',()=>{
   if(!gv('s-loader-text'))updateLoaderPreview();
 });
+
+// ═══════════════════════════════════════════════════
+//  QR KOD (Masa standı için menü/site linki)
+// ═══════════════════════════════════════════════════
+let qrInstance = null;
+function getQRTargetURL(){
+  const path = document.getElementById('qr-target')?.value || '/menu';
+  return window.location.origin + path;
+}
+function renderQR(){
+  const url = getQRTargetURL();
+  const urlPreview = document.getElementById('qr-url-preview');
+  if(urlPreview) urlPreview.textContent = url;
+
+  const size = parseInt(document.getElementById('qr-size')?.value || '500');
+  const color = document.getElementById('ci-qr')?.value || '#000000';
+  const wrap = document.getElementById('qr-canvas-wrap');
+  if(!wrap) return;
+  wrap.innerHTML = '';
+  const canvas = document.createElement('canvas');
+  wrap.appendChild(canvas);
+  try{
+    qrInstance = new QRious({
+      element: canvas,
+      value: url,
+      size: Math.min(size, 280),
+      foreground: color,
+      background: '#ffffff',
+      level: 'H'
+    });
+  }catch(e){
+    wrap.innerHTML = '<div style="color:#999;font-size:.8rem;text-align:center;padding:2rem">QR kod oluşturulamadı</div>';
+  }
+}
+function downloadQR(){
+  const url = getQRTargetURL();
+  const size = parseInt(document.getElementById('qr-size')?.value || '500');
+  const color = document.getElementById('ci-qr')?.value || '#000000';
+  const tempCanvas = document.createElement('canvas');
+  try{
+    new QRious({
+      element: tempCanvas,
+      value: url,
+      size: size,
+      foreground: color,
+      background: '#ffffff',
+      level: 'H'
+    });
+    const link = document.createElement('a');
+    const restaurantName = (DB.settings?.restaurantName || 'restoran').replace(/[^a-zA-Z0-9çğıöşüÇĞİÖŞÜ]+/g,'-');
+    link.download = `qr-kod-${restaurantName}.png`;
+    link.href = tempCanvas.toDataURL('image/png');
+    link.click();
+    toast('✓ QR kod indirildi','ok');
+  }catch(e){
+    toast('QR indirme hatası','err');
+  }
+}
 
 initAll();
 </script>
